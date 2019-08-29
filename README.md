@@ -10,21 +10,26 @@ Palvelutoteutaan Java Springboot kehystä käyttäen ja thymeleaf template engin
 
 ## Järjestelmän määrittely
 
+Peruskäyttäjä on henkilö, joka palveluun kirjautumalla pystyy lisäämään, muokkaamaan, tarkastelemaan ja poistamaan omia tietojaan.
 
+Tarkastelija on henkilö, joka palveluun kirjautumalla pystyy tarkastelemaan palveluun syötettyjä tietoja haluamansa peruskäyttäjän osalta. Tarkastelija voi olla esimerkiksi lääkäri tai terapiaryhmän vetäjä.
 
-Määrittelyssä järjestelmää tarkastellaan käyttäjän näkökulmasta. Järjestelmän
-toiminnot hahmotellaan käyttötapausten tai käyttäjätarinoiden kautta, ja kuvataan järjestelmän
-käyttäjäryhmät.
+Järjestelmän toiminnot (peruskäyttäjä)
+- palveluun rekisteröityminen
+- sisäänkirjautuminen
+- tietojen syöttäminen: nukahtamisaika, heräämisaika, unenlaadun arviointi, uneen vaikuttaneet ulkopuoliset seikat.
+- tietojen tarkastelu eri aikaväleillä
+- tietojen muokaaminen
+- tietojen poistaminen
+- uloskirjautuminen
 
--   Käyttäjäroolit ja roolien tarvitsemat toiminnot, esim. käyttötapauskaaviona
-    (use case diagram)
+Järjestelmän toiminnot (tarkastelija)
+- palveluun rekisteröityminen
+- sisäänkirjautuminen
+- tarkasteltavan henkilön valinta
+- tietojen tarkastelu eri aikaväleillä
+- uloskirjautuminen
 
--   Lyhyt kuvaus käyttäjäryhmistä (rooleista)
-
--   Lyhyt kuvaus käyttötapauksista tai käyttäjätarinat
-
-Kuvauksissa kannattaa harkita, mikä on toteuttajalle ja asiakkaalle oleellista
-tietoa ja keskittyä siihen.
 
 ## Käyttöliittymä
 
