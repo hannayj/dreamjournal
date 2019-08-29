@@ -35,10 +35,11 @@ Järjestelmän toiminnot (tarkastelija)
 
 ## Käyttöliittymä
 
-Käyttöliittymän tärkeimmät (vain ne!) näkymät ja niiden väliset siirtymät esitetään
-käyttöliittymäkaaviona.
+Käyttöliittymäkaavio, peruskäyttäjä
+![peruskäyttäjä](https://raw.githubusercontent.com/hannayj/sleepdiary/master/images/kayttoliittymakaavio_peruskayttaja.png)
 
-Jos näkymän tarkoitus ei ole itsestään selvä, se pitää kuvata lyhyesti.
+Käyttöliittymäkaavio, tarkastelija
+![tarkastelija](https://raw.githubusercontent.com/hannayj/sleepdiary/master/images/kayttoliittymakaavio_tarkastelija.png)
 
 ## Tietokanta
 
