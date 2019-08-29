@@ -21,11 +21,13 @@ Järjestelmän toiminnot (peruskäyttäjä)
 - tietojen tarkastelu eri aikaväleillä
 - tietojen muokaaminen
 - tietojen poistaminen
+- tarkasteluoikeuden myöntäminen
 - uloskirjautuminen
 
 Järjestelmän toiminnot (tarkastelija)
 - palveluun rekisteröityminen
 - sisäänkirjautuminen
+- tarkasteluoikeuden pyytäminen
 - tarkasteltavan henkilön valinta
 - tietojen tarkastelu eri aikaväleillä
 - uloskirjautuminen
