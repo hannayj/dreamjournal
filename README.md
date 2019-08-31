@@ -114,3 +114,5 @@ käynnistämiseen tai käyttöön liittyy joitain muita toimenpiteitä tai toimi
 
 Usko tai älä, tulet tarvitsemaan tätä itsekin, kun tauon jälkeen palaat
 järjestelmän pariin !
+
+![logo](https://raw.githubusercontent.com/hannayj/sleepdiary/master/images/logo_dark.png)
