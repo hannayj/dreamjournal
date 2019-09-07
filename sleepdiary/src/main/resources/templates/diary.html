@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Sleep Diary</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+	<h1>Sleep Diary</h1>
+	
+	<table>
+		<tr>
+			<th>Start</th>
+			<th>Finish</th>
+			<th>Duration</th>
+			<th>Quality</th>
+			<th>Comments</th>
+		</tr>
+		
+		<!-- Check these references from back end before running -->
+		<tr th:each = "uni : ${unet}">
+			<td th:text = "$uni.start}"></td>
+			<td th:text = "$uni.end}"></td>
+			<td th:text = "$uni.duration}"></td>
+			<td th:text = "$uni.quality}"></td>
+			<td th:text = "$uni.comment}"></td>
+		</tr>
+	</table>
+
+</body>
+</html>
