@@ -43,28 +43,64 @@ Käyttöliittymäkaavio, tarkastelija
 
 ## Tietokanta
 
-Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet
-kuvataan käsitekaaviolla. Käsitemalliin
-sisältyy myös taulujen välisten viiteyhteyksien ja avainten
-määritykset. Tietokanta kuvataan käyttäen jotain kuvausmenetelmää, joko
-ER-kaaviota ja UML-luokkakaaviota.
+> ### KAYTTAJAT
+> _Kayttajat-taulu sisältää käyttäjätilit._
+>
+> Kenttä | Tyyppi | Kuvaus
+> ------ | ------ | ------
+> id | int PK | Käyttäjän id
+> nimi | varchar(50) |  Tilin nimimerkki
+> salasana | varchar(50) | Tilin salasana
+> kayttajataso | int FK | Viittaus käyttäjätasoon [Kayttajataso](#KAYTTAJATASOT)-taulussa
 
-Lisäksi kukin järjestelmän tietoelementti ja sen attribuutit kuvataan
-tietohakemistossa. Tietohakemisto tarkoittaa yksinkertaisesti vain jokaisen elementin (taulun) ja niiden
-attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän tyyliin:
+> ### KAYTTAJATASOT
+> _Kayttajatasot-taulu sisältää käyttäjien käyttäjätasot._
+>
+> Kenttä | Tyyppi | Kuvaus
+> ------ | ------ | ------
+> id | int PK | Kayttajatason id
+> kayttajataso | varchar(10) |  Käyttäjätason arvo: "peruskayttaja" tai "tarkastelija"
 
-
-> ### _Tilit_
-> _Tilit-taulu sisältää käyttäjätilit. Käyttäjällä voi olla monta tiliä. Tili kuuluu aina vain yhdelle käyttäjälle._
+> ### LUVAT
+> _Luvat-taulu sisältää luvat käyttäjän tietojen takasteluun. Lupa viittaa yhteen käyttäjään ja sillä on yksi tarkastelija._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
 > id | int PK | Tilin id
-> nimimerkki | varchar(30) |  Tilin nimimerkki
-> avatar | int FK | Tilin avatar, viittaus [avatar](#Avatar)-tauluun
-> kayttaja | int FK | Viittaus käyttäjään [käyttäjä](#Kayttaja)-taulussa
+> kayttaja | int FK | Viittaus käyttäjään [Kayttaja](#KAYTTAJAT)-taulussa, jonka tietoja voidaan tarkastella
+> tarkastelija | int FK | Viittaus käyttäjään [Kayttaja](#KAYTTAJAT)-taulussa, jolla on lupa tarkastella tietojanka tietoja tarkastellaan
 
-## Tekninen kuvaus
+> ### UNIJAKSOT
+> _Unijaksot-taulu sisältää käyttäjien unijaksot. Käyttäjällä voi olla monta unijaksoa ja unijakso kuuluu aina vain yhdelle käyttäjälle._
+>
+> Kenttä | Tyyppi | Kuvaus
+> ------ | ------ | ------
+> id | int PK | Unijakson id
+> alkuaika | DateTime
+> loppuaika | DateTime
+> kayttaja | int FK | Viittaus käyttäjään [Kayttaja](#KAYTTAJAT)-taulussa
+> unenlaatu | int FK | Viittaus unenlaatuun [Unenlaatu](#UNENLAADUT)-taulussa
+
+> ### UNENLAADUT
+> _Unenlaadut-taulu sisältää unijaksojen unenlaadut._
+>
+> Kenttä | Tyyppi | Kuvaus
+> ------ | ------ | ------
+> id | int PK | Unenlaadun id
+> unenlaatu | varchar(10) | Unenlaadun arvo voi olla 1, 2, 3, 4, tai 5
+
+> ### KOMMENTIT
+> _Kommentit-taulu sisältää unijaksoon liittyvät kommentit. Kommentilla on yksi kirjoittaja ja se liittyy yhteen unijaksoon._
+>
+> Kenttä | Tyyppi | Kuvaus
+> ------ | ------ | ------
+> id | int PK | Kommentin id
+> kommentti | varchar(200)
+> aika | DateTime
+> kayttaja | int FK | Viittaus käyttäjään [Kayttaja](#KAYTTAJAT)-taulussa
+> unijakso | int FK | Viittaus unijaksoon [Unijakso](#UNIJAKSOT)-taulussa
+
+## Tekninen kuvaus, jonka tietoja voidaan tarkastella
 
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelun tekniset
 ratkaisut, esim.
