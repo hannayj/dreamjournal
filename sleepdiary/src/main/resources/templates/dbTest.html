@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Pekan testi</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<table>
+		<tr>
+			<th>Start</th>
+			<th>Finish</th>
+			<th>Duration</th>
+			<th>Quality</th>
+		</tr>
+		<tr th:each="jakso: ${unijaksot}">
+			<td th:text="${jakso.alkuaika} + ' |'"></td>
+			<td th:text="${jakso.loppuaika} + ' |'"></td>
+			<td th:text="${#dates.hour(jakso.duration)} + ' tuntia |'"></td>
+			<td th:text="${jakso.unenlaatu}"></td>
+		</tr>
+	</table>
+</body>
+</html>
