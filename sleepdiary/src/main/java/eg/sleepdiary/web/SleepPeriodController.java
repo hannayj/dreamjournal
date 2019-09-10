@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import eg.sleepdiary.domain.UnijaksoRepository;
+import eg.sleepdiary.domain.SleepPeriodRepository;
 
 /**
  * 
@@ -14,18 +14,18 @@ import eg.sleepdiary.domain.UnijaksoRepository;
  *
  */
 @Controller
-public class UnijaksoController {
+public class SleepPeriodController {
 
 	@Autowired
-	private UnijaksoRepository repo;
+	private SleepPeriodRepository periodRepo;
 	
 	/**
 	 * @param model
-	 * @return name of the html template that lists all unijaksot
+	 * @return name of the html template that lists all SleepPeriods
 	 */
 	@GetMapping
-	public String getUnijaksot(Model model) {
-		model.addAttribute("unijaksot", repo.findAll());
+	public String getSleepperiods(Model model) {
+		model.addAttribute("sleepperiods", periodRepo.findAll());
 		return "dbTest";
 	}
 }
