@@ -35,7 +35,7 @@ public class SleepdiaryApplication {
 			SleepPeriod u1 = new SleepPeriod(jakso1alku, jakso1loppu, qualityRepo.findBysleepquality("hyva").get(0));
 			SleepPeriod u2 = new SleepPeriod(jakso2alku, jakso2loppu, qualityRepo.findBysleepquality("hyva").get(0));
 			SleepPeriod u3 = new SleepPeriod(jakso3alku, jakso3loppu, qualityRepo.findBysleepquality("huono").get(0));
-			
+
 			periodRepo.save(u1);
 			periodRepo.save(u2);
 			periodRepo.save(u3);

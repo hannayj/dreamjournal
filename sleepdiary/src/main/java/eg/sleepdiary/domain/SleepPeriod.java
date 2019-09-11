@@ -1,6 +1,7 @@
 package eg.sleepdiary.domain;
 
 import java.sql.Timestamp;
+import java.time.Duration;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -78,8 +79,8 @@ public class SleepPeriod {
 	 * The return value is in the following format "yy-MM-dd HH:mm:ss"
 	 * 
 	 */
-	public Timestamp getDuration() {
-		return new Timestamp(endtime.getTime() - starttime.getTime());
+	public long getDuration() {
+		return Duration.between(starttime.toInstant(), endtime.toInstant()).toHours();
 	}
 
 	@Override
