@@ -26,6 +26,6 @@ public class SleepPeriodController {
 	@GetMapping
 	public String getSleepperiods(Model model) {
 		model.addAttribute("sleepperiods", periodRepo.findAll());
-		return "dbTest";
+		return "diary";
 	}
 }
