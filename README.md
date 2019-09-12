@@ -4,7 +4,7 @@ Tiimi: Marja, Pekka, Hanna, Santtu
 
 ## Johdanto
 
-Projektin tarkoituksena on toteuttaa ja julkaista verkkopohjainen unipäiväkirjasovellus. Käyttäjä on kuka tahansa, joka haluaa seurata ja selvittää omaa unirytmiään ja siihen vaikuttaneita ulkoisia asioita. Käyttäjä syöttää sovellukseen nukahtamis- ja heräämisajat sekä muita mahdollisia huomioita edellisestä unijaksosta. Käyttäjä saa palvelusta tiedon edellisistä uniajoistaan vertailua ja johtopäätöksiä varten. Projektin päättyessä valmiina on visuaalisesti miellyttävä ja teknisesti toimiva sovellusratkaisu.
+Projektin tarkoituksena on toteuttaa ja julkaista verkkopohjainen unipäiväkirjasovellus. Unipäiväkirjan laatimisessa sovelletaan Työterveyslaitoksen ja Käypä hoito -suosituksen mukaisia pohjia, joita lääkäri voi hyödyntää anamneesityökaluna. Käyttäjä on kuka tahansa, joka haluaa seurata ja selvittää omaa unirytmiään ja siihen vaikuttaneita ulkoisia asioita. Käyttäjä syöttää sovellukseen nukahtamis- ja heräämisajat sekä muita mahdollisia huomioita edellisestä unijaksosta. Käyttäjä saa palvelusta tiedon edellisistä uniajoistaan vertailua ja johtopäätöksiä varten. Projektin päättyessä valmiina on visuaalisesti miellyttävä ja teknisesti toimiva sovellusratkaisu.
 
 Palvelutoteutaan Java Springboot kehystä käyttäen ja thymeleaf template engineä hyödyntäen. Tietokantajärejstelmänä toimii MariaDB. Sovelluksesta tehdään responsiivinen eli se toimii luontevasti kaikilla päätelaitteilla.
 
@@ -43,62 +43,73 @@ Käyttöliittymäkaavio, tarkastelija
 
 ## Tietokanta
 
-> ### KAYTTAJAT
+Kaavio
+![tietokantakaavio](https://raw.githubusercontent.com/hannayj/sleepdiary/master/images/DB_version2.png)
+
+> ### User
 > _Kayttajat-taulu sisältää käyttäjätilit._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
 > id | int PK | Käyttäjän id
-> nimi | varchar(50) |  Tilin nimimerkki
-> salasana | varchar(50) | Tilin salasana
-> kayttajataso | int FK | Viittaus käyttäjätasoon [Kayttajataso](#KAYTTAJATASOT)-taulussa
+> name | varchar(50) |  Tilin nimimerkki
+> password | varchar(50) | Tilin salasana
+> userLevel | int FK | Viittaus käyttäjätasoon [UserLevel](#UserLevel)-taulussa
 
-> ### KAYTTAJATASOT
+> ### UserLevel
 > _Kayttajatasot-taulu sisältää käyttäjien käyttäjätasot._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
 > id | int PK | Kayttajatason id
-> kayttajataso | varchar(10) |  Käyttäjätason arvo: "peruskayttaja" tai "tarkastelija"
+> userLevel | varchar(10) | Käyttäjätason arvo: "user" tai "examiner"
 
-> ### LUVAT
+> ### Permission
 > _Luvat-taulu sisältää luvat käyttäjän tietojen takasteluun. Lupa viittaa yhteen käyttäjään ja sillä on yksi tarkastelija._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
 > id | int PK | Tilin id
-> kayttaja | int FK | Viittaus käyttäjään [Kayttaja](#KAYTTAJAT)-taulussa, jonka tietoja voidaan tarkastella
-> tarkastelija | int FK | Viittaus käyttäjään [Kayttaja](#KAYTTAJAT)-taulussa, jolla on lupa tarkastella tietojanka tietoja tarkastellaan
+> user | int FK | Viittaus käyttäjään [User](#User)-taulussa, jonka tietoja voidaan tarkastella
+> examiner | int FK | Viittaus käyttäjään [User](#User)-taulussa, jolla on lupa tarkastella tietoja
 
-> ### UNIJAKSOT
-> _Unijaksot-taulu sisältää käyttäjien unijaksot. Käyttäjällä voi olla monta unijaksoa ja unijakso kuuluu aina vain yhdelle käyttäjälle._
+> ### SleepPeriod
+> _Unijaksot-taulu sisältää käyttäjien unijaksot. Unijakso liittyy aina yhteen päiväkirjamerkintään._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
 > id | int PK | Unijakson id
-> alkuaika | DateTime
-> loppuaika | DateTime
-> kayttaja | int FK | Viittaus käyttäjään [Kayttaja](#KAYTTAJAT)-taulussa
-> unenlaatu | int FK | Viittaus unenlaatuun [Unenlaatu](#UNENLAADUT)-taulussa
+> startTime | DateTime
+> endTime | DateTime
+> diaryEntry | int FK | Viittaus unenlaatuun [DiaryEntry](#DiaryEntry)-taulussa
 
-> ### UNENLAADUT
+> ### DiaryEntry
+> _Päiväkirjamerkinnät-tauluun linkittyvät päivän unijaksot ja niihin liittyvät kommentit._
+>
+> Kenttä | Tyyppi | Kuvaus
+> ------ | ------ | ------
+> id | int PK | Unenlaadun id
+> user | int FK | Viittaus käyttäjään [User](#User)-taulussa
+> sleepQuality | int FK | Viittaus unijaksoon [SleepQuality](#SleepQuality)-taulussa
+
+> ### SleepQuality
 > _Unenlaadut-taulu sisältää unijaksojen unenlaadut._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
 > id | int PK | Unenlaadun id
-> unenlaatu | varchar(10) | Unenlaadun arvo voi olla 1, 2, 3, 4, tai 5
+> sleepQuality | varchar(10) | Unenlaadun arvo voi olla 1, 2, 3, 4, tai 5
 
-> ### KOMMENTIT
+> ### Comment
 > _Kommentit-taulu sisältää unijaksoon liittyvät kommentit. Kommentilla on yksi kirjoittaja ja se liittyy yhteen unijaksoon._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
 > id | int PK | Kommentin id
-> kommentti | varchar(200)
-> aika | DateTime
-> kayttaja | int FK | Viittaus käyttäjään [Kayttaja](#KAYTTAJAT)-taulussa
-> unijakso | int FK | Viittaus unijaksoon [Unijakso](#UNIJAKSOT)-taulussa
+> commentText | varchar(200)
+> time | DateTime
+> user | int FK | Viittaus käyttäjään [User](#User)-taulussa
+> diaryEntry | int FK | Viittaus päiväkirjamerkintään [DiaryEntry](#DiaryEntry)-taulussa
 
 ## Tekninen kuvaus, jonka tietoja voidaan tarkastella
 
@@ -150,5 +161,9 @@ käynnistämiseen tai käyttöön liittyy joitain muita toimenpiteitä tai toimi
 
 Usko tai älä, tulet tarvitsemaan tätä itsekin, kun tauon jälkeen palaat
 järjestelmän pariin !
+
+## Tietoturva
+
+Pohdintaa tietoturvasta.
 
 ![logo](https://raw.githubusercontent.com/hannayj/sleepdiary/master/images/logo_dark.png)
