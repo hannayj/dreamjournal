@@ -4,7 +4,7 @@ Tiimi: Marja, Pekka, Hanna, Santtu
 
 ## Johdanto
 
-Projektin tarkoituksena on toteuttaa ja julkaista verkkopohjainen unipäiväkirjasovellus. Käyttäjä on kuka tahansa, joka haluaa seurata ja selvittää omaa unirytmiään ja siihen vaikuttaneita ulkoisia asioita. Käyttäjä syöttää sovellukseen nukahtamis- ja heräämisajat sekä muita mahdollisia huomioita edellisestä unijaksosta. Käyttäjä saa palvelusta tiedon edellisistä uniajoistaan vertailua ja johtopäätöksiä varten. Projektin päättyessä valmiina on visuaalisesti miellyttävä ja teknisesti toimiva sovellusratkaisu.
+Projektin tarkoituksena on toteuttaa ja julkaista verkkopohjainen unipäiväkirjasovellus. Unipäiväkirjan laatimisessa sovelletaan Työterveyslaitoksen ja Käypä hoito -suosituksen mukaisia pohjia, joita lääkäri voi hyödyntää anamneesityökaluna. Käyttäjä on kuka tahansa, joka haluaa seurata ja selvittää omaa unirytmiään ja siihen vaikuttaneita ulkoisia asioita. Käyttäjä syöttää sovellukseen nukahtamis- ja heräämisajat sekä muita mahdollisia huomioita edellisestä unijaksosta. Käyttäjä saa palvelusta tiedon edellisistä uniajoistaan vertailua ja johtopäätöksiä varten. Projektin päättyessä valmiina on visuaalisesti miellyttävä ja teknisesti toimiva sovellusratkaisu.
 
 Palvelutoteutaan Java Springboot kehystä käyttäen ja thymeleaf template engineä hyödyntäen. Tietokantajärejstelmänä toimii MariaDB. Sovelluksesta tehdään responsiivinen eli se toimii luontevasti kaikilla päätelaitteilla.
 
@@ -158,5 +158,9 @@ käynnistämiseen tai käyttöön liittyy joitain muita toimenpiteitä tai toimi
 
 Usko tai älä, tulet tarvitsemaan tätä itsekin, kun tauon jälkeen palaat
 järjestelmän pariin !
+
+## Tietoturva
+
+Pohdintaa tietoturvasta.
 
 ![logo](https://raw.githubusercontent.com/hannayj/sleepdiary/master/images/logo_dark.png)
