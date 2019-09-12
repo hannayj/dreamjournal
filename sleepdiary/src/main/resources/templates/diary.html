@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"/>
 <head>
 	<title>Sleep Diary</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -7,24 +8,28 @@
 <body>
 	<h1>Sleep Diary</h1>
 	
-	<table>
+	<table class="table table-striped">
 		<tr>
 			<th>Start</th>
 			<th>Finish</th>
 			<th>Duration</th>
 			<th>Quality</th>
 			<th>Comments</th>
+			<th></th>
+			<th></th>
 		</tr>
 		
-		<!-- Check these references from back end before running -->
-		<tr th:each = "uni : ${unet}">
-			<td th:text = "$uni.start}"></td>
-			<td th:text = "$uni.end}"></td>
-			<td th:text = "$uni.duration}"></td>
-			<td th:text = "$uni.quality}"></td>
-			<td th:text = "$uni.comment}"></td>
+		<tr th:each = "period: ${sleepperiods}">
+			<td th:text = "${period.starttime}"></td>
+			<td th:text = "${period.endtime}"></td>
+			<td th:text="${period.duration} + ' hours'"></td>
+			<td th:text = "${period.sleepquality.sleepquality}"></td>
+			<td></td>
+			<td><a class="btn btn-danger">Delete</a></td>
+			<td><a class="btn btn-info">Edit</a></td>
 		</tr>
 	</table>
+	<a class="btn btn-success">Add a new sleep period</a>
 
 </body>
 </html>
