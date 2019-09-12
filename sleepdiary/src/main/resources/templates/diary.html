@@ -15,6 +15,8 @@
 			<th>Duration</th>
 			<th>Quality</th>
 			<th>Comments</th>
+			<th></th>
+			<th></th>
 		</tr>
 		
 		<tr th:each = "period: ${sleepperiods}">
@@ -22,9 +24,12 @@
 			<td th:text = "${period.endtime}"></td>
 			<td th:text="${period.duration} + ' hours'"></td>
 			<td th:text = "${period.sleepquality.sleepquality}"></td>
-			<!--  <td th:text = "${period.comment}"></td> -->
+			<td></td>
+			<td><a class="btn btn-danger">Delete</a></td>
+			<td><a class="btn btn-info">Edit</a></td>
 		</tr>
 	</table>
+	<a class="btn btn-success">Add a new sleep period</a>
 
 </body>
 </html>
