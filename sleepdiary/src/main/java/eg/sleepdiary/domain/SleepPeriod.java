@@ -7,13 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
  * 
- * @author jaripeks
- * A class that represents the SleepPeriod table in the database
+ * @author jaripeks A class that represents the SleepPeriod table in the database
  *
  */
 @Entity
@@ -21,73 +19,80 @@ public class SleepPeriod {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long sleepperiodid;
-	
-	private Timestamp starttime;
-	private Timestamp endtime;
-	
+	private long id;
+
+	private Timestamp startTime;
+	private Timestamp endTime;
+	private SleepQuality sleepQuality;
 	@ManyToOne
-	@JoinColumn(name = "sleepqualityid")
-	private SleepQuality sleepquality;
-	
+	private User user;
+
 	public SleepPeriod() {
 		super();
 	}
 
-	public SleepPeriod(Timestamp start, Timestamp end, SleepQuality quality) {
+	public SleepPeriod(Timestamp start, Timestamp end, SleepQuality quality, User user) {
 		super();
-		this.starttime = start;
-		this.endtime = end;
-		this.setSleepquality(quality);
+		this.startTime = start;
+		this.endTime = end;
+		this.sleepQuality = quality;
+		this.user = user;
 	}
 
-	public long getSleepperiodid() {
-		return sleepperiodid;
+	public long getId() {
+		return id;
 	}
 
-	public void setSleepperiodid(long id) {
-		this.sleepperiodid = id;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public Timestamp getStarttime() {
-		return starttime;
+	public Timestamp getStartTime() {
+		return startTime;
 	}
 
-	public void setStarttime(Timestamp start) {
-		this.starttime = start;
+	public void setStartTime(Timestamp start) {
+		this.startTime = start;
 	}
 
-	public Timestamp getEndtime() {
-		return endtime;
+	public Timestamp getEndTime() {
+		return endTime;
 	}
 
-	public void setEndtime(Timestamp end) {
-		this.endtime = end;
-	}
-	
-	public SleepQuality getSleepquality() {
-		return sleepquality;
+	public void setEndTime(Timestamp end) {
+		this.endTime = end;
 	}
 
-	public void setSleepquality(SleepQuality quality) {
-		this.sleepquality = quality;
+	public SleepQuality getSleepQuality() {
+		return sleepQuality;
+	}
+
+	public void setSleepQuality(SleepQuality quality) {
+		this.sleepQuality = quality;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**
 	 * 
 	 * @return the difference of endtime and starttime for SleepPeriod in Timestamp.
-	 * The return value is in the following format "yy-MM-dd HH:mm:ss"
+	 *         The return value is in the following format "yy-MM-dd HH:mm:ss"
 	 * 
 	 */
 	public long getDuration() {
-		return Duration.between(starttime.toInstant(), endtime.toInstant()).toHours();
+		return Duration.between(startTime.toInstant(), endTime.toInstant()).toHours();
 	}
 
 	@Override
 	public String toString() {
-		return "SleepPeriod [sleepperiodid=" + sleepperiodid + ", starttime=" + starttime + ", endtime=" + endtime
-				+ ", sleepquality=" + sleepquality + "]";
+		return "SleepPeriod [sleepperiodid=" + id + ", starttime=" + startTime + ", endtime=" + endTime
+				+ ", sleepquality=" + sleepQuality + "]";
 	}
-
 
 }
