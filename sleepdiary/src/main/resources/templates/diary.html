@@ -19,11 +19,11 @@
 			<th></th>
 		</tr>
 		
-		<tr th:each = "period: ${sleepperiods}">
-			<td th:text = "${period.starttime}"></td>
-			<td th:text = "${period.endtime}"></td>
+		<tr th:each = "period: ${sleepPeriods}">
+			<td th:text = "${period.startTime}"></td>
+			<td th:text = "${period.endTime}"></td>
 			<td th:text="${period.duration} + ' hours'"></td>
-			<td th:text = "${period.sleepquality.sleepquality}"></td>
+			<td th:text = "${period.sleepQuality}"></td>
 			<td></td>
 			<td><a class="btn btn-danger">Delete</a></td>
 			<td><a class="btn btn-info">Edit</a></td>
