@@ -1,8 +1,11 @@
 package eg.sleepdiary.domain;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,18 +17,19 @@ import lombok.NoArgsConstructor;
 @Setter
 @ToString
 @NoArgsConstructor
-public class User {
+public class Comment {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String name;
-	private String password;
-	private UserLevel userLevel;
+	private String text;
+	private LocalDateTime time;
+	@ManyToOne
+	private User user;
 
-	public User(String name, String password, UserLevel userLevel) {
-		this.name = name;
-		this.password = password;
-		this.userLevel = userLevel;
+	public Comment(String text, LocalDateTime time, User user) {
+		this.text = text;
+		this.time = time;
+		this.user = user;
 	}
 }

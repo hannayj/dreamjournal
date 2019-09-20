@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import eg.sleepdiary.domain.SleepPeriodRepository;
-import eg.sleepdiary.domain.UserRepository;
 
 /**
  * 

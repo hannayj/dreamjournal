@@ -1,13 +1,18 @@
 package eg.sleepdiary.domain;
 
-import java.sql.Timestamp;
 import java.time.Duration;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 
@@ -15,70 +20,28 @@ import javax.persistence.ManyToOne;
  *
  */
 @Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class SleepPeriod {
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
-	private Timestamp startTime;
-	private Timestamp endTime;
+	@GeneratedValue
+	private Long id;
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
 	private SleepQuality sleepQuality;
 	@ManyToOne
 	private User user;
 
-	public SleepPeriod() {
-		super();
-	}
-
-	public SleepPeriod(Timestamp start, Timestamp end, SleepQuality quality, User user) {
-		super();
-		this.startTime = start;
-		this.endTime = end;
-		this.sleepQuality = quality;
+	public SleepPeriod(LocalDateTime startTime, LocalDateTime endTime, SleepQuality sleepQuality, User user) {
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.sleepQuality = sleepQuality;
 		this.user = user;
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public Timestamp getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Timestamp start) {
-		this.startTime = start;
-	}
-
-	public Timestamp getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Timestamp end) {
-		this.endTime = end;
-	}
-
-	public SleepQuality getSleepQuality() {
-		return sleepQuality;
-	}
-
-	public void setSleepQuality(SleepQuality quality) {
-		this.sleepQuality = quality;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	/**
 	 * 
 	 * @return the difference of endtime and starttime for SleepPeriod in Timestamp.
@@ -86,13 +49,7 @@ public class SleepPeriod {
 	 * 
 	 */
 	public long getDuration() {
-		return Duration.between(startTime.toInstant(), endTime.toInstant()).toHours();
-	}
-
-	@Override
-	public String toString() {
-		return "SleepPeriod [sleepperiodid=" + id + ", starttime=" + startTime + ", endtime=" + endTime
-				+ ", sleepquality=" + sleepQuality + "]";
+		return Duration.between(startTime, endTime).toHours();
 	}
 
 }
