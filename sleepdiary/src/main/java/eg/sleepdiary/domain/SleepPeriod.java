@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -23,19 +24,18 @@ public class SleepPeriod {
 
 	private Timestamp startTime;
 	private Timestamp endTime;
-	private SleepQuality sleepQuality;
 	@ManyToOne
+	@JoinColumn(name="id")
 	private User user;
 
 	public SleepPeriod() {
 		super();
 	}
 
-	public SleepPeriod(Timestamp start, Timestamp end, SleepQuality quality, User user) {
+	public SleepPeriod(Timestamp start, Timestamp end, User user) {
 		super();
 		this.startTime = start;
 		this.endTime = end;
-		this.sleepQuality = quality;
 		this.user = user;
 	}
 
@@ -63,14 +63,6 @@ public class SleepPeriod {
 		this.endTime = end;
 	}
 
-	public SleepQuality getSleepQuality() {
-		return sleepQuality;
-	}
-
-	public void setSleepQuality(SleepQuality quality) {
-		this.sleepQuality = quality;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -91,8 +83,7 @@ public class SleepPeriod {
 
 	@Override
 	public String toString() {
-		return "SleepPeriod [sleepperiodid=" + id + ", starttime=" + startTime + ", endtime=" + endTime
-				+ ", sleepquality=" + sleepQuality + "]";
+		return "SleepPeriod [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", user=" + user + "]";
 	}
 
 }

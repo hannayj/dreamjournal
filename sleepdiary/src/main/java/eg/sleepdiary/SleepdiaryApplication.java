@@ -38,9 +38,9 @@ public class SleepdiaryApplication {
 			userRepo.save(user1);
 			userRepo.save(user2);
 
-			SleepPeriod u1 = new SleepPeriod(jakso1alku, jakso1loppu, SleepQuality.HIGH, user1);
-			SleepPeriod u2 = new SleepPeriod(jakso2alku, jakso2loppu, SleepQuality.HIGH, user1);
-			SleepPeriod u3 = new SleepPeriod(jakso3alku, jakso3loppu, SleepQuality.LOW, user1);
+			SleepPeriod u1 = new SleepPeriod(jakso1alku, jakso1loppu, user1);
+			SleepPeriod u2 = new SleepPeriod(jakso2alku, jakso2loppu, user1);
+			SleepPeriod u3 = new SleepPeriod(jakso3alku, jakso3loppu, user1);
 
 			periodRepo.save(u1);
 			periodRepo.save(u2);
