@@ -15,7 +15,7 @@
 		<tr th:each="period: ${sleepperiods}">
 			<td th:text="${period.starttime} + ' |'"></td>
 			<td th:text="${period.endtime} + ' |'"></td>
-			<td th:text="${#dates.hour(period.duration)} + ' tuntia |'"></td>
+			<td th:text="${period.duration} + ' tuntia |'"></td>
 			<td th:text="${period.sleepquality.sleepquality}"></td>
 		</tr>
 	</table>

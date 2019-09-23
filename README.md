@@ -43,6 +43,9 @@ Käyttöliittymäkaavio, tarkastelija
 
 ## Tietokanta
 
+Kaavio
+![tietokantakaavio](https://raw.githubusercontent.com/hannayj/sleepdiary/master/images/DB_version2.png)
+
 > ### User
 > _Kayttajat-taulu sisältää käyttäjätilit._
 >
