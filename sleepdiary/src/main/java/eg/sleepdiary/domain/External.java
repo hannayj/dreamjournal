@@ -35,7 +35,7 @@ public class External {
 	
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name="id")
+	@JoinColumn(name="userid")
 	private User user;
 	private Timestamp dateTime;
 	private ExternalType externalType;

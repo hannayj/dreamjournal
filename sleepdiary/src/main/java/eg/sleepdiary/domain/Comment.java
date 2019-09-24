@@ -21,7 +21,11 @@ import lombok.NoArgsConstructor;
  * @author marhyvar A class that represents the Comment table in the database
  *
  */
-
+@Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +35,7 @@ public class Comment {
 	private Timestamp commentDate;
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name="id")
+	@JoinColumn(name="userid")
 	private User user;
 	private SleepQuality sleepQuality;
 	
