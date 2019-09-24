@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 
 import lombok.Getter;
@@ -28,6 +30,7 @@ public class Comment {
 	private String comment;
 	private Timestamp commentDate;
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="id")
 	private User user;
 	private SleepQuality sleepQuality;

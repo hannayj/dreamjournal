@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 
  * @author jaripeks A class that represents the SleepPeriod table in the database
@@ -25,6 +27,7 @@ public class SleepPeriod {
 	private Timestamp startTime;
 	private Timestamp endTime;
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="id")
 	private User user;
 
