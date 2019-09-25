@@ -37,8 +37,9 @@ public class SleepPeriodController {
 	}
 	
 	@GetMapping("/sleepperiodsperday")
-	public String findByStartTimeBetween(Model model) {
-		model.addAttribute("sleepPeriods", periodRepo.findAllByStartTimeBetween(start, end)
+	public String findSleepPeriods(@RequestParam("startTime") Timestamp start,
+			@RequestParam("endTime") Timestamp end, Model model){
+		model.addAttribute("sleepPeriods", periodRepo.findAllByStartTimeBetween(start, end));
 		return "diary";
 	}
 	
