@@ -47,7 +47,7 @@ public class SleepPeriodController {
 		model.addAttribute("sleepPeriods", periodRepo.findAll());
 		return "diary";
 	}
-	
+
 	@GetMapping("/sleepperiodsperday")
 	public String findSleepPeriods(@RequestParam("startTime") String start,
 			@RequestParam("endTime") String end, Model model){

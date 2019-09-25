@@ -11,4 +11,5 @@ public interface SleepPeriodRepository extends CrudRepository<SleepPeriod, Long>
     	      Timestamp start,
     	      Timestamp end);
 
+	boolean existsByStartTime(Timestamp startTime);
 }
