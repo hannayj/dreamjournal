@@ -25,7 +25,19 @@ public class SleepPeriodController {
 
 	@Autowired
 	private SleepPeriodRepository periodRepo;
-
+	
+	@GetMapping("/test")
+	public String testJavas() {
+		return "dbTest";
+	}
+	
+	@GetMapping("/testPrint")
+	public String testPrint(@RequestParam("startTime") String start,
+			@RequestParam("endTime") String end){
+		System.out.println(Timestamp.valueOf(start + " 00:00:00") + " " + Timestamp.valueOf(end + " 00:00:00"));
+		return "redirect:test";
+	}
+	
 	/**
 	 * @param model
 	 * @return name of the html template that lists all SleepPeriods
@@ -37,9 +49,9 @@ public class SleepPeriodController {
 	}
 	
 	@GetMapping("/sleepperiodsperday")
-	public String findSleepPeriods(@RequestParam("startTime") Timestamp start,
-			@RequestParam("endTime") Timestamp end, Model model){
-		model.addAttribute("sleepPeriods", periodRepo.findAllByStartTimeBetween(start, end));
+	public String findSleepPeriods(@RequestParam("startTime") String start,
+			@RequestParam("endTime") String end, Model model){
+		model.addAttribute("sleepPeriods", periodRepo.findAllByStartTimeBetween(Timestamp.valueOf(start + " 12:00:00"), Timestamp.valueOf(end + " 12:00:00")));
 		return "diary";
 	}
 	

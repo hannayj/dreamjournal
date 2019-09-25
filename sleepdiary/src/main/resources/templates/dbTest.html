@@ -1,23 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<link type="text/css" rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" />
 <head>
 <title>Pekan testi</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<table>
-		<tr>
-			<th>Start</th>
-			<th>Finish</th>
-			<th>Duration</th>
-			<th>Quality</th>
-		</tr>
-		<tr th:each="period: ${sleepperiods}">
-			<td th:text="${period.starttime} + ' |'"></td>
-			<td th:text="${period.endtime} + ' |'"></td>
-			<td th:text="${period.duration} + ' tuntia |'"></td>
-			<td th:text="${period.sleepquality.sleepquality}"></td>
-		</tr>
-	</table>
+	<form class="form-inline" th:action="@{/sleepperiodsperday}" action="#" method="get" >
+		<label for="start-input" class="label">Start</label>
+		<input class="form-control" type="date" value="2019-09-01" id="start-input" name="startTime">
+		<label for="end-input" class="label">End</label>
+		<input class="form-control" type="date" value="2019-09-04" id="end-input" name="endTime">
+		<button type="submit" class="btn btn-primary">Show</button>
+	</form>
+	<p>Gets all sleepperiods starting between start-date 12:00:00 and end-date 12:00:00</p>
 </body>
 </html>
