@@ -44,72 +44,58 @@ Käyttöliittymäkaavio, tarkastelija
 ## Tietokanta
 
 Kaavio
-![tietokantakaavio](https://raw.githubusercontent.com/hannayj/sleepdiary/master/images/DB_version2.png)
+![tietokantakaavio](https://raw.githubusercontent.com/hannayj/sleepdiary/master/images/DB_final.png)
 
 > ### User
-> _Kayttajat-taulu sisältää käyttäjätilit._
+> _User-taulu sisältää käyttäjätilit._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
-> id | int PK | Käyttäjän id
+> user_id | int PK | Käyttäjän id
 > name | varchar(50) |  Tilin nimimerkki
 > password | varchar(50) | Tilin salasana
-> userLevel | int FK | Viittaus käyttäjätasoon [UserLevel](#UserLevel)-taulussa
-
-> ### UserLevel
-> _Kayttajatasot-taulu sisältää käyttäjien käyttäjätasot._
->
-> Kenttä | Tyyppi | Kuvaus
-> ------ | ------ | ------
-> id | int PK | Kayttajatason id
-> userLevel | varchar(10) | Käyttäjätason arvo: "user" tai "examiner"
+> userLevel_id | int | Käyttäjätason id
 
 > ### Permission
-> _Luvat-taulu sisältää luvat käyttäjän tietojen takasteluun. Lupa viittaa yhteen käyttäjään ja sillä on yksi tarkastelija._
+> _Permission-taulu sisältää luvat käyttäjän tietojen takasteluun. Lupa viittaa yhteen käyttäjään ja sillä on yksi tarkastelija._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
-> id | int PK | Tilin id
-> user | int FK | Viittaus käyttäjään [User](#User)-taulussa, jonka tietoja voidaan tarkastella
-> examiner | int FK | Viittaus käyttäjään [User](#User)-taulussa, jolla on lupa tarkastella tietoja
+> permission_id | int PK | Tilin id
+> user_id | int FK | Viittaus käyttäjään [User](#User)-taulussa, jolla on lupa tarkastella tietoja
+> user_id | int FK | Viittaus käyttäjään [User](#User)-taulussa, jonka tietoja voidaan tarkastella
 
 > ### SleepPeriod
 > _Unijaksot-taulu sisältää käyttäjien unijaksot. Unijakso liittyy aina yhteen päiväkirjamerkintään._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
-> id | int PK | Unijakson id
-> startTime | DateTime
-> endTime | DateTime
-> diaryEntry | int FK | Viittaus unenlaatuun [DiaryEntry](#DiaryEntry)-taulussa
-
-> ### DiaryEntry
-> _Päiväkirjamerkinnät-tauluun linkittyvät päivän unijaksot ja niihin liittyvät kommentit._
->
-> Kenttä | Tyyppi | Kuvaus
-> ------ | ------ | ------
-> id | int PK | Unenlaadun id
-> user | int FK | Viittaus käyttäjään [User](#User)-taulussa
-> sleepQuality | int FK | Viittaus unijaksoon [SleepQuality](#SleepQuality)-taulussa
-
-> ### SleepQuality
-> _Unenlaadut-taulu sisältää unijaksojen unenlaadut._
->
-> Kenttä | Tyyppi | Kuvaus
-> ------ | ------ | ------
-> id | int PK | Unenlaadun id
-> sleepQuality | varchar(10) | Unenlaadun arvo voi olla 1, 2, 3, 4, tai 5
+> user_id | int PK | Unijakson id
+> startTime | DateTime | Unijakson alkuaika
+> endTime | DateTime | Unijakson päättymisaika
+> user_id | int FK | Viittaus käyttäjään [User](#User)-taulussa
 
 > ### Comment
-> _Kommentit-taulu sisältää unijaksoon liittyvät kommentit. Kommentilla on yksi kirjoittaja ja se liittyy yhteen unijaksoon._
+> _Kommentit-taulu sisältää unijaksoon liittyvät kommentit ja laadun arvioinnin. Kommentilla on yksi kirjoittaja ja se liittyy koko vuorokauteen._
 >
 > Kenttä | Tyyppi | Kuvaus
 > ------ | ------ | ------
-> id | int PK | Kommentin id
-> commentText | varchar(200)
-> time | DateTime
-> user | int FK | Viittaus käyttäjään [User](#User)-taulussa
-> diaryEntry | int FK | Viittaus päiväkirjamerkintään [DiaryEntry](#DiaryEntry)-taulussa
+> comment_id | int PK | Kommentin id
+> comment | varchar(200) | Kommentin sisältö.
+> commentDate | DateTime | Kommentin päiväys.
+> user_id | int FK | Viittaus käyttäjään [User](#User)-taulussa
+> sleepQuality | int FK | Unen laadun arviointi asteikolla.
+
+> ### External
+> _External-taulu sisältää vuorokauden unijaksoihin vaikuttaneet muut mahdolliset asiat, kuten kahvin, alkoholin tai lääkkeiden nauttimisen. Ulkoiset asiat liittyvät käyttäjään ja koko vuorokauteen._
+>
+> Kenttä | Tyyppi | Kuvaus
+> ------ | ------ | ------
+> external_id | int PK | Ulkoisen seikan id
+> user_id | int FK | Viittaus käyttäjään [User](#User)-taulussa
+> dateTime | DateTime | Seikan aikaleima.
+> externalType | int | Seikan tyyppi.
+> quantity | int | Seikan määrä, esim. alkoholiannokset.
 
 ## Tekninen kuvaus, jonka tietoja voidaan tarkastella
 
