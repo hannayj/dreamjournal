@@ -1,11 +1,15 @@
 package eg.sleepdiary.web;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.SleepPeriodRepository;
@@ -29,6 +33,13 @@ public class SleepPeriodController {
 	@GetMapping("/sleepperiods")
 	public String getSleepPeriods(Model model) {
 		model.addAttribute("sleepPeriods", periodRepo.findAll());
+		return "diary";
+	}
+	
+	@GetMapping("/sleepperiodsperday")
+	public String findSleepPeriods(@RequestParam("startTime") Timestamp start,
+			@RequestParam("endTime") Timestamp end, Model model){
+		model.addAttribute("sleepPeriods", periodRepo.findAllByStartTimeBetween(start, end));
 		return "diary";
 	}
 	
