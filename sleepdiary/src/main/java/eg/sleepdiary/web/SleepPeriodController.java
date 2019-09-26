@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import eg.sleepdiary.domain.CommentRepository;
+import eg.sleepdiary.domain.DayService;
+import eg.sleepdiary.domain.SleepDay;
 import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.SleepPeriodRepository;
 import eg.sleepdiary.domain.UserRepository;
@@ -25,17 +28,39 @@ public class SleepPeriodController {
 
 	@Autowired
 	private SleepPeriodRepository periodRepo;
+	@Autowired
+	private CommentRepository commentRepo;
 	
+	/**
+	 * Test endpoint
+	 * @return
+	 */
 	@GetMapping("/test")
 	public String testJavas() {
 		return "dbTest";
 	}
 	
+	/**
+	 * Test print func
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	@GetMapping("/testPrint")
 	public String testPrint(@RequestParam("startTime") String start,
-			@RequestParam("endTime") String end){
-		System.out.println(Timestamp.valueOf(start + " 00:00:00") + " " + Timestamp.valueOf(end + " 00:00:00"));
-		return "redirect:test";
+			@RequestParam("endTime") String end, Model model){
+		System.out.println(start);
+		DayService days = new DayService();
+		List<SleepDay> sleep = days.getDay(start, end, periodRepo, commentRepo);
+		for(SleepDay s: sleep) {
+			System.out.println(s.getDay());
+			for(SleepPeriod sp : s.getPeriods()) {
+				System.out.println(sp.getStartTime() + " - " + sp.getEndTime());
+			}
+			System.out.println(s.getComment());
+		}
+		model.addAttribute("days", sleep);
+		return "dbTest";
 	}
 	
 	/**
@@ -45,13 +70,16 @@ public class SleepPeriodController {
 	@GetMapping("/sleepperiods")
 	public String getSleepPeriods(Model model) {
 		model.addAttribute("sleepPeriods", periodRepo.findAll());
+		model.addAttribute("comments", commentRepo.findAll());
 		return "diary";
 	}
-	
+
 	@GetMapping("/sleepperiodsperday")
 	public String findSleepPeriods(@RequestParam("startTime") String start,
 			@RequestParam("endTime") String end, Model model){
-		model.addAttribute("sleepPeriods", periodRepo.findAllByStartTimeBetween(Timestamp.valueOf(start + " 12:00:00"), Timestamp.valueOf(end + " 12:00:00")));
+		Timestamp startTime = Timestamp.valueOf(start + " 12:00:00"), endTime = Timestamp.valueOf(end + " 12:00:00");
+		model.addAttribute("sleepPeriods", periodRepo.findAllByStartTimeBetween(startTime, endTime));
+		model.addAttribute("comments", commentRepo.findAllByCommentDateBetween(startTime, endTime));
 		return "diary";
 	}
 	

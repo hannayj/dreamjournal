@@ -2,6 +2,7 @@ package eg.sleepdiary.domain;
 
 import java.sql.Timestamp;
 import java.time.Duration;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,12 +13,21 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * 
  * @author jaripeks A class that represents the SleepPeriod table in the database
  *
  */
 @Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class SleepPeriod {
 
 	@Id
@@ -31,46 +41,11 @@ public class SleepPeriod {
 	@JoinColumn(name="userid")
 	private User user;
 
-	public SleepPeriod() {
-		super();
-	}
 
 	public SleepPeriod(Timestamp start, Timestamp end, User user) {
 		super();
 		this.startTime = start;
 		this.endTime = end;
-		this.user = user;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public Timestamp getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Timestamp start) {
-		this.startTime = start;
-	}
-
-	public Timestamp getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Timestamp end) {
-		this.endTime = end;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -82,11 +57,6 @@ public class SleepPeriod {
 	 */
 	public long getDuration() {
 		return Duration.between(startTime.toInstant(), endTime.toInstant()).toHours();
-	}
-
-	@Override
-	public String toString() {
-		return "SleepPeriod [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", user=" + user + "]";
 	}
 
 }

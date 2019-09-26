@@ -3,17 +3,35 @@
 <link type="text/css" rel="stylesheet"
 	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" />
 <head>
-<title>Pekan testi</title>
+<title>testi</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<form class="form-inline" th:action="@{/sleepperiodsperday}" action="#" method="get" >
+
+	<form class="form-inline" th:action="@{/testPrint}" action="#" method="get" >
 		<label for="start-input" class="label">Start</label>
 		<input class="form-control" type="date" value="2019-09-01" id="start-input" name="startTime">
 		<label for="end-input" class="label">End</label>
-		<input class="form-control" type="date" value="2019-09-04" id="end-input" name="endTime">
+		<input class="form-control" type="date" value="2019-09-06" id="end-input" name="endTime">
 		<button type="submit" class="btn btn-primary">Show</button>
 	</form>
-	<p>Gets all sleepperiods starting between start-date 12:00:00 and end-date 12:00:00</p>
+		<table th:each="day: ${days}" class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th>"Day"</th>
+					<th th:colspan="${#lists.size(day.periods)}">Sleep period(s)</th>
+					<th>Total amount of sleep</th>
+					<th>Comment</th>
+				</tr>
+			</thead>
+			<tr>
+				<td th:text="${day.day}"></td>
+				<th:block th:each="sleep: ${day.periods}">
+					<td th:text="${#dates.format(sleep.startTime, 'HH:mm')} + '-' + ${#dates.format(sleep.endTime, 'HH:mm')}"></td>
+				</th:block>
+				<td th:text="${#aggregates.sum(day.periods.![duration])}"></td>
+				<td th:text="${day.comment.comment}"></td>
+			</tr>
+		</table>
 </body>
 </html>
