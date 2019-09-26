@@ -1,7 +1,6 @@
 package eg.sleepdiary.web;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.SleepPeriodRepository;
-import eg.sleepdiary.domain.UserRepository;
 
 /**
  * 

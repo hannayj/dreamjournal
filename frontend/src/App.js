@@ -12,13 +12,13 @@ class App extends Component {
       sleepPeriods: [],
       startTime: '',
       endTime: '',
-      showFooter: true
+      showFooter: true,
+      view: 'sleepperiods'
     }
   }
 
   componentDidMount() {
     document.title = 'Sleep Diary'
-
     this.fetchSleepPeriods()
   }
 
@@ -58,9 +58,10 @@ class App extends Component {
     }
   }
 
-  saveSleepPeriod = (sleepPeriod) => (event) => {
+  updateSleepPeriod = (sleepPeriod) => (event) => {
     event.preventDefault()
     console.log("Saved!")
+    // TODO: update modified sleep period
   }
 
   handleInputChange = () => (event) => {
@@ -72,7 +73,7 @@ class App extends Component {
       value = event.target.value
     }
     this.setState({ [name]: value })
-    console.log(event.target.value, event.target.name)
+    console.log('Value changed:' + name, value)
   }
 
   render() {
@@ -85,14 +86,20 @@ class App extends Component {
           changeView={ this.changeView }
         />
         <div id="main">
-          <SleepPeriods
-            sleepPeriods={ this.state.sleepPeriods }
-            addSleepPeriod= { this.addSleepPeriod }
-            handleInputChange={ this.handleInputChange }
-            startTime={ this.state.startTime }
-            endTime={ this.state.endTime }
-            saveSleepPeriod={ this.saveSleepPeriod }
-          />
+          { this.state.view === 'settings' &&
+            // TODO: add settings view
+            <></>
+          }
+          { this.state.view === 'sleepperiods' &&
+            <SleepPeriods
+              sleepPeriods={ this.state.sleepPeriods }
+              addSleepPeriod= { this.addSleepPeriod }
+              handleInputChange={ this.handleInputChange }
+              startTime={ this.state.startTime }
+              endTime={ this.state.endTime }
+              updateSleepPeriod={ this.updateSleepPeriod }
+            />
+          }
         </div>
         { this.state.showFooter &&
           <Footer

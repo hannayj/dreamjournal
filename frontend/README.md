@@ -1,3 +1,11 @@
+# Installation
+
+Install [Node](https://nodejs.org/en/download/) with npm (node package manager)
+
+To install this app, open a command line in this directory and run
+
+`npm install`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

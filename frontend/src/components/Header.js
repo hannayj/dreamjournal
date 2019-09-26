@@ -3,7 +3,7 @@ import React from 'react';
 const Header = ({ changeView }) => {
   return (
     <header id='header'>
-      <h1 onClick={ changeView('splash') }>
+      <h1 onClick={ changeView('sleepperiods') }>
         Sleep diary
       </h1>
     </header>

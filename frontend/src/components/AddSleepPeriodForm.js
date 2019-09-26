@@ -12,11 +12,11 @@ const AddSleepPeriodForm = ({
         Add new sleep period
       </h1>
       <form onSubmit={ addSleepPeriod() }>
-        <label htmlFor='addnew_starttime'>Start time</label>
+        <label htmlFor='startTime'>Start time</label>
         <br />
         <input onChange={ handleInputChange() } type='datetime-local' id='startTime' name='startTime' value={ startTime } />
         <br />
-        <label htmlFor='addnew_endtime'>End time</label>
+        <label htmlFor='endTime'>End time</label>
         <br />
         <input onChange={ handleInputChange() } type='datetime-local' id='endTime' name='endTime' value={ endTime } />
         <br />

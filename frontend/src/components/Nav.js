@@ -4,11 +4,11 @@ const Nav = ({ changeView }) => {
   return (
     <nav id='nav'>
       <ul>
-        <li onClick={ changeView('browse') }>
-          Browse
+        <li onClick={ changeView('sleepperiods') }>
+          Home
         </li>
-        <li onClick={ changeView('about') }>
-          About
+        <li onClick={ changeView('settings') }>
+          Settings
         </li>
       </ul>
     </nav>

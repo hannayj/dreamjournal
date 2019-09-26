@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 
 import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.SleepPeriodRepository;
-import eg.sleepdiary.domain.SleepQuality;
 import eg.sleepdiary.domain.User;
 import eg.sleepdiary.domain.UserLevel;
 import eg.sleepdiary.domain.UserRepository;

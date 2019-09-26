@@ -3,11 +3,11 @@ import React from 'react';
 const SleepPeriod = ({
   sleepPeriod,
   handleInputChange,
-  saveSleepPeriod
+  updateSleepPeriod
 }) => {
   return (
     <div className='product clearfix'>
-      <form onSubmit={ saveSleepPeriod(sleepPeriod) }>
+      <form onSubmit={ updateSleepPeriod(sleepPeriod) }>
         <a href={ '/sleepPeriods/' + sleepPeriod.id }>
           Sleep period { sleepPeriod.id }
         </a>

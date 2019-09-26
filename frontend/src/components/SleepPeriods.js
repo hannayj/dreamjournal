@@ -1,5 +1,5 @@
 import React from 'react';
-import Product from './SleepPeriod'
+import SleepPeriod from './SleepPeriod'
 import AddSleepPeriodForm from './AddSleepPeriodForm'
 
 const SleepPeriods = ({
@@ -8,9 +8,8 @@ const SleepPeriods = ({
     startTime,
     endTime,
     handleInputChange,
-    saveSleepPeriod
+    updateSleepPeriod
   }) => {
-  console.log(sleepPeriods)
   return (
     <div id='products'>
       <AddSleepPeriodForm
@@ -20,11 +19,11 @@ const SleepPeriods = ({
         handleInputChange={ handleInputChange }
       />
       { sleepPeriods.map((sleepPeriod) => 
-        <Product
+        <SleepPeriod
           key={ sleepPeriod.id }
           sleepPeriod={ sleepPeriod }
           handleInputChange={ handleInputChange }
-          saveSleepPeriod={ saveSleepPeriod }
+          updateSleepPeriod={ updateSleepPeriod }
         />
       ) }
     </div>
