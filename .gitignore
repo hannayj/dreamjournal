@@ -38,3 +38,5 @@ secrets.yml
 .gradletasknamecache
 .sts4-cache
 .vscode
+node_modules
+package-lock.json

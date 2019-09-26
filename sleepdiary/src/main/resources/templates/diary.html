@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"/>
+<link type="text/css" rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"/>
 <head>
 	<title>Sleep Diary</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -13,18 +13,14 @@
 			<th>Start</th>
 			<th>Finish</th>
 			<th>Duration</th>
-			<th>Quality</th>
-			<th>Comments</th>
-			<th></th>
-			<th></th>
+			<th> </th>
+			<th> </th>
 		</tr>
 		
 		<tr th:each = "period: ${sleepPeriods}">
 			<td th:text = "${period.startTime}"></td>
 			<td th:text = "${period.endTime}"></td>
 			<td th:text="${period.duration} + ' hours'"></td>
-			<td th:text = "${period.sleepQuality}"></td>
-			<td></td>
 			<td><a class="btn btn-danger">Delete</a></td>
 			<td><a class="btn btn-info">Edit</a></td>
 		</tr>
