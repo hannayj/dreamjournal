@@ -31,8 +31,8 @@ public class SleepdiaryApplication {
 			Timestamp jakso3alku = Timestamp.valueOf("2019-09-04 00:00:00");
 			Timestamp jakso3loppu = Timestamp.valueOf("2019-09-04 05:00:00");
 
-			User user1 = new User("user", "password", UserLevel.BASIC);
-			User user2 = new User("examiner", "password", UserLevel.HIGHER);
+			User user1 = new User("user","$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", UserLevel.BASIC);
+			User user2 = new User("examiner", "$2y$10$WDYzeuSIkgNkm/4ZGsL/GunLTf1KQ5Gyhabj/Bka7EteS1bxdrBsy", UserLevel.HIGHER);
 
 			userRepo.save(user1);
 			userRepo.save(user2);
