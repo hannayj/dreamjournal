@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -37,11 +37,11 @@ public class External {
 	@JsonIgnore
 	@JoinColumn(name="userid")
 	private User user;
-	private Timestamp dateTime;
+	private LocalDateTime dateTime;
 	private ExternalType externalType;
 	private int quantity;
 	
-	public External(User user, Timestamp dateTime, ExternalType externalType, int quantity) {
+	public External(User user, LocalDateTime dateTime, ExternalType externalType, int quantity) {
 		super();
 		this.user = user;
 		this.dateTime = dateTime;

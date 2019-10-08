@@ -5,17 +5,19 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from './components/Button';
+import ExternalTable from './components/ExternalTable';
 import extService from './services/externals';
 
 const App= () => {
-
+  const extData = extService.getAll();
   const [exts, setExts] = useState({startTime: '', externalType: '', quantity: 0})
   const [newExt, setNewExt] = useState({})
+  const [showExts, setShowExts] = useState(true);
   
   useEffect(() => {
     extService.getAll()
     .then(initialExts => setExts(initialExts))
-  }, [])
+  }, [setExts])
 
   const handleExtChange = (event) => {
     setNewExt({
@@ -34,7 +36,7 @@ const App= () => {
       .create(extObject)
       .then(data => {
         setExts(exts.concat(data))
-        setNewExt('')
+        setNewExt({startTime: '', externalType: '', quantity: 0})
       })
   }
 
@@ -69,6 +71,7 @@ const App= () => {
        <p> <input onChange={handleExtChange} type='text' id='quantity' value={exts.quantity}/></p>
         <button type="submit">Save</button>
       </form>
+      <ExternalTable externals={extData}/>
     </div>
   )
 }
