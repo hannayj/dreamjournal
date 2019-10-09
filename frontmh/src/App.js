@@ -9,15 +9,15 @@ import ExternalTable from './components/ExternalTable';
 import extService from './services/externals';
 
 const App= () => {
-  const extData = extService.getAll();
+  
   const [exts, setExts] = useState({startTime: '', externalType: '', quantity: 0})
   const [newExt, setNewExt] = useState({})
-  const [showExts, setShowExts] = useState(true);
+  //const [showExts, setShowExts] = useState(true);
   
   useEffect(() => {
     extService.getAll()
     .then(initialExts => setExts(initialExts))
-  }, [setExts])
+  }, [])
 
   const handleExtChange = (event) => {
     setNewExt({
@@ -29,8 +29,7 @@ const App= () => {
   const addExt = (event) => {
     event.preventDefault() 
     const extObject = {
-      content: newExt,
-      date: new Date().toISOString()
+      content: newExt
     }
     extService
       .create(extObject)
@@ -58,7 +57,8 @@ const App= () => {
       <form onSubmit={addExt}>
         <h1>Add others</h1>
         <label htmlFor='dateTime'>Start time</label>
-        <p><input onChange={handleExtChange} type='datetime-local' id='dateTime' value={exts.startTime}/></p>
+        <p><input onChange={handleExtChange} type='datetime-local' id=
+        'dateTime' value={exts.startTime}/></p>
         <p>Type</p>
         <p><select value={exts.externalType}
         onChange={handleExtChange} >
@@ -68,10 +68,11 @@ const App= () => {
           <option value="OTHER">OTHER</option>
         </select></p>
         <label htmlFor='quantity'>Quantity</label>
-       <p> <input onChange={handleExtChange} type='text' id='quantity' value={exts.quantity}/></p>
+       <p> <input onChange={handleExtChange} type='text' id=
+       'quantity' value={exts.quantity}/></p>
         <button type="submit">Save</button>
       </form>
-      <ExternalTable externals={extData}/>
+      <ExternalTable />
     </div>
   )
 }
