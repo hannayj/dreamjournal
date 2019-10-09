@@ -1,14 +1,18 @@
 package eg.sleepdiary;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import eg.sleepdiary.domain.Comment;
+import eg.sleepdiary.domain.CommentRepository;
 import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.SleepPeriodRepository;
+import eg.sleepdiary.domain.SleepQuality;
 import eg.sleepdiary.domain.User;
 import eg.sleepdiary.domain.UserLevel;
 import eg.sleepdiary.domain.UserRepository;
@@ -21,7 +25,7 @@ public class SleepdiaryApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(SleepPeriodRepository periodRepo, UserRepository userRepo) {
+	public CommandLineRunner demo(SleepPeriodRepository periodRepo, UserRepository userRepo, CommentRepository commentRepo) {
 		return (args) -> {
 
 			Timestamp jakso1alku = Timestamp.valueOf("2019-09-01 22:00:00");
@@ -40,7 +44,10 @@ public class SleepdiaryApplication {
 			SleepPeriod u1 = new SleepPeriod(jakso1alku, jakso1loppu, user1);
 			SleepPeriod u2 = new SleepPeriod(jakso2alku, jakso2loppu, user1);
 			SleepPeriod u3 = new SleepPeriod(jakso3alku, jakso3loppu, user1);
-
+			
+			Comment comment = new Comment("Tämä on kommentti", LocalDateTime.now(), user1, SleepQuality.HIGH);
+			
+			commentRepo.save(comment);
 			periodRepo.save(u1);
 			periodRepo.save(u2);
 			periodRepo.save(u3);

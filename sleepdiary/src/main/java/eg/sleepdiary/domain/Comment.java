@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,14 +32,14 @@ public class Comment {
 	private long id;
 	
 	private String comment;
-	private Timestamp commentDate;
+	private LocalDateTime commentDate;
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name="userid")
 	private User user;
 	private SleepQuality sleepQuality;
 	
-	public Comment(String comment, Timestamp commentDate, User user, SleepQuality sleepQuality) {
+	public Comment(String comment, LocalDateTime commentDate, User user, SleepQuality sleepQuality) {
 		super();
 		this.comment = comment;
 		this.commentDate = commentDate;
