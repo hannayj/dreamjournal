@@ -10,80 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
-@Entity
-public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false, updatable = false)
-	private Long id;
-	
-	@Column(name = "name", nullable = false, unique = true)
-	private String name;
-	
-	@Column(name = "password" , nullable = false)
-	private String password;
-	
-	@Column(name = "userLevel", nullable = false)
-	private String userLevel;
-	
-	public User() {
-	}
-	
-	public User(String name, String password, String userLevel) {
-		super();
-		this.name = name;
-		this.password = password;
-		this.userLevel = userLevel;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getUserLevel() {
-		return userLevel;
-	}
-
-	public void setUserLevel(String userLevel) {
-		this.userLevel = userLevel;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password + ", userLevel=" + userLevel + "]";
-	}
-	
-	
-	
-	
-	
-}
-
-
-
-
-/**import lombok.Getter;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.NoArgsConstructor;
@@ -97,11 +24,17 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, updatable = false)
 	private long id;
 
+	@Column(name = "name", nullable = false, unique = true)
 	private String name;
+	
+	@Column(name = "password", nullable = false)
 	private String password;
-	private UserLevel userLevel;
+	
+	@Column(name = "userLevel", nullable = false)
+	private String userLevel;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
 	private List<Comment> comments;
@@ -112,11 +45,10 @@ public class User {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
 	private List<External> externals;
 
-	public User(String name, String password, UserLevel userLevel) {
+	public User(String name, String password, String userLevel) {
 		this.name = name;
 		this.password = password;
 		this.userLevel = userLevel;
 	}
 	
 }
-*/

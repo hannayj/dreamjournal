@@ -35,6 +35,9 @@ public class SleepdiaryApplication {
 			User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");
 			User user2 = new User("examiner", "$2a$10$kWeUzwHsV2kzwHbE8ZHw/eiy13oMWRDG4c2t297VOwEG8nqZjwFNm", "EXAMINER");
 			
+			//User user1 = new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", UserLevel.BASIC);
+			//User user2 = new User("examiner", "$2a$10$kWeUzwHsV2kzwHbE8ZHw/eiy13oMWRDG4c2t297VOwEG8nqZjwFNm", UserLevel.HIGHER);
+			
 			userRepo.save(user1);
 			userRepo.save(user2);
 
