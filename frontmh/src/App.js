@@ -1,80 +1,87 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios'
+import External from './components/External';
+import ExternalForm from './components/ExternalForm'
 import './App.css';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from './components/Button';
-import ExternalTable from './components/ExternalTable';
+
 import extService from './services/externals';
 
 const App= () => {
   
-  const [exts, setExts] = useState({startTime: '', externalType: '', quantity: 0})
-  const [newExt, setNewExt] = useState({})
-  //const [showExts, setShowExts] = useState(true);
+  const [exts, setExts] = useState([])
+  const [extDate, setExtDate] = useState('')
+  const [extType, setExtType] =useState('COFFEE')
+  const [quantity, setQuantity] = useState('')
   
   useEffect(() => {
     extService.getAll()
-    .then(initialExts => setExts(initialExts))
+    .then(allExts => {
+      console.log(allExts)
+      setExts(allExts)
+    })
   }, [])
 
-  const handleExtChange = (event) => {
-    setNewExt({
-      ...exts,
-      [event.target.name] : event.target.value
-    })
-  }
+  const handleDateChange = (event) => setExtDate(event.target.value)
+  const handleExtTypeChange = (event) => setExtType(event.target.value)
+  const handleQuantityChange = (event) => setQuantity(event.target.value)
 
   const addExt = (event) => {
     event.preventDefault() 
-    const extObject = {
-      content: newExt
-    }
+    const newExt = { extDate, extType, quantity}
+    console.log(newExt)
     extService
-      .create(extObject)
-      .then(data => {
-        setExts(exts.concat(data))
-        setNewExt({startTime: '', externalType: '', quantity: 0})
+      .create(newExt)
+      .then(returnedExt => {
+        setExts(exts.concat(returnedExt))
+        setExtDate('')
+        setExtType('')
+        setQuantity('')
       })
   }
+  const formInputs = [
+    {
+      name: 'ExtDate',
+      type: 'datetime-local',
+      value: extDate,
+      onChange: handleDateChange,
+    },
+    {
+      name: 'Quantity',
+      type: 'text',
+      value: quantity,
+      onChange: handleQuantityChange
+    }
+  ]
 
+  const selectionInputs = {
+    value: extType,
+    onChange: handleExtTypeChange,
+    values: [
+      {
+        id: 1,
+        value: 'COFFEE'
+      },
+      {
+        id: 2,
+        value: 'ALCOHOL'
+      },
+      {
+        id: 3,
+        value: 'MEDICINE'
+      },
+      {
+        id: 4,
+        value: 'OTHER'
+      }
+    ]
+  }
   return (
-    <div className="App">
-      <AppBar position="static" color="default">
-        <Toolbar>
-          <Typography variant="h3" color="inherit">
-          Sleepdiary
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Typography variant="h5" color="inherit">
-          Hi, how did you sleep?
-          </Typography>
-      <Button text='Add sleep'/>
-      <Button text='Add others'/>
-      <Button text='Add comment'/>
-      <form onSubmit={addExt}>
-        <h1>Add others</h1>
-        <label htmlFor='dateTime'>Start time</label>
-        <p><input onChange={handleExtChange} type='datetime-local' id=
-        'dateTime' value={exts.startTime}/></p>
-        <p>Type</p>
-        <p><select value={exts.externalType}
-        onChange={handleExtChange} >
-          <option value="COFFEE">COFFEE</option>
-          <option value="ALCOHOL">ALCOHOL</option>
-          <option value="MEDICINE">MEDICINE</option>
-          <option value="OTHER">OTHER</option>
-        </select></p>
-        <label htmlFor='quantity'>Quantity</label>
-       <p> <input onChange={handleExtChange} type='text' id=
-       'quantity' value={exts.quantity}/></p>
-        <button type="submit">Save</button>
-      </form>
-      <ExternalTable />
+    <div>
+      <h1>Add</h1>
+      <ExternalForm inputs={formInputs} select={selectionInputs} submit={addExt} />
+      <h1>External factors</h1>
+      {exts.map(c => <External key={c.id} ext={c} />)}
     </div>
-  )
+  );
 }
 
 export default App;
