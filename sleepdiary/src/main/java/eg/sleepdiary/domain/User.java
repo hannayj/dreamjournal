@@ -34,7 +34,7 @@ public class User {
 	private String password;
 	
 	@Column(name = "userLevel", nullable = false)
-	private String userLevel;
+	private UserLevel userLevel;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
 	private List<Comment> comments;
@@ -45,7 +45,7 @@ public class User {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
 	private List<External> externals;
 
-	public User(String name, String password, String userLevel) {
+	public User(String name, String password, UserLevel userLevel) {
 		this.name = name;
 		this.password = password;
 		this.userLevel = userLevel;

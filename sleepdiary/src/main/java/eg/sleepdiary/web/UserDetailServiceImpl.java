@@ -28,7 +28,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	UsernameNotFoundException {
 		User curruser = repository.findByName(name);
 		UserDetails user = new org.springframework.security.core.userdetails.User(name, curruser.getPassword(),
-				AuthorityUtils.createAuthorityList(curruser.getUserLevel()));
+				AuthorityUtils.createAuthorityList(curruser.getUserLevel().toString()));
 		return user;
 	}
 

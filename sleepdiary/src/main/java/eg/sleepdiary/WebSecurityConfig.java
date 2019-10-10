@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.formLogin()
 				.loginPage("/login")
-				.defaultSuccessUrl("/dbTest") //the page where login leads
+				.defaultSuccessUrl("/sleepperiods") //the page where login leads
 				.permitAll()
 				.and()
 			.logout()

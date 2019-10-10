@@ -6,7 +6,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
+	<div class="container">
+		<form th:action="@{/logout}" method="post">
+			<span class="float-right">
+			<input type="submit" value="Sign out" class="btn btn-danger"/>
+			</span>
+		</form>	
+	</div>
+	
 	<h1>Sleep Diary</h1>
+	
+
 	
 	<table class="table table-striped">
 		<tr>
