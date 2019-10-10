@@ -2,9 +2,10 @@ import React from 'react';
 
 const AddSleepPeriodForm = ({
   startTime,
+  setStartTime,
   endTime,
+  setEndTime,
   addSleepPeriod,
-  handleInputChange
 }) => {
   return (
     <div id='new'>
@@ -14,11 +15,23 @@ const AddSleepPeriodForm = ({
       <form onSubmit={ addSleepPeriod() }>
         <label htmlFor='startTime'>Start time</label>
         <br />
-        <input onChange={ handleInputChange() } type='datetime-local' id='startTime' name='startTime' value={ startTime } />
+        <input
+          onChange={event => setStartTime(event.target.value)}
+          type='datetime-local'
+          id='startTime'
+          name='startTime'
+          value={ startTime }
+        />
         <br />
         <label htmlFor='endTime'>End time</label>
         <br />
-        <input onChange={ handleInputChange() } type='datetime-local' id='endTime' name='endTime' value={ endTime } />
+        <input
+          onChange={event => setEndTime(event.target.value)}
+          type='datetime-local'
+          id='endTime'
+          name='endTime'
+          value={ endTime }
+        />
         <br />
         <button type='submit'>Add new sleep period</button>
       </form>

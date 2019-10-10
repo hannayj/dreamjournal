@@ -42,7 +42,7 @@ code {
   left: 50%;
   transform: translateX(-50%);
   color: white;
-  background: red;
+  background: blue;
   box-shadow: rgba(0,0,0,.5) 0 0 5px;
   z-index: 9001;
 }
@@ -59,7 +59,7 @@ code {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   color: white;
-  background: red;
+  background: blue;
   box-shadow: rgba(0, 0, 0, .5) 0 0 5px;
   z-index: 9000;
 }
@@ -86,7 +86,7 @@ code {
 }
 #nav ul li:hover {
   background: black;
-  color: red;
+  color: blue;
 }
 #userinfo {
   padding: 10px;
