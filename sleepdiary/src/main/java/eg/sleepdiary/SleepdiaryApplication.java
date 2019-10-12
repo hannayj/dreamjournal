@@ -2,8 +2,6 @@ package eg.sleepdiary;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.time.Month;
 
 import org.springframework.boot.CommandLineRunner;
@@ -31,7 +29,8 @@ public class SleepdiaryApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(SleepPeriodRepository periodRepo, UserRepository userRepo, CommentRepository commentRepo) {
+	public CommandLineRunner demo(SleepPeriodRepository periodRepo, UserRepository userRepo,
+			CommentRepository commentRepo, ExternalRepository extRepo) {
 		return (args) -> {
 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

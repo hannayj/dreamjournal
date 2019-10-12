@@ -60,6 +60,7 @@ public class SleepPeriodApiController {
 	public ResponseEntity<?> postComment(@RequestBody Comment comment) {
 		Comment createdComment = commentRepo.save(comment);
 		return new ResponseEntity<Comment>(createdComment, HttpStatus.OK);
+	}
 
 	@GetMapping("/externals/")
 	public ResponseEntity<Iterable<External>> getExternals() {
