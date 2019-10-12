@@ -1,7 +1,7 @@
 package eg.sleepdiary;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,12 +28,13 @@ public class SleepdiaryApplication {
 	public CommandLineRunner demo(SleepPeriodRepository periodRepo, UserRepository userRepo, CommentRepository commentRepo) {
 		return (args) -> {
 
-			Timestamp jakso1alku = Timestamp.valueOf("2019-09-01 22:00:00");
-			Timestamp jakso1loppu = Timestamp.valueOf("2019-09-02 06:00:00");
-			Timestamp jakso2alku = Timestamp.valueOf("2019-09-02 21:00:00");
-			Timestamp jakso2loppu = Timestamp.valueOf("2019-09-03 06:00:00");
-			Timestamp jakso3alku = Timestamp.valueOf("2019-09-04 00:00:00");
-			Timestamp jakso3loppu = Timestamp.valueOf("2019-09-04 05:00:00");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			LocalDateTime jakso1alku = LocalDateTime.parse("2019-09-01 22:00:00", formatter);
+			LocalDateTime jakso1loppu = LocalDateTime.parse("2019-09-02 06:00:00", formatter);
+			LocalDateTime jakso2alku = LocalDateTime.parse("2019-09-02 21:00:00", formatter);
+			LocalDateTime jakso2loppu = LocalDateTime.parse("2019-09-03 06:00:00", formatter);
+			LocalDateTime jakso3alku = LocalDateTime.parse("2019-09-04 00:00:00", formatter);
+			LocalDateTime jakso3loppu = LocalDateTime.parse("2019-09-04 05:00:00", formatter);
 
 			User user1 = new User("user", "password", UserLevel.BASIC);
 			User user2 = new User("examiner", "password", UserLevel.HIGHER);

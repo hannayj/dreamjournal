@@ -1,13 +1,19 @@
 import React from 'react';
 import SleepPeriod from './SleepPeriod'
 import AddSleepPeriodForm from './AddSleepPeriodForm'
+import Filter from './Filter'
 
 const SleepPeriods = ({
     sleepPeriods,
     addSleepPeriod,
     startTime,
+    setStartTime,
     endTime,
-    handleInputChange,
+    setEndTime,
+    filterStartDate,
+    setFilterStartDate,
+    filterEndDate,
+    setFilterEndDate,
     updateSleepPeriod
   }) => {
   return (
@@ -15,14 +21,23 @@ const SleepPeriods = ({
       <AddSleepPeriodForm
         addSleepPeriod={ addSleepPeriod }
         startTime={ startTime }
+        setStartTime={ setStartTime }
         endTime={ endTime }
-        handleInputChange={ handleInputChange }
+        setEndTime={ setEndTime }
       />
+      <Filter
+        filterStartDate={filterStartDate}
+        setFilterStartDate={setFilterStartDate}
+        filterEndDate={filterEndDate}
+        setFilterEndDate={setFilterEndDate}
+      />
+      <h1>
+        Sleep periods
+      </h1>
       { sleepPeriods.map((sleepPeriod) => 
         <SleepPeriod
           key={ sleepPeriod.id }
           sleepPeriod={ sleepPeriod }
-          handleInputChange={ handleInputChange }
           updateSleepPeriod={ updateSleepPeriod }
         />
       ) }

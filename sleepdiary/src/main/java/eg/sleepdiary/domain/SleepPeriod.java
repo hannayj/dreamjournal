@@ -1,6 +1,6 @@
 package eg.sleepdiary.domain;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.Duration;
 
 import javax.persistence.Entity;
@@ -24,8 +24,8 @@ public class SleepPeriod {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private Timestamp startTime;
-	private Timestamp endTime;
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
 	@ManyToOne
 	@JsonIgnore
 	@JoinColumn(name="userid")
@@ -35,7 +35,7 @@ public class SleepPeriod {
 		super();
 	}
 
-	public SleepPeriod(Timestamp start, Timestamp end, User user) {
+	public SleepPeriod(LocalDateTime start, LocalDateTime end, User user) {
 		super();
 		this.startTime = start;
 		this.endTime = end;
@@ -50,19 +50,19 @@ public class SleepPeriod {
 		this.id = id;
 	}
 
-	public Timestamp getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Timestamp start) {
+	public void setStartTime(LocalDateTime start) {
 		this.startTime = start;
 	}
 
-	public Timestamp getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Timestamp end) {
+	public void setEndTime(LocalDateTime end) {
 		this.endTime = end;
 	}
 
@@ -76,12 +76,12 @@ public class SleepPeriod {
 
 	/**
 	 * 
-	 * @return the difference of endtime and starttime for SleepPeriod in Timestamp.
+	 * @return the difference of endtime and starttime for SleepPeriod in LocalDateTime.
 	 *         The return value is in the following format "yy-MM-dd HH:mm:ss"
 	 * 
 	 */
 	public long getDuration() {
-		return Duration.between(startTime.toInstant(), endTime.toInstant()).toHours();
+		return Duration.between(startTime, endTime).toHours();
 	}
 
 	@Override
