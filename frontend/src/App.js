@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import sleepPeriodService from './services/sleepPeriods'
+import commentService from './services/comments'
+import externalService from './services/externals'
+
 import SleepPeriods from './components/SleepPeriods'
 import Header from './components/Header'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import Comments from './components/Comments'
+import Externals from './components/Externals'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -13,16 +18,38 @@ const App = () => {
   const [filterEndDate, setFilterEndDate] = useState('')
   const [showFooter, setShowFooter] = useState(true)
   const [view, setView] = useState('sleepperiods')
+  const [comments, setComments] = useState([])
+  const [comment, setComment] = useState('')
+  const [commentDate, setCommentDate] = useState('')
+  const [sleepQuality, setSleepQuality] = useState('MEDIUM')
+  const [exts, setExts] = useState([])
+  const [extDate, setExtDate] = useState('')
+  const [extType, setExtType] = useState('COFFEE')
+  const [quantity, setQuantity] = useState('')
 
   useEffect(() => {
     document.title = 'Sleep Diary'
     fetchSleepPeriods()
+    fetchComments()
+    fetchExternals()
   }, [])
 
   const fetchSleepPeriods = () => {
     sleepPeriodService
       .getAll()
       .then(sleepPeriods => setSleepPeriods(sleepPeriods))
+  }
+
+  const fetchComments = () => {
+    commentService
+      .getAll()
+      .then(allComments => setComments(allComments))
+  }
+
+  const fetchExternals = () => {
+    externalService
+      .getAll()
+      .then(externals => setExts(externals))
   }
 
   const hideFooter = () => {
@@ -65,8 +92,8 @@ const App = () => {
       const startTimeDate = new Date(sleepPeriod.startTime)
       const endTimeDate = new Date(sleepPeriod.endTime)
       if ((startTimeDate <= filterEndDate && startTimeDate >= filterStartDate) ||
-          (endTimeDate >= filterStartDate && endTimeDate <= filterEndDate) ||
-          (startTimeDate <= filterStartDate && endTimeDate >= filterEndDate)) {
+        (endTimeDate >= filterStartDate && endTimeDate <= filterEndDate) ||
+        (startTimeDate <= filterStartDate && endTimeDate >= filterEndDate)) {
         return true
       }
       return false
@@ -74,38 +101,96 @@ const App = () => {
     return true
   })
 
+  const addComment = (event) => {
+    event.preventDefault()
+    const newComment = { comment, commentDate, sleepQuality }
+    console.log(newComment)
+    commentService
+      .create(newComment)
+      .then(returnedComment => {
+        setComments(comments.concat(returnedComment))
+        setComment('')
+        setCommentDate('')
+        setSleepQuality('MEDIUM')
+      })
+  }
+
+  const handleCommentChange = (event) => setComment(event.target.value)
+  const handleCommentDateChange = (event) => setCommentDate(event.target.value)
+  const handleQualityChange = (event) => setSleepQuality(event.target.value)
+
+  const addExt = (event) => {
+    event.preventDefault()
+    const newExt = { extDate, extType, quantity }
+    console.log(newExt)
+    externalService
+      .create(newExt)
+      .then(returnedExt => {
+        setExts(exts.concat(returnedExt))
+        setExtDate('')
+        setExtType('')
+        setQuantity('')
+      })
+  }
+
+  const handleExtDateChange = (event) => setExtDate(event.target.value)
+  const handleExtTypeChange = (event) => setExtType(event.target.value)
+  const handleQuantityChange = (event) => setQuantity(event.target.value)
+
   return (
     <div id='container'>
       <Header
-        changeView={ changeView }
+        changeView={changeView}
       />
       <Nav
-        changeView={ changeView }
+        changeView={changeView}
       />
       <div id="main">
-        { view === 'settings' &&
+        {view === 'settings' &&
           // TODO: add settings view
           <></>
         }
-        { view === 'sleepperiods' &&
-          <SleepPeriods
-            sleepPeriods={ filteredSleepPeriods }
-            addSleepPeriod= { addSleepPeriod }
-            startTime={ startTime }
-            setStartTime={ setStartTime }
-            endTime={ endTime }
-            setEndTime={ setEndTime }
-            filterStartDate={filterStartDate}
-            setFilterStartDate={setFilterStartDate}
-            filterEndDate={filterEndDate} 
-            setFilterEndDate={setFilterEndDate}
-            updateSleepPeriod={ updateSleepPeriod }
-          />
+        {view === 'sleepperiods' &&
+          <>
+            <SleepPeriods
+              sleepPeriods={filteredSleepPeriods}
+              addSleepPeriod={addSleepPeriod}
+              startTime={startTime}
+              setStartTime={setStartTime}
+              endTime={endTime}
+              setEndTime={setEndTime}
+              filterStartDate={filterStartDate}
+              setFilterStartDate={setFilterStartDate}
+              filterEndDate={filterEndDate}
+              setFilterEndDate={setFilterEndDate}
+              updateSleepPeriod={updateSleepPeriod}
+            />
+            <Comments
+              comments={comments}
+              comment={comment}
+              handleCommentChange={handleCommentChange}
+              commentDate={commentDate}
+              handleDateChange={handleCommentDateChange}
+              sleepQuality={sleepQuality}
+              handleQualityChange={handleQualityChange}
+              addComment={addComment}
+            />
+            <Externals 
+              externals={exts}
+              addExternal={addExt}
+              externalTypeValue={extType}
+              handleExternalTypeChange={handleExtTypeChange}
+              externalDateValue={extDate}
+              handleDateChange={handleExtDateChange}
+              externalQuantityValue={quantity}
+              handleQuantityChange={handleQuantityChange}
+            />
+          </>
         }
       </div>
-      { showFooter &&
+      {showFooter &&
         <Footer
-          hideFooter={ hideFooter }
+          hideFooter={hideFooter}
         />
       }
     </div>
