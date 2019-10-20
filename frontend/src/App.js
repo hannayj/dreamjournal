@@ -9,6 +9,7 @@ import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
+import Settings from './components/Settings'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -148,7 +149,9 @@ const App = () => {
       <div id="main">
         {view === 'settings' &&
           // TODO: add settings view
-          <></>
+          <>
+          <Settings />
+          </>
         }
         {view === 'sleepperiods' &&
           <>
