@@ -37,14 +37,14 @@ public class External {
 	@JsonIgnore
 	@JoinColumn(name="userid")
 	private User user;
-	private LocalDateTime dateTime;
+	private LocalDateTime externalDate;
 	private ExternalType externalType;
 	private int quantity;
 	
-	public External(User user, LocalDateTime dateTime, ExternalType externalType, int quantity) {
+	public External(User user, LocalDateTime externalDate, ExternalType externalType, int quantity) {
 		super();
 		this.user = user;
-		this.dateTime = dateTime;
+		this.externalDate = externalDate;
 		this.externalType = externalType;
 		this.quantity = quantity;
 	}

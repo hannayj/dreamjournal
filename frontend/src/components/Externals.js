@@ -5,18 +5,19 @@ import ExternalForm from './ExternalForm';
 const Externals = ({
     externals,
     addExternal,
-    externalTypeValue,
+    externalType,
     handleExternalTypeChange,
-    externalDateValue,
+    externalDate,
     handleDateChange,
     externalQuantityValue,
-    handleQuantityChange
+    handleQuantityChange,
+    deleteExternal
 }) => {
     const formInputs = [
         {
             name: 'ExtDate',
             type: 'datetime-local',
-            value: externalDateValue,
+            value: externalDate,
             onChange: handleDateChange,
         },
         {
@@ -27,7 +28,7 @@ const Externals = ({
         }
     ]
     const selectionInputs = {
-        value: externalTypeValue,
+        value: externalType,
         onChange: handleExternalTypeChange,
         values: [
             {
@@ -53,7 +54,7 @@ const Externals = ({
             <h1>Externals</h1>
             <h2>Add a new external</h2>
             <ExternalForm inputs={formInputs} select={selectionInputs} submit={addExternal} />
-            {externals.map(e => <External key={e.id} ext={e} />)}
+            {externals.map(e => <External key={e.id} ext={e} deleteExternal={deleteExternal}/>)}
         </div>
     )
 }

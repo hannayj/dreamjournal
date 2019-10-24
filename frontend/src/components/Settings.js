@@ -36,6 +36,7 @@ const Settings = ({
         <h2>
           User profile
         </h2>
+       <p>Change user information:</p> 
         <SettingForm inputs={formInputs} submit={updateUser} />
       </div>
     )
