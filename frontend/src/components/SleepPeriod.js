@@ -1,20 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const SleepPeriod = ({
   sleepPeriod,
-  updateSleepPeriod
+  updateSleepPeriod,
+  removeSleepPeriod
 }) => {
+  const [editMode, setEditMode] = useState(false)
+  const [editableSleepPeriod, setSleepPeriod] = useState(sleepPeriod)
+
   return (
     <div className='product clearfix'>
-      <form onSubmit={ updateSleepPeriod(sleepPeriod) }>
-        <a href={ '/sleepPeriods/' + sleepPeriod.id }>
-          Sleep period { sleepPeriod.id }
-        </a>
-        <p>Start time: { sleepPeriod.startTime }</p>
-        <p>End time: { sleepPeriod.endTime }</p>
-        <p>Duration: { sleepPeriod.duration }h</p>
-        <br />
-      </form>
+      { editMode === false && 
+        <div>
+          <a href={ '/sleepPeriods/' + sleepPeriod.id }>
+            Sleep period { sleepPeriod.id }
+          </a>
+          <p>Start time: { sleepPeriod.startTime }</p>
+          <p>End time: { sleepPeriod.endTime }</p>
+          <p>Duration: { sleepPeriod.duration }h</p>
+          <br />
+          <button onClick={ () => removeSleepPeriod(sleepPeriod) }>Delete</button>
+          <button onClick={ () => setEditMode(true) }>Edit</button>
+        </div>
+      }
+      { editMode === true && 
+        <div>
+          <a href={ '/sleepPeriods/' + sleepPeriod.id }>
+            Sleep period { sleepPeriod.id }
+          </a>
+          <p>Start time: 
+            <input
+              onChange = {
+                event => setSleepPeriod({...editableSleepPeriod,
+                  startTime: event.target.value
+                })
+              }
+              type='datetime-local'
+              id='startTime'
+              name='startTime'
+              value={ editableSleepPeriod.startTime }
+            />
+          </p>
+          <p>End time: 
+            <input
+              onChange = {
+                event => setSleepPeriod({...editableSleepPeriod,
+                  endTime: event.target.value
+                })
+              }
+              type='datetime-local'
+              id='endTime'
+              name='endTime'
+              value={ editableSleepPeriod.endTime }
+            />
+          </p>
+          <p>Duration: { sleepPeriod.duration }h</p>
+          <br />
+          <button onClick={ () => removeSleepPeriod(sleepPeriod) }>Delete</button>
+          <button onClick={ () => {
+            updateSleepPeriod(editableSleepPeriod);
+            setEditMode(false);
+          }}>Save</button>
+        </div>
+      }
     </div>
   )
 }
