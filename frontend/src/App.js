@@ -115,6 +115,16 @@ const App = () => {
       })
   }
 
+  //no error handling and no confirmation required
+  const deleteComment = id => {
+    console.log(`delete id ${id}`)
+    commentService
+      .deletePerson(id)
+      .then(() => {
+        setComments(comments.filter(c => c.id !== id))
+      })
+  }
+
   const handleCommentChange = (event) => setComment(event.target.value)
   const handleCommentDateChange = (event) => setCommentDate(event.target.value)
   const handleQualityChange = (event) => setSleepQuality(event.target.value)
@@ -174,6 +184,7 @@ const App = () => {
               sleepQuality={sleepQuality}
               handleQualityChange={handleQualityChange}
               addComment={addComment}
+              deleteComment={deleteComment}
             />
             <Externals 
               externals={exts}
