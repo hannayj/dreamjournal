@@ -1,8 +1,9 @@
 import React from 'react';
+import Table from 'react-bootstrap/Table'
 
 const External = ({ ext }) => {
     return (
-        <table border="1">
+        <Table striped bordered hover>
             <tbody>
                 <tr>
                     <th>External ID {ext.id}</th>
@@ -11,7 +12,7 @@ const External = ({ ext }) => {
                     <th>Quantity {ext.quantity}</th>
                 </tr>
             </tbody>
-        </table>
+        </Table>
     );
 }
 

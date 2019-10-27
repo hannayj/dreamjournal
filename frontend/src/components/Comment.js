@@ -1,8 +1,9 @@
 import React from 'react';
+import Table from 'react-bootstrap/Table'
 
 const Comment = ({ comment }) => {
     return (
-        <table border="1">
+        <Table striped bordered hover>
             <tbody>
                 <tr>
                     <th>Comment ID {comment.id}</th>
@@ -13,7 +14,7 @@ const Comment = ({ comment }) => {
                     <td colSpan="3">"{comment.comment}"</td>
                 </tr>
             </tbody>
-        </table>
+        </Table>
     );
 }
 
