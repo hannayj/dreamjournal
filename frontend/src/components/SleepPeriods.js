@@ -31,9 +31,9 @@ const SleepPeriods = ({
         filterEndDate={filterEndDate}
         setFilterEndDate={setFilterEndDate}
       />
-      <h1>
+      <h2>
         Sleep periods
-      </h1>
+      </h2>
       { sleepPeriods.map((sleepPeriod) => 
         <SleepPeriod
           key={ sleepPeriod.id }

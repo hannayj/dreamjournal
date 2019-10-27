@@ -138,7 +138,7 @@ const App = () => {
   const handleQuantityChange = (event) => setQuantity(event.target.value)
 
   return (
-    <div id='container'>
+    <div class='container'>
       <Header
         changeView={changeView}
       />
