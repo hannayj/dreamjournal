@@ -11,7 +11,8 @@ const Externals = ({
     handleDateChange,
     externalQuantityValue,
     handleQuantityChange,
-    deleteExternal
+    deleteExternal, 
+    updateExternal
 }) => {
     const formInputs = [
         {
@@ -54,7 +55,13 @@ const Externals = ({
             <h1>Externals</h1>
             <h2>Add a new external</h2>
             <ExternalForm inputs={formInputs} select={selectionInputs} submit={addExternal} />
-            {externals.map(e => <External key={e.id} ext={e} deleteExternal={deleteExternal}/>)}
+            {externals.map(e => 
+            <External 
+                key={e.id} 
+                ext={e} 
+                deleteExternal={deleteExternal}
+                updateExternal={updateExternal}
+            />)}
         </div>
     )
 }

@@ -156,6 +156,15 @@ const App = () => {
       })
   }
 
+  const updateExternal = id => {
+    console.log(`update id ${id}`)
+    externalService
+    .update(id)
+    .then(() => {
+      setExts(exts.filter(e => e.id !== id))
+    })
+  }
+
   const handleExtDateChange = (event) => setExternalDate(event.target.value)
   const handleExtTypeChange = (event) => setExternalType(event.target.value)
   const handleQuantityChange = (event) => setQuantity(event.target.value)
@@ -223,6 +232,7 @@ const App = () => {
               externalQuantityValue={quantity}
               handleQuantityChange={handleQuantityChange}
               deleteExternal={deleteExternal}
+              updateExternal={updateExternal}
             />
           </>
         }
