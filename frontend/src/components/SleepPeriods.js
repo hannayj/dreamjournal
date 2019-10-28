@@ -14,7 +14,8 @@ const SleepPeriods = ({
     setFilterStartDate,
     filterEndDate,
     setFilterEndDate,
-    updateSleepPeriod
+    updateSleepPeriod,
+    removeSleepPeriod
   }) => {
   return (
     <div id='products'>
@@ -39,6 +40,7 @@ const SleepPeriods = ({
           key={ sleepPeriod.id }
           sleepPeriod={ sleepPeriod }
           updateSleepPeriod={ updateSleepPeriod }
+          removeSleepPeriod={ removeSleepPeriod }
         />
       ) }
     </div>

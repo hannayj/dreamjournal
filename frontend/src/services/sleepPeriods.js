@@ -12,4 +12,14 @@ const create = async (sleepPeriod) => {
   return response.data
 }
 
-export default { getAll, create }
+const update = async (sleepPeriod) => {
+  const response = await axios.put(baseUrl + sleepPeriod.id, sleepPeriod)
+  return response.data
+}
+
+const remove = async (sleepPeriod) => {
+  const response = await axios.delete(baseUrl + sleepPeriod.id)
+  return response.data
+}
+
+export default { getAll, create, update, remove }
