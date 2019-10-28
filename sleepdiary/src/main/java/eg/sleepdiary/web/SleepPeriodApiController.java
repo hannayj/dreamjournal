@@ -88,6 +88,7 @@ public class SleepPeriodApiController {
 		External createdExternal = externalRepo.save(external);
 		return new ResponseEntity<External>(createdExternal, HttpStatus.OK);
 	}
+
 	
 	@DeleteMapping("/externals/{id}")
     public Map<String, Boolean> deleteExternal(@PathVariable(value = "id") Long id)
@@ -142,5 +143,30 @@ public class SleepPeriodApiController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
+
+
+
+	@PutMapping("/sleepperiods/{id}")
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody SleepPeriod sleepPeriod) {
+		log.info("Updating SleepPeriod: {}", sleepPeriod);
+		if (!periodRepo.existsById(id)) {
+			log.error("A SleepPeriod with id {} doesn't exist", id);
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		SleepPeriod createdSleepPeriod = periodRepo.save(sleepPeriod);
+		return new ResponseEntity<SleepPeriod>(createdSleepPeriod, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/sleepperiods/{id}")
+	public ResponseEntity<?> remove(@PathVariable Long id) {
+		log.info("Delete SleepPeriod with id {}", id);
+		SleepPeriod sleepPeriod = periodRepo.findById(id).orElse(null);
+		if (sleepPeriod == null) {
+			log.error("SleepPeriod with id {} doesn't exist", id);
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		periodRepo.delete(sleepPeriod);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 }
