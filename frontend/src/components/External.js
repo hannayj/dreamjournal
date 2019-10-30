@@ -2,12 +2,39 @@ import React, { useState } from 'react';
 
 const External = ({ 
     ext, 
-    select,
     deleteExternal, 
     updateExternal 
 }) => {
     const [editMode, setEditMode] = useState(false)
   const [editableExternal, setExternal] = useState(ext)
+  const typeChange = event => setExternal({...editableExternal,
+    externalType: event.target.value
+    })
+
+  const selectionInputs = {
+    value: ext.externalType,
+    onChange: typeChange,
+    values: [
+        {
+            id: 1,
+            value: 'COFFEE'
+        },
+        {
+            id: 2,
+            value: 'ALCOHOL'
+        },
+        {
+            id: 3,
+            value: 'MEDICINE'
+        },
+        {
+            id: 4,
+            value: 'OTHER'
+        }
+    ]
+}
+
+  
     return (
         <div className='product clearfix'>
             { editMode === false &&
@@ -29,7 +56,7 @@ const External = ({
                     <tbody>
                         <tr>
                             <th>External ID {ext.id}</th>
-                            <th><input
+                            <th> Date: <input
                                     onChange = {
                                         event => setExternal({...editableExternal,
                                         externalDate: event.target.value
@@ -40,13 +67,21 @@ const External = ({
                                     name='externalDate'
                                     value={ editableExternal.externalDate }
                                     /></th>
-                            <th>External type {ext.externalType}</th>
-                            <th>
-                                <select value={select.value} onChange={select.onChange}>
-                                {select.values.map(v => <option key={v.id} value={v.value}>{v.value}</option>)}
-                                 </select>
-                            </th>
-                            <th>Quantity {ext.quantity}</th>
+                            <th>External type: 
+                                <select value={selectionInputs.value} onChange={selectionInputs.onChange}>
+                                    {selectionInputs.values.map(v => <option key={v.id} value={v.value}>{v.value}</option>)}
+                                </select></th>
+                            <th> Quantity: <input
+                                    onChange = {
+                                        event => setExternal({...editableExternal,
+                                        quantity: event.target.value
+                                        })
+                                    }
+                                    type='text'
+                                    id='quantity'
+                                    name='quantity'
+                                    value={ editableExternal.quantity }
+                                    /></th>
                             <td><button onClick={() => deleteExternal(ext.id)}>Delete</button></td>
                             <td><button onClick={() => {
                                 updateExternal(editableExternal.id);

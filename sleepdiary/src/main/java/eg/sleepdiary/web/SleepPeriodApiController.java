@@ -102,6 +102,17 @@ public class SleepPeriodApiController {
         return response;
     }
 	
+	@PutMapping("/externals/{id}")
+	public ResponseEntity<?> updateExternal(@PathVariable Long id, @RequestBody External external) {
+		log.info("Updating External: {}", external);
+		if (!externalRepo.existsById(id)) {
+			log.error("An external with id {} doesn't exist", id);
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		External createdExternal = externalRepo.save(external);
+		return new ResponseEntity<External>(createdExternal, HttpStatus.OK);
+	}
+	
 	//get user by id
 	@GetMapping("/users/{id}")
 	public ResponseEntity<User> getEmployeeById(@PathVariable(value = "id") Long id)

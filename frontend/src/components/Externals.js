@@ -55,12 +55,16 @@ const Externals = ({
             <h1>Externals</h1>
             <h2>Add a new external</h2>
             <ExternalForm inputs={formInputs} select={selectionInputs} submit={addExternal} />
+            <h1>
+                External factors 
+            </h1>
             {externals.map(e => 
             <External 
                 key={e.id} 
                 ext={e} 
                 deleteExternal={deleteExternal}
                 updateExternal={updateExternal}
+                select={selectionInputs}
             />)}
         </div>
     )
