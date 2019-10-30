@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import sleepPeriodService from './services/sleepPeriods'
 import commentService from './services/comments'
 import externalService from './services/externals'
 
 import SleepPeriods from './components/SleepPeriods'
-import Header from './components/Header'
-import Nav from './components/Nav'
-import Footer from './components/Footer'
+import Settings from './components/Settings'
+import Navigation from './components/Navigation'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
 
@@ -16,8 +16,6 @@ const App = () => {
   const [endTime, setEndTime] = useState('')
   const [filterStartDate, setFilterStartDate] = useState('')
   const [filterEndDate, setFilterEndDate] = useState('')
-  const [showFooter, setShowFooter] = useState(true)
-  const [view, setView] = useState('sleepperiods')
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const [commentDate, setCommentDate] = useState('')
@@ -50,14 +48,6 @@ const App = () => {
     externalService
       .getAll()
       .then(externals => setExts(externals))
-  }
-
-  const hideFooter = () => {
-    setShowFooter(false)
-  }
-
-  const changeView = (view) => () => {
-    setView(view)
   }
 
   const addSleepPeriod = () => (event) => {
@@ -147,62 +137,53 @@ const App = () => {
   const handleQuantityChange = (event) => setQuantity(event.target.value)
 
   return (
-    <div class='container'>
-      <Header
-        changeView={changeView}
-      />
-      <Nav
-        changeView={changeView}
-      />
-      <div id="main">
-        {view === 'settings' &&
-          // TODO: add settings view
-          <></>
-        }
-        {view === 'sleepperiods' &&
-          <>
-            <SleepPeriods
-              sleepPeriods={filteredSleepPeriods}
-              addSleepPeriod={addSleepPeriod}
-              startTime={startTime}
-              setStartTime={setStartTime}
-              endTime={endTime}
-              setEndTime={setEndTime}
-              filterStartDate={filterStartDate}
-              setFilterStartDate={setFilterStartDate}
-              filterEndDate={filterEndDate}
-              setFilterEndDate={setFilterEndDate}
-              updateSleepPeriod={updateSleepPeriod}
-              removeSleepPeriod={ removeSleepPeriod }
-            />
-            <Comments
-              comments={comments}
-              comment={comment}
-              handleCommentChange={handleCommentChange}
-              commentDate={commentDate}
-              handleDateChange={handleCommentDateChange}
-              sleepQuality={sleepQuality}
-              handleQualityChange={handleQualityChange}
-              addComment={addComment}
-            />
-            <Externals 
-              externals={exts}
-              addExternal={addExt}
-              externalTypeValue={extType}
-              handleExternalTypeChange={handleExtTypeChange}
-              externalDateValue={extDate}
-              handleDateChange={handleExtDateChange}
-              externalQuantityValue={quantity}
-              handleQuantityChange={handleQuantityChange}
-            />
-          </>
-        }
-      </div>
-      {showFooter &&
-        <Footer
-          hideFooter={hideFooter}
-        />
-      }
+    <div className='container'>
+      <Router>
+        <Navigation />
+        <Switch>
+          <Route exact path="/">
+            <>
+              <SleepPeriods
+                sleepPeriods={filteredSleepPeriods}
+                addSleepPeriod={addSleepPeriod}
+                startTime={startTime}
+                setStartTime={setStartTime}
+                endTime={endTime}
+                setEndTime={setEndTime}
+                filterStartDate={filterStartDate}
+                setFilterStartDate={setFilterStartDate}
+                filterEndDate={filterEndDate}
+                setFilterEndDate={setFilterEndDate}
+                updateSleepPeriod={updateSleepPeriod}
+                removeSleepPeriod={removeSleepPeriod}
+              />
+              <Comments
+                comments={comments}
+                comment={comment}
+                handleCommentChange={handleCommentChange}
+                commentDate={commentDate}
+                handleDateChange={handleCommentDateChange}
+                sleepQuality={sleepQuality}
+                handleQualityChange={handleQualityChange}
+                addComment={addComment}
+              />
+              <Externals
+                externals={exts}
+                addExternal={addExt}
+                externalTypeValue={extType}
+                handleExternalTypeChange={handleExtTypeChange}
+                externalDateValue={extDate}
+                handleDateChange={handleExtDateChange}
+                externalQuantityValue={quantity}
+                handleQuantityChange={handleQuantityChange}
+              />
+            </>
+          </Route>
+          <Route path="/settings">
+            <Settings />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   )
 }
