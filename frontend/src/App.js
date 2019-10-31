@@ -28,7 +28,7 @@ const App = () => {
   const [extDate, setExtDate] = useState('')
   const [extType, setExtType] = useState('COFFEE')
   const [quantity, setQuantity] = useState('')
-  const [users, setUsers] = useState([])
+  const [user, setUser] = useState('')
   const [name, setName] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -65,7 +65,7 @@ const App = () => {
   const fetchUsers = () => {
     userService
     .getAll()
-    .then(users => setUsers(users))
+    .then(users => setUser(users[0]))
   }
 
   const hideFooter = () => {
@@ -166,7 +166,7 @@ const App = () => {
     userService
       .update(user)
       .then(updatedUser => {
-        setUsers(users.concat(updatedUser))
+        setUser(updatedUser)
       })
       .catch(error => console.log(error))
   }
@@ -184,7 +184,7 @@ const App = () => {
           // TODO: add settings view
           <>
           <User 
-            users={users}
+            user={user}
             name={name}
             setName={setName}
             firstName={firstName}

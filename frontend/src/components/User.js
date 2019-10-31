@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const User = ({
-    users,
+    user,
     name, 
     setName, 
     firstName, 
@@ -16,17 +16,16 @@ const User = ({
     setPasswordAgain,
     updateUser
   }) => {
-    const user = users[0]
     const [editMode, setEditMode] = useState(false)
     const [editableUser, setUser] = useState(user)
-  
+    console.log(user)
     return (
       <div className='product clearfix'>
         { editMode === false && 
           <div>
-            <a href={ '/users/' + user.id }>
+           <a href={ '/users/' + user.id }>
               User information for user { user.id }
-            </a>
+            </a> 
            <h2>Information</h2> 
             <p>Username: { user.name }</p>
             <p>First name: { user.firstName }</p>
