@@ -6,7 +6,9 @@ const CommentForm = ({ inputs, select, submit }) => {
     return (
         <Form onSubmit={submit}>
             <Form.Group controlId="formComment">
-            {inputs.map(i => <div key={i.name}>{i.name}: <input type={i.type} value={i.value} onChange={i.onChange} ></input></div>)}
+            {inputs.map(i => <div key={i.name}>
+                <Form.Label column sm={2}>{i.name}: </Form.Label>
+                <input type={i.type} value={i.value} onChange={i.onChange} ></input></div>)}
             </Form.Group>
             <Form.Group controlId="formQuality"> 
                 <Form.Label>Quality: </Form.Label>
