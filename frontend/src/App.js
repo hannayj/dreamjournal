@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import sleepPeriodService from './services/sleepPeriods'
 import commentService from './services/comments'
 import externalService from './services/externals'
+import userService from './services/users'
 
 import SleepPeriods from './components/SleepPeriods'
 import Header from './components/Header'
@@ -9,6 +10,7 @@ import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
+import User from './components/User'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -26,12 +28,20 @@ const App = () => {
   const [extDate, setExtDate] = useState('')
   const [extType, setExtType] = useState('COFFEE')
   const [quantity, setQuantity] = useState('')
+  const [users, setUsers] = useState([])
+  const [name, setName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordAgain, setPasswordAgain] = useState('')
 
   useEffect(() => {
     document.title = 'Sleep Diary'
     fetchSleepPeriods()
     fetchComments()
     fetchExternals()
+    fetchUsers()
   }, [])
 
   const fetchSleepPeriods = () => {
@@ -50,6 +60,12 @@ const App = () => {
     externalService
       .getAll()
       .then(externals => setExts(externals))
+  }
+
+  const fetchUsers = () => {
+    userService
+    .getAll()
+    .then(users => setUsers(users))
   }
 
   const hideFooter = () => {
@@ -146,6 +162,15 @@ const App = () => {
   const handleExtTypeChange = (event) => setExtType(event.target.value)
   const handleQuantityChange = (event) => setQuantity(event.target.value)
 
+  const updateUser = (user) => {
+    userService
+      .update(user)
+      .then(updatedUser => {
+        setUsers(users.concat(updatedUser))
+      })
+      .catch(error => console.log(error))
+  }
+
   return (
     <div id='container'>
       <Header
@@ -157,7 +182,24 @@ const App = () => {
       <div id="main">
         {view === 'settings' &&
           // TODO: add settings view
-          <></>
+          <>
+          <User 
+            users={users}
+            name={name}
+            setName={setName}
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            passwordAgain={passwordAgain}
+            setpasswordAgain={setPasswordAgain}
+            updateUser={updateUser}
+          />
+          </>
         }
         {view === 'sleepperiods' &&
           <>

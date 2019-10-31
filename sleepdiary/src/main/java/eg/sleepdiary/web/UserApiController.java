@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.User;
 import eg.sleepdiary.domain.UserRepository;
 
@@ -40,6 +41,13 @@ public class UserApiController {
 	          .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
 	        return ResponseEntity.ok().body(user);
 	    }
+	
+	//get all users
+	@GetMapping("/users/")
+	public ResponseEntity<Iterable<User>> findAll() {
+		Iterable<User> users = userRepo.findAll();
+		return new ResponseEntity<Iterable<User>>(users, HttpStatus.OK);
+	}
 	
 	//create new user
 	@PostMapping("/users/")
