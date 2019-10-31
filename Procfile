@@ -1,0 +1,1 @@
+web: java -jar sleepdiary/target/sleepdiary-0.0.1-SNAPSHOT.jar
