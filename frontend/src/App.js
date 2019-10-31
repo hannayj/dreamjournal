@@ -62,8 +62,6 @@ const App = () => {
 
   const addSleepPeriod = () => (event) => {
     event.preventDefault()
-    const startTime = event.target.startTime.value
-    const endTime = event.target.endTime.value
     if (startTime && endTime) {
       const sleepPeriod = {
         startTime: startTime,
@@ -81,10 +79,21 @@ const App = () => {
     }
   }
 
-  const updateSleepPeriod = (sleepPeriod) => (event) => {
-    event.preventDefault()
-    console.log("Saved!")
-    // TODO: update modified sleep period
+  const updateSleepPeriod = (sleepPeriod) => {
+    sleepPeriodService
+      .update(sleepPeriod)
+      .then(updatedSleepPeriod => {
+        const filteredSleepPeriods = sleepPeriods.filter(sp => sp.id !== sleepPeriod.id)
+        setSleepPeriods(filteredSleepPeriods.concat(updatedSleepPeriod))
+      })
+      .catch(error => console.log(error))
+  }
+
+  const removeSleepPeriod = (sleepPeriod) => {
+    sleepPeriodService
+      .remove(sleepPeriod)
+      .then(setSleepPeriods(sleepPeriods.filter(sp => sp.id !== sleepPeriod.id)))
+      .catch(error => console.log(error))
   }
 
   const filteredSleepPeriods = sleepPeriods.filter(sleepPeriod => {
@@ -148,7 +157,7 @@ const App = () => {
   const handleQuantityChange = (event) => setQuantity(event.target.value)
 
   return (
-    <div id='container'>
+    <div class='container'>
       <Header
         changeView={changeView}
       />
@@ -174,6 +183,7 @@ const App = () => {
               filterEndDate={filterEndDate}
               setFilterEndDate={setFilterEndDate}
               updateSleepPeriod={updateSleepPeriod}
+              removeSleepPeriod={ removeSleepPeriod }
             />
             <Comments
               comments={comments}

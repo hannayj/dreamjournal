@@ -1,8 +1,9 @@
 import React from 'react';
+import Table from 'react-bootstrap/Table'
 
 const Comment = ({ comment, deleteComment }) => {
     return (
-        <table border="1">
+        <Table striped bordered hover>
             <tbody>
                 <tr>
                     <th>Comment ID {comment.id}</th>
@@ -16,7 +17,7 @@ const Comment = ({ comment, deleteComment }) => {
                     <td colSpan="3"><button onClick={() => deleteComment(comment.id)}>Delete</button></td>
                 </tr>
             </tbody>
-        </table>
+        </Table>
     );
 }
 

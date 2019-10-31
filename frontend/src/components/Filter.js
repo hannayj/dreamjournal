@@ -11,9 +11,9 @@ const Filter = ({
 }) => {
   return (
     <div>
-      <h1>
+      <h2>
         Filter sleep periods by date
-      </h1>
+      </h2>
       <label htmlFor='filterStartDate'>Start date</label>
       <br />
       <DatePicker
