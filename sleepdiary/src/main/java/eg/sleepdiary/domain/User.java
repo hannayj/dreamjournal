@@ -25,7 +25,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private String name;
+	private String name, firstName, lastName, email;
 	private String password;
 	private UserLevel userLevel;
 	
@@ -38,8 +38,12 @@ public class User {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
 	private List<External> externals;
 
-	public User(String name, String password, UserLevel userLevel) {
+	public User(String name, String firstName, String lastName, String email, 
+			String password, UserLevel userLevel) {
 		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 		this.password = password;
 		this.userLevel = userLevel;
 	}
