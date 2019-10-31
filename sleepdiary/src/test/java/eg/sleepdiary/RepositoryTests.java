@@ -1,7 +1,5 @@
 package eg.sleepdiary;
 
-import static org.junit.Assert.assertThat;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -17,12 +15,9 @@ import eg.sleepdiary.domain.Comment;
 import eg.sleepdiary.domain.CommentRepository;
 import eg.sleepdiary.domain.External;
 import eg.sleepdiary.domain.ExternalRepository;
-import eg.sleepdiary.domain.ExternalType;
 import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.SleepPeriodRepository;
-import eg.sleepdiary.domain.SleepQuality;
 import eg.sleepdiary.domain.User;
-import eg.sleepdiary.domain.UserLevel;
 import eg.sleepdiary.domain.UserRepository;
 
 @RunWith(SpringRunner.class)
@@ -30,55 +25,67 @@ import eg.sleepdiary.domain.UserRepository;
 public class RepositoryTests {
 	@Autowired
 	private CommentRepository commentRepo;
-	ArrayList<Comment> comments = new ArrayList<Comment>();
 	@Autowired
 	private ExternalRepository externalRepo;
-	ArrayList<External> externals = new ArrayList<External>();
 	@Autowired
 	private SleepPeriodRepository sleepRepo;
-	ArrayList<SleepPeriod> sleeps = new ArrayList<SleepPeriod>();
 	@Autowired
 	private UserRepository userRepo;
-	ArrayList<User> users = new ArrayList<User>();
-	
+
 	@Before
 	public void init() {
-		for(Comment c : commentRepo.findAll()) {
-			comments.add(c);
-		}
-		for(External e : externalRepo.findAll()) {
-			externals.add(e);
-		}
-		for(SleepPeriod s : sleepRepo.findAll()) {
-			sleeps.add(s);
-		}
-		for(User u : userRepo.findAll()) {
-			users.add(u);
-		}
 	}
 
 	@Test
 	public void commentRepoFindsComment() {
+		ArrayList<Comment> comments = new ArrayList<Comment>();
+		for (Comment c : commentRepo.findAll()) {
+			comments.add(c);
+		}
 		assertThat(comments).isNotNull().hasSize(1);
 	}
-	
-	@Test
-	public void commentRepoFindsRightComment() {
-		assertThat(comments.get(0).getComment()).startsWith("Tämä").endsWith("kommentti");
-	}
-	
+
 	@Test
 	public void externalRepoFindsExternals() {
+		ArrayList<External> externals = new ArrayList<External>();
+		for (External e : externalRepo.findAll()) {
+			externals.add(e);
+		}
 		assertThat(externals).isNotNull().hasSize(2);
 	}
-	
+
 	@Test
 	public void sleepRepoFindsSleeps() {
+		ArrayList<SleepPeriod> sleeps = new ArrayList<SleepPeriod>();
+		for (SleepPeriod s : sleepRepo.findAll()) {
+			sleeps.add(s);
+		}
 		assertThat(sleeps).isNotNull().hasSize(3);
 	}
-	
+
+	@Test
+	public void sleepRepoFindsByStartTimeBetween() {
+		LocalDateTime alku = LocalDateTime.of(2019, 9, 1, 0, 0);
+		LocalDateTime loppu = LocalDateTime.of(2019, 9, 2, 0, 0);
+		ArrayList<SleepPeriod> sleeps = new ArrayList<SleepPeriod>();
+		for (SleepPeriod s : sleepRepo.findAllByStartTimeBetween(alku, loppu)) {
+			sleeps.add(s);
+		}
+		assertThat(sleeps).isNotNull().hasSize(1);
+	}
+
+	@Test
+	public void sleepRepoFindsbyStartTime() {
+		LocalDateTime alku = LocalDateTime.of(2019, 9, 1, 22, 0);
+		assertThat(sleepRepo.existsByStartTime(alku)).isTrue();
+	}
+
 	@Test
 	public void userRepoFindsUsers() {
+		ArrayList<User> users = new ArrayList<User>();
+		for (User u : userRepo.findAll()) {
+			users.add(u);
+		}
 		assertThat(users).isNotNull().hasSize(2);
 	}
 }

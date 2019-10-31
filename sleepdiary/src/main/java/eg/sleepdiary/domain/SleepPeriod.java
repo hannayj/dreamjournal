@@ -76,8 +76,7 @@ public class SleepPeriod {
 
 	/**
 	 * 
-	 * @return the difference of endtime and starttime for SleepPeriod in LocalDateTime.
-	 *         The return value is in the following format "yy-MM-dd HH:mm:ss"
+	 * @return the number of hours between the endtime and the starttime of the SleepPeriod
 	 * 
 	 */
 	public long getDuration() {
