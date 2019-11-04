@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Table from 'react-bootstrap/Table'
 
 const Comment = ({ comment, deleteComment, updateComment, qualitySelect }) => {
     const [editMode, setEditMode] = useState(false)
@@ -6,7 +7,7 @@ const Comment = ({ comment, deleteComment, updateComment, qualitySelect }) => {
     return (
         <div>
             {editMode === false &&
-                <table border="1">
+                <Table striped bordered hover>
                     <tbody>
                         <tr>
                             <th>Comment ID {comment.id}</th>
@@ -23,10 +24,10 @@ const Comment = ({ comment, deleteComment, updateComment, qualitySelect }) => {
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </Table>
             }
             {editMode === true &&
-                <table border="1">
+                <Table striped bordered hover>
                     <tbody>
                         <tr>
                             <th>Comment ID {comment.id}</th>
@@ -77,7 +78,7 @@ const Comment = ({ comment, deleteComment, updateComment, qualitySelect }) => {
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </Table>
             }
         </div>
     );

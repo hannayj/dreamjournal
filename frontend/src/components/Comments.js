@@ -59,8 +59,8 @@ const Comments = ({
 
     return (
         <div>
-            <h1>Comments</h1>
-            <h2>Add a new Comment</h2>
+            <h2>Comments</h2>
+            <h3>Add a new Comment</h3>
             <CommentForm inputs={formInputs} select={selectionInputs} submit={addComment} />
             {comments.map(c => 
                     <Comment
