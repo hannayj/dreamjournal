@@ -58,11 +58,27 @@ public class SleepPeriodApiController {
 		return new ResponseEntity<Iterable<Comment>>(comments, HttpStatus.OK);
 	}
 	
-	//pitäisi luoda aina uusi kommentti
 	@PostMapping("/comments/")
 	public ResponseEntity<?> postComment(@RequestBody Comment comment) {
 		Comment createdComment = commentRepo.save(comment);
-		return new ResponseEntity<Comment>(createdComment, HttpStatus.OK);
+		return new ResponseEntity<Comment>(createdComment, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/comments/{id}")
+	public ResponseEntity<?> updateComment(@PathVariable Long id, @RequestBody Comment comment) {
+		if(!commentRepo.existsById(id)) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<Comment>(commentRepo.save(comment), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/comments/{id}")
+	public ResponseEntity<?> deleteComment(@PathVariable Long id) {
+		if(!commentRepo.existsById(id)) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		commentRepo.deleteById(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/externals/")

@@ -11,7 +11,8 @@ const Comments = ({
     sleepQuality,
     handleQualityChange,
     addComment,
-    deleteComment
+    deleteComment,
+    updateComment
 }) => {
     const formInputs = [
         {
@@ -61,7 +62,15 @@ const Comments = ({
             <h1>Comments</h1>
             <h2>Add a new Comment</h2>
             <CommentForm inputs={formInputs} select={selectionInputs} submit={addComment} />
-            {comments.map(c => <Comment key={c.id} comment={c} deleteComment={deleteComment} />)}
+            {comments.map(c => 
+                    <Comment
+                        key={c.id}
+                        comment={c}
+                        deleteComment={deleteComment}
+                        updateComment={updateComment}
+                        qualitySelect={selectionInputs.values}
+                    />)
+            }
         </div>
     )
 }

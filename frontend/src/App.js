@@ -9,6 +9,7 @@ import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
+import FilteredView from './components/FilteredView'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -26,6 +27,7 @@ const App = () => {
   const [extDate, setExtDate] = useState('')
   const [extType, setExtType] = useState('COFFEE')
   const [quantity, setQuantity] = useState('')
+  const [dateFilter, setDateFilter] = useState(Date.now())
 
   useEffect(() => {
     document.title = 'Sleep Diary'
@@ -124,12 +126,31 @@ const App = () => {
       })
   }
 
-  //no error handling and no confirmation required
+  const updateComment = comment => {
+    console.log('update')
+    console.log(comment)
+    commentService
+      .update(comment)
+      .then(returnedComment => {
+        console.log(returnedComment)
+        setComments(comments.filter(c => c.id !== comment.id).concat(returnedComment))
+      })
+      .catch(error => {
+        console.log(error)
+        setComments(comments.filter(c => c.id !== comment.id))
+      })
+  }
+
+  //no confirmation required
   const deleteComment = id => {
     console.log(`delete id ${id}`)
     commentService
       .deletePerson(id)
       .then(() => {
+        setComments(comments.filter(c => c.id !== id))
+      })
+      .catch(error => {
+        console.log(error)
         setComments(comments.filter(c => c.id !== id))
       })
   }
@@ -171,6 +192,7 @@ const App = () => {
         }
         {view === 'sleepperiods' &&
           <>
+            <FilteredView date={dateFilter} />
             <SleepPeriods
               sleepPeriods={filteredSleepPeriods}
               addSleepPeriod={addSleepPeriod}
@@ -195,6 +217,7 @@ const App = () => {
               handleQualityChange={handleQualityChange}
               addComment={addComment}
               deleteComment={deleteComment}
+              updateComment={updateComment}
             />
             <Externals 
               externals={exts}
