@@ -18,6 +18,7 @@ const User = ({
   }) => {
     const [editMode, setEditMode] = useState(false)
     const [editableUser, setUser] = useState(user)
+    const [editablePassword, setEditPassword] = useState("")
     console.log(user)
     return (
       <div className='product clearfix'>
@@ -37,13 +38,22 @@ const User = ({
             <p>Password: 
               <input
                 onChange = {
-                  event => setUser({...editableUser,
-                    password: event.target.value
-                  })
+                  event => setEditPassword(event.target.value)
                 }
-                type='text'
-                id='password'
-                name='password'
+                type='password'
+                id='editablePassword'
+                name='editablePassword'
+                value=""
+              />
+            </p>
+            <p>Password Again: 
+              <input
+                onChange = {
+                  event => setPasswordAgain(event.target.value)
+                }
+                type='password'
+                id='passwordAgain'
+                name='passwordAgain'
                 value=""
               />
             </p>
