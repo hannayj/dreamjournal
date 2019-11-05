@@ -10,6 +10,7 @@ import Footer from './components/Footer'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
 import FilteredView from './components/FilteredView'
+import DateSelect from './components/DateSelect'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -114,25 +115,31 @@ const App = () => {
 
   const addComment = (event) => {
     event.preventDefault()
-    const newComment = { comment, commentDate, sleepQuality }
-    console.log(newComment)
-    commentService
-      .create(newComment)
-      .then(returnedComment => {
-        setComments(comments.concat(returnedComment))
-        setComment('')
-        setCommentDate('')
-        setSleepQuality('MEDIUM')
-      })
+      if(comment && commentDate && sleepQuality){
+      const newComment = { comment, commentDate, sleepQuality }
+      console.log(newComment)
+      commentService
+        .create(newComment)
+        .then(returnedComment => {
+          setComments(comments.concat(returnedComment))
+          setComment('')
+          setCommentDate('')
+          setSleepQuality('MEDIUM')
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      } else {
+        if (!comment) console.log('comment null')
+        if (!commentDate) console.log('comment date null')
+        if (!sleepQuality) console.log('sleep quality null')
+      }
   }
 
   const updateComment = comment => {
-    console.log('update')
-    console.log(comment)
     commentService
       .update(comment)
       .then(returnedComment => {
-        console.log(returnedComment)
         setComments(comments.filter(c => c.id !== comment.id).concat(returnedComment))
       })
       .catch(error => {
@@ -177,8 +184,12 @@ const App = () => {
   const handleExtTypeChange = (event) => setExtType(event.target.value)
   const handleQuantityChange = (event) => setQuantity(event.target.value)
 
+  const handleDatePickerChange = (date) => {
+    setDateFilter(date.getTime())
+  }
+
   return (
-    <div class='container'>
+    <div className='container'>
       <Header
         changeView={changeView}
       />
@@ -192,7 +203,18 @@ const App = () => {
         }
         {view === 'sleepperiods' &&
           <>
-            <FilteredView date={dateFilter} />
+            <DateSelect startDate={dateFilter} handleDateChange={handleDatePickerChange} />
+            <FilteredView 
+              date={dateFilter}
+              sleeps={sleepPeriods}
+              comments={comments}
+              exts={exts}
+              updateSleepPeriod={updateSleepPeriod}
+              removeSleepPeriod={removeSleepPeriod}
+              deleteComment={deleteComment}
+              updateComment={updateComment}
+            />
+            <hr />
             <SleepPeriods
               sleepPeriods={filteredSleepPeriods}
               addSleepPeriod={addSleepPeriod}

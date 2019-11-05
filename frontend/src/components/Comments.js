@@ -68,7 +68,6 @@ const Comments = ({
                         comment={c}
                         deleteComment={deleteComment}
                         updateComment={updateComment}
-                        qualitySelect={selectionInputs.values}
                     />)
             }
         </div>

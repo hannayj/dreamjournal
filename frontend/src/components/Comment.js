@@ -1,9 +1,33 @@
 import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table'
 
-const Comment = ({ comment, deleteComment, updateComment, qualitySelect }) => {
+const Comment = ({ comment, deleteComment, updateComment }) => {
     const [editMode, setEditMode] = useState(false)
     const [editComment, setComment] = useState(comment)
+
+    const qualities = [
+        {
+            id: 1,
+            value: 'HIGHEST'
+        },
+        {
+            id: 2,
+            value: 'HIGH'
+        },
+        {
+            id: 3,
+            value: 'MEDIUM'
+        },
+        {
+            id: 4,
+            value: 'LOW'
+        },
+        {
+            id: 5,
+            value: 'LOWEST'
+        }
+    ]
+
     return (
         <div>
             {editMode === false &&
@@ -53,7 +77,7 @@ const Comment = ({ comment, deleteComment, updateComment, qualitySelect }) => {
                                             sleepQuality: event.target.value
                                         })
                                     }>
-                                    {qualitySelect.map(q => <option key={q.id} value={q.value}>{q.value}</option>)}
+                                    {qualities.map(q => <option key={q.id} value={q.value}>{q.value}</option>)}
                                 </select>
                             </th>
                         </tr>
