@@ -12,14 +12,44 @@ const User = ({
     setEmail,
     password, 
     setPassword, 
-    passwordAgain, 
-    setPasswordAgain,
     updateUser
   }) => {
     const [editMode, setEditMode] = useState(false)
     const [editableUser, setUser] = useState(user)
-    const [editablePassword, setEditPassword] = useState("")
-    console.log(user)
+    const [error, setError] = useState("")
+
+    function useInput(initialValue){
+      const [value, setValue] = useState(initialValue);
+      function handleChange(e){        
+        setValue(e.target.value);    
+      }
+      return [value,handleChange];
+   }
+
+   function handleSubmit(e) {
+     e.preventDefault();
+     console.log("hello from handleSubmit")
+     //password checking logic
+     let password1 = document.getElementById('newPassword').value;
+     console.log(password1)
+     let password2 = document.getElementById('passwordAgain').value;
+     console.log(password1)
+     if (password1 === "" || password2 === "") {
+      setError("Please enter new password values to both fields")
+     } else if (password1 === password2) {
+      setUser({...editableUser,
+        password: password1})
+        updateUser(editableUser)
+        console.log("Password updated")
+     } else {
+      setError("Passwords do not match")
+     }
+   }
+
+    const [newPassword, setNewPassword] = useInput("")
+    const [passwordAgain, setPasswordAgain] = useInput("")
+
+    //console.log(user)
     return (
       <div className='product clearfix'>
         { editMode === false && 
@@ -35,31 +65,18 @@ const User = ({
             <br />
             <button onClick={ () => setEditMode(true) }>Edit</button>
             <h2>Change password:</h2>
-            <p>Password: 
-              <input
-                onChange = {
-                  event => setEditPassword(event.target.value)
-                }
-                type='password'
-                id='editablePassword'
-                name='editablePassword'
-                value=""
-              />
-            </p>
-            <p>Password Again: 
-              <input
-                onChange = {
-                  event => setPasswordAgain(event.target.value)
-                }
-                type='password'
-                id='passwordAgain'
-                name='passwordAgain'
-                value=""
-              />
-            </p>
-            <button onClick={ () => {
-              updateUser(editableUser);
-            }}>Save</button>
+            <form onSubmit={handleSubmit}>
+              <p> New password:</p>
+              <input id="newPassword"type="password"
+              value={newPassword} onChange={setNewPassword}/>  
+              <br></br>
+              <p> Password again:</p>      
+              <input id="passwordAgain" type="password"
+              value={passwordAgain} onChange={setPasswordAgain}/> 
+              <br></br>   
+              <p>{error}</p>      
+              <button>Submit</button>
+           </form>
           </div>
         }
         { editMode === true && 

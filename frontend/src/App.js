@@ -34,7 +34,7 @@ const App = () => {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [passwordAgain, setPasswordAgain] = useState('')
+
 
   useEffect(() => {
     document.title = 'Sleep Diary'
@@ -195,8 +195,6 @@ const App = () => {
             setEmail={setEmail}
             password={password}
             setPassword={setPassword}
-            passwordAgain={passwordAgain}
-            setpasswordAgain={setPasswordAgain}
             updateUser={updateUser}
           />
           </>
