@@ -35,7 +35,6 @@ const App = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-
   useEffect(() => {
     document.title = 'Sleep Diary'
     fetchSleepPeriods()

@@ -16,7 +16,8 @@ const User = ({
   }) => {
     const [editMode, setEditMode] = useState(false)
     const [editableUser, setUser] = useState(user)
-    const [error, setError] = useState("")
+    const [msg, setMsg] = useState("")
+    
 
     function useInput(initialValue){
       const [value, setValue] = useState(initialValue);
@@ -26,23 +27,35 @@ const User = ({
       return [value,handleChange];
    }
 
+   function checkPassword(word) {
+     //must contain at least 1 lowercase, uppercase, number, special character (reserved ones are escaped)
+     //at least 8 digits long
+    let passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+     return passwordRegex.test(word)
+   }
+
    function handleSubmit(e) {
      e.preventDefault();
      console.log("hello from handleSubmit")
      //password checking logic
-     let password1 = document.getElementById('newPassword').value;
+     let password1 = document.getElementById('newPassword').value.trim();
      console.log(password1)
-     let password2 = document.getElementById('passwordAgain').value;
+     let password2 = document.getElementById('passwordAgain').value.trim();
      console.log(password1)
      if (password1 === "" || password2 === "") {
-      setError("Please enter new password values to both fields")
+      setMsg("Please enter values to both fields")
      } else if (password1 === password2) {
+       if (checkPassword(password1)) {
       setUser({...editableUser,
         password: password1})
         updateUser(editableUser)
         console.log("Password updated")
+        setMsg("Password changed")
+      } else {
+        setMsg("Password is not strong enough. It must contain at least 1 uppercase and 1 lowercase letter, 1 number and 1 special character and be at least 8 digits long.")
+      }
      } else {
-      setError("Passwords do not match")
+      setMsg("Passwords do not match")
      }
    }
 
@@ -74,7 +87,7 @@ const User = ({
               <input id="passwordAgain" type="password"
               value={passwordAgain} onChange={setPasswordAgain}/> 
               <br></br>   
-              <p>{error}</p>      
+              <p>{msg}</p>      
               <button>Submit</button>
            </form>
           </div>
