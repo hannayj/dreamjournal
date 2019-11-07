@@ -35,6 +35,7 @@ const App = () => {
     fetchSleepPeriods()
     fetchComments()
     fetchExternals()
+    setCurrentPeriodStart()
   }, [])
 
   const fetchSleepPeriods = () => {
@@ -188,6 +189,13 @@ const App = () => {
     setDateFilter(date.getTime())
   }
 
+  const setCurrentPeriodStart = () => {
+    const now = new Date()
+    if(now.getHours() < 12) {
+      setDateFilter(new Date(now.getTime() - 86400000))
+    }
+  }
+
   return (
     <div className='container'>
       <Header
@@ -203,7 +211,11 @@ const App = () => {
         }
         {view === 'sleepperiods' &&
           <>
-            <DateSelect startDate={dateFilter} handleDateChange={handleDatePickerChange} />
+            <DateSelect 
+              startDate={dateFilter}
+              handleDateChange={handleDatePickerChange}
+              sleepPeriods={sleepPeriods}
+            />
             <FilteredView 
               date={dateFilter}
               sleeps={sleepPeriods}
@@ -214,7 +226,6 @@ const App = () => {
               deleteComment={deleteComment}
               updateComment={updateComment}
             />
-            <hr />
             <SleepPeriods
               sleepPeriods={filteredSleepPeriods}
               addSleepPeriod={addSleepPeriod}

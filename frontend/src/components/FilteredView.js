@@ -37,6 +37,9 @@ const FilteredView = ({
         return end
     }
 
+    /**
+     * returns the param.sleeps starting between [getStartTime(),getEndTime()[
+     */
     const getSleeps = () => {
         if(sleeps) {
             const filtered = sleeps.filter(s => {
@@ -89,8 +92,10 @@ const FilteredView = ({
 //<button onClick={() => console.log(getFiltered())}>clack</button>
     return(
         <>
-            <h1>FilteredView</h1>
-            <div>{getStartTime().toLocaleString()} - {getEndTime().toLocaleString()}</div>
+            <hr />
+            <h5>Selected time period</h5>
+            <h6><b>{getStartTime().toLocaleString()} - {getEndTime().toLocaleString()}</b></h6>
+            <hr />
             {getFiltered().filteredSleeps.map(s =>
                 <SleepPeriod 
                     key={s.id}
@@ -107,6 +112,7 @@ const FilteredView = ({
                     updateComment={updateComment}
                 />    
             )}
+            <hr />
         </>
     )
 }
