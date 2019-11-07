@@ -43,9 +43,6 @@ public class SleepPeriodApiController {
 	@Autowired
 	private ExternalRepository externalRepo;
 	
-	@Autowired
-	private UserRepository userRepo;
-	
 	@GetMapping("/sleepperiods/")
 	public ResponseEntity<Iterable<SleepPeriod>> findAll() {
 		Iterable<SleepPeriod> sleepPeriods = periodRepo.findAll();
@@ -113,50 +110,6 @@ public class SleepPeriodApiController {
 		return new ResponseEntity<External>(createdExternal, HttpStatus.OK);
 	}
 	
-	//get user by id
-	@GetMapping("/users/{id}")
-	public ResponseEntity<User> getEmployeeById(@PathVariable(value = "id") Long id)
-	        throws ResourceNotFoundException {
-	        User user = userRepo.findById(id)
-	          .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-	        return ResponseEntity.ok().body(user);
-	    }
-	
-	//create new user
-	@PostMapping("/users/")
-	public ResponseEntity<?> postExternal(@RequestBody User user) {
-		User createdUser = userRepo.save(user);
-		return new ResponseEntity<User>(createdUser, HttpStatus.OK);
-	}
-	
-	//update user
-	@PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long id,
-         @RequestBody User userDetails) throws ResourceNotFoundException {
-        User user = userRepo.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-
-        user.setName(userDetails.getName());
-        user.setPassword(userDetails.getPassword());
-        final User updatedUser = userRepo.save(user);
-        return ResponseEntity.ok(updatedUser);
-    }
-	
-	//delete user
-	@DeleteMapping("/users/{id}")
-    public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long id)
-         throws ResourceNotFoundException {
-        User user = userRepo.findById(id)
-       .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-
-        userRepo.delete(user);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
-    }
-
-
-
 	@PutMapping("/sleepperiods/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody SleepPeriod sleepPeriod) {
 		log.info("Updating SleepPeriod: {}", sleepPeriod);
