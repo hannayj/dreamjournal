@@ -17,7 +17,8 @@ const User = ({
     const [editMode, setEditMode] = useState(false)
     const [editableUser, setUser] = useState(user)
     const [msg, setMsg] = useState("")
-    
+    const [newPassword, setNewPassword] = useInput("")
+    const [passwordAgain, setPasswordAgain] = useInput("")
 
     function useInput(initialValue){
       const [value, setValue] = useState(initialValue);
@@ -33,7 +34,7 @@ const User = ({
     let passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
      return passwordRegex.test(word)
    }
-
+  
    function handleSubmit(e) {
      e.preventDefault();
      console.log("hello from handleSubmit")
@@ -46,21 +47,18 @@ const User = ({
       setMsg("Please enter values to both fields")
      } else if (password1 === password2) {
        if (checkPassword(password1)) {
-      setUser({...editableUser,
-        password: password1})
+        setUser({...editableUser,
+          password: password1})
         updateUser(editableUser)
         console.log("Password updated")
         setMsg("Password changed")
-      } else {
-        setMsg("Password is not strong enough. It must contain at least 1 uppercase and 1 lowercase letter, 1 number and 1 special character and be at least 8 digits long.")
+        } else {
+        setMsg("Password must contain uppercase and lowercase letters, 1 number and 1 special character and be at least 8 digits long.")
       }
      } else {
       setMsg("Passwords do not match")
      }
    }
-
-    const [newPassword, setNewPassword] = useInput("")
-    const [passwordAgain, setPasswordAgain] = useInput("")
 
     //console.log(user)
     return (
