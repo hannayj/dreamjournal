@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import sleepPeriodService from './services/sleepPeriods'
 import commentService from './services/comments'
 import externalService from './services/externals'
-import settingsService from './services/settings'
 
 import SleepPeriods from './components/SleepPeriods'
 import Header from './components/Header'
@@ -10,7 +9,6 @@ import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
-import Settings from './components/Settings'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -28,9 +26,6 @@ const App = () => {
   const [externalDate, setExternalDate] = useState('')
   const [externalType, setExternalType] = useState('COFFEE')
   const [quantity, setQuantity] = useState('')
-  const [name, setName] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordAgain, setPasswordAgain] = useState('')
 
   useEffect(() => {
     document.title = 'Sleep Diary'
@@ -135,6 +130,7 @@ const App = () => {
 
   const addExt = (event) => {
     event.preventDefault()
+    if (externalDate && externalType && quantity) {
     const newExt = { externalDate, externalType, quantity }
     console.log(newExt)
     externalService
@@ -145,6 +141,12 @@ const App = () => {
         setExternalType('')
         setQuantity('')
       })
+      .catch(error => {
+        console.log(error)
+      })
+    } else {
+      console.log("empty values")
+    }
   }
 
   const deleteExternal = id => {
@@ -156,24 +158,23 @@ const App = () => {
       })
   }
 
-  const updateExternal = id => {
-    console.log(`update id ${id}`)
+  const updateExternal = ext => {
     externalService
-    .update(id)
-    .then(() => {
-      setExts(exts.filter(e => e.id !== id))
-    })
+      .update(ext)
+      .then(returnedExternal => {
+        setExts(exts.filter(e => e.id !== ext.id).concat(returnedExternal))
+      })
+      .catch(error => {
+        console.log(error)
+        setExts(exts.filter(e => e.id !== ext.id))
+      })
   }
 
   const handleExtDateChange = (event) => setExternalDate(event.target.value)
   const handleExtTypeChange = (event) => setExternalType(event.target.value)
   const handleQuantityChange = (event) => setQuantity(event.target.value)
 
-  //add service
-  const handleNameChange = (event) => setName(event.target.value)
-  const handlePasswordChange = (event) => setPassword(event.target.value)
-  const handlePasswordAgainChange = (event) => setPasswordAgain(event.target.value)
-
+ 
   return (
     <div id='container'>
       <Header
@@ -186,14 +187,6 @@ const App = () => {
         {view === 'settings' &&
           // TODO: add settings view
           <>
-          <Settings 
-            name={name}
-            handleNameChange={handleNameChange}
-            password={password}
-            handlePasswordChange={handlePasswordChange}
-            passwordAgain={passwordAgain}
-            handlePasswordAgainChange={handlePasswordAgainChange}
-          />
           </>
         }
         {view === 'sleepperiods' &&

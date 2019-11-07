@@ -6,15 +6,10 @@ const External = ({
     updateExternal 
 }) => {
     const [editMode, setEditMode] = useState(false)
-  const [editableExternal, setExternal] = useState(ext)
-  const typeChange = event => setExternal({...editableExternal,
-    externalType: event.target.value
-    })
+    const [editableExternal, setExternal] = useState(ext)
 
-  const selectionInputs = {
-    value: ext.externalType,
-    onChange: typeChange,
-    values: [
+    const factors = [
+
         {
             id: 1,
             value: 'COFFEE'
@@ -32,8 +27,6 @@ const External = ({
             value: 'OTHER'
         }
     ]
-}
-
   
     return (
         <div className='product clearfix'>
@@ -68,9 +61,17 @@ const External = ({
                                     value={ editableExternal.externalDate }
                                     /></th>
                             <th>External type: 
-                                <select value={selectionInputs.value} onChange={selectionInputs.onChange}>
-                                    {selectionInputs.values.map(v => <option key={v.id} value={v.value}>{v.value}</option>)}
-                                </select></th>
+                                <select 
+                                    value={editableExternal.externalType} 
+                                    onChange={
+                                        event => setExternal({
+                                            ...editableExternal,
+                                            externalType: event.target.value
+                                        })
+                                    }>
+                                    {factors.map(f => <option key={f.id} value={f.value}>{f.value}</option>)}
+                                   </select> 
+                                </th>
                             <th> Quantity: <input
                                     onChange = {
                                         event => setExternal({...editableExternal,
@@ -84,7 +85,7 @@ const External = ({
                                     /></th>
                             <td><button onClick={() => deleteExternal(ext.id)}>Delete</button></td>
                             <td><button onClick={() => {
-                                updateExternal(editableExternal.id);
+                                updateExternal(editableExternal);
                                 setEditMode(false)
                                 }}>Update</button></td>
                         </tr>
