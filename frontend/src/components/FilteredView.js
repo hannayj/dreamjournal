@@ -66,9 +66,6 @@ const FilteredView = ({
         }
     }
 
-    /**
-     * DOES NOT WORK SINCE EXTERNALS DONT WORK
-     */
     const getExts = () => {
         if(exts) {
             const filtered = exts.filter(e => {
@@ -86,10 +83,11 @@ const FilteredView = ({
     const getFiltered = () => {
         return {
             filteredSleeps: getSleeps(),
-            filteredComments: getComments()
+            filteredComments: getComments(),
+            filteredExts: getExts()
         }
     }
-//<button onClick={() => console.log(getFiltered())}>clack</button>
+    
     return(
         <>
             <hr />
