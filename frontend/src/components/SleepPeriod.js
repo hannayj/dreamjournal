@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
 
 const SleepPeriod = ({
   sleepPeriod,
@@ -19,8 +20,8 @@ const SleepPeriod = ({
           <p>End time: { sleepPeriod.endTime }</p>
           <p>Duration: { sleepPeriod.duration }h</p>
           <br />
-          <button onClick={ () => removeSleepPeriod(sleepPeriod) }>Delete</button>
-          <button onClick={ () => setEditMode(true) }>Edit</button>
+          <Button onClick={ () => removeSleepPeriod(sleepPeriod) } variant="danger" size="sm">Delete</Button>
+          <Button onClick={ () => setEditMode(true) } variant="warning" size="sm">Edit</Button>
         </div>
       }
       { editMode === true && 

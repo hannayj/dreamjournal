@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 const AddSleepPeriodForm = ({
   startTime,
@@ -9,9 +10,9 @@ const AddSleepPeriodForm = ({
 }) => {
   return (
     <div id='new'>
-      <h1>
+      <h2>
         Add new sleep period
-      </h1>
+      </h2>
       <form onSubmit={ addSleepPeriod() }>
         <label htmlFor='startTime'>Start time</label>
         <br />
@@ -33,7 +34,8 @@ const AddSleepPeriodForm = ({
           value={ endTime }
         />
         <br />
-        <button type='submit'>Add new sleep period</button>
+        <p></p>
+        <Button variant='info' type='submit'>Add new sleep period</Button>
       </form>
     </div>
   )

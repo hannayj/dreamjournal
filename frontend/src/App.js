@@ -11,6 +11,8 @@ import Footer from './components/Footer'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
 import User from './components/User'
+import FilteredView from './components/FilteredView'
+import DateSelect from './components/DateSelect'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -34,6 +36,7 @@ const App = () => {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [dateFilter, setDateFilter] = useState(Date.now())
 
   useEffect(() => {
     document.title = 'Sleep Diary'
@@ -41,6 +44,7 @@ const App = () => {
     fetchComments()
     fetchExternals()
     fetchUsers()
+    setCurrentPeriodStart()
   }, [])
 
   const fetchSleepPeriods = () => {
@@ -127,15 +131,50 @@ const App = () => {
 
   const addComment = (event) => {
     event.preventDefault()
-    const newComment = { comment, commentDate, sleepQuality }
-    console.log(newComment)
+      if(comment && commentDate && sleepQuality){
+      const newComment = { comment, commentDate, sleepQuality }
+      console.log(newComment)
+      commentService
+        .create(newComment)
+        .then(returnedComment => {
+          setComments(comments.concat(returnedComment))
+          setComment('')
+          setCommentDate('')
+          setSleepQuality('MEDIUM')
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      } else {
+        if (!comment) console.log('comment null')
+        if (!commentDate) console.log('comment date null')
+        if (!sleepQuality) console.log('sleep quality null')
+      }
+  }
+
+  const updateComment = comment => {
     commentService
-      .create(newComment)
+      .update(comment)
       .then(returnedComment => {
-        setComments(comments.concat(returnedComment))
-        setComment('')
-        setCommentDate('')
-        setSleepQuality('MEDIUM')
+        setComments(comments.filter(c => c.id !== comment.id).concat(returnedComment))
+      })
+      .catch(error => {
+        console.log(error)
+        setComments(comments.filter(c => c.id !== comment.id))
+      })
+  }
+
+  //no confirmation required
+  const deleteComment = id => {
+    console.log(`delete id ${id}`)
+    commentService
+      .deletePerson(id)
+      .then(() => {
+        setComments(comments.filter(c => c.id !== id))
+      })
+      .catch(error => {
+        console.log(error)
+        setComments(comments.filter(c => c.id !== id))
       })
   }
 
@@ -197,9 +236,20 @@ const App = () => {
       })
       .catch(error => console.log(error))
   }
+  
+  const handleDatePickerChange = (date) => {
+    setDateFilter(date.getTime())
+  }
+
+  const setCurrentPeriodStart = () => {
+    const now = new Date()
+    if(now.getHours() < 12) {
+      setDateFilter(new Date(now.getTime() - 86400000))
+    }
+  }
 
   return (
-    <div id='container'>
+    <div className='container'>
       <Header
         changeView={changeView}
       />
@@ -228,6 +278,21 @@ const App = () => {
         }
         {view === 'sleepperiods' &&
           <>
+            <DateSelect 
+              startDate={dateFilter}
+              handleDateChange={handleDatePickerChange}
+              sleepPeriods={sleepPeriods}
+            />
+            <FilteredView 
+              date={dateFilter}
+              sleeps={sleepPeriods}
+              comments={comments}
+              exts={exts}
+              updateSleepPeriod={updateSleepPeriod}
+              removeSleepPeriod={removeSleepPeriod}
+              deleteComment={deleteComment}
+              updateComment={updateComment}
+            />
             <SleepPeriods
               sleepPeriods={filteredSleepPeriods}
               addSleepPeriod={addSleepPeriod}
@@ -251,6 +316,8 @@ const App = () => {
               sleepQuality={sleepQuality}
               handleQualityChange={handleQualityChange}
               addComment={addComment}
+              deleteComment={deleteComment}
+              updateComment={updateComment}
             />
             <Externals 
               externals={exts}

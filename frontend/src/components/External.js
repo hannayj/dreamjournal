@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Table from 'react-bootstrap/Table'
 
 const External = ({ 
     ext, 
@@ -27,11 +28,10 @@ const External = ({
             value: 'OTHER'
         }
     ]
-  
     return (
         <div className='product clearfix'>
             { editMode === false &&
-                <table border="1">
+                <Table striped bordered hover>
                     <tbody>
                         <tr>
                             <th>External ID {ext.id}</th>
@@ -42,10 +42,10 @@ const External = ({
                             <td><button onClick={() => setEditMode(true)}>Edit</button></td>
                         </tr>
                     </tbody>
-                </table>
+                </Table>
             } 
             { editMode === true &&
-                <table border="1">
+                <Table striped bordered hover>
                     <tbody>
                         <tr>
                             <th>External ID {ext.id}</th>
@@ -90,7 +90,7 @@ const External = ({
                                 }}>Update</button></td>
                         </tr>
                     </tbody>
-                </table>
+                </Table>
             }
         </div>
     );

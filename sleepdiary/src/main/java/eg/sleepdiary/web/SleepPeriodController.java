@@ -1,6 +1,7 @@
 package eg.sleepdiary.web;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,7 +50,7 @@ public class SleepPeriodController {
 	@GetMapping("/sleepperiodsperday")
 	public String findSleepPeriods(@RequestParam("startTime") String start,
 			@RequestParam("endTime") String end, Model model){
-		model.addAttribute("sleepPeriods", periodRepo.findAllByStartTimeBetween(Timestamp.valueOf(start + " 12:00:00"), Timestamp.valueOf(end + " 12:00:00")));
+		model.addAttribute("sleepPeriods", periodRepo.findAllByStartTimeBetween(LocalDateTime.parse(start), LocalDateTime.parse(end)));
 		return "diary";
 	}
 	
