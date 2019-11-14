@@ -68,9 +68,10 @@ const App = () => {
     try {
       const user = await accountService.login({
         userName: "user",
-        password: "Slamdance1$"
+        password: "password"
       })
-
+      console.log(user.data)
+      console.log(user.headers)
       window.localStorage.setItem('user', JSON.stringify(user))
 
       setUser(user)

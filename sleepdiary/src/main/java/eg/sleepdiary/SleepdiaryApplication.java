@@ -45,7 +45,7 @@ public class SleepdiaryApplication {
 			LocalDateTime dateTime2 = LocalDateTime.of(2019, Month.SEPTEMBER, 19, 16, 15, 00);
 			
 
-			User user1 = new User("user", "Masa", "Aho", "ma@com", "$2a$10$Fw5okLx3phk6w.PS8rzGYOadirGj0QuHyuwNool3k2040iyfitZjK", UserLevel.BASIC);
+			User user1 = new User("user", "Masa", "Aho", "ma@com", "password", UserLevel.BASIC);
 			User user2 = new User("examiner", "Eva", "Oras", "eo@com","password", UserLevel.HIGHER);
 
 			userRepo.save(user1);
