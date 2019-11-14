@@ -4,9 +4,9 @@ import sleepPeriodService from './services/sleepPeriods'
 import commentService from './services/comments'
 import externalService from './services/externals'
 import userService from './services/users'
+import accountService from './services/accounts'
 
 import SleepPeriods from './components/SleepPeriods'
-import Settings from './components/Settings'
 import Navigation from './components/Navigation'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
@@ -41,7 +41,6 @@ const App = () => {
     fetchSleepPeriods()
     fetchComments()
     fetchExternals()
-    fetchUsers()
     setCurrentPeriodStart()
   }, [])
 
@@ -61,6 +60,23 @@ const App = () => {
     externalService
       .getAll()
       .then(externals => setExts(externals))
+  }
+
+  const login = () => async (event) => {
+    event.preventDefault()
+
+    try {
+      const user = await accountService.login({
+        userName: "user",
+        password: "Slamdance1$"
+      })
+
+      window.localStorage.setItem('user', JSON.stringify(user))
+
+      setUser(user)
+    } catch (e) {
+      console.log("d'oh!")
+    }
   }
 
   const addSleepPeriod = () => (event) => {
@@ -234,10 +250,11 @@ const App = () => {
 
   return (
     <div className="container">
-      <Header changeView={changeView} />
-      <Nav changeView={changeView} />
       <Router>
         <Navigation />
+        <form onSubmit={login()}>
+          <button>Login</button>
+        </form>
         <Switch>
           <Route exact path="/">
             <>
@@ -311,7 +328,6 @@ const App = () => {
               setPassword={setPassword}
               updateUser={updateUser}
             />
-            <Settings />
           </Route>
         </Switch>
       </Router>
