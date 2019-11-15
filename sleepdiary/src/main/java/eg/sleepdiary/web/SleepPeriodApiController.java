@@ -1,11 +1,6 @@
 package eg.sleepdiary.web;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import eg.sleepdiary.domain.Comment;
@@ -25,8 +19,6 @@ import eg.sleepdiary.domain.External;
 import eg.sleepdiary.domain.ExternalRepository;
 import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.SleepPeriodRepository;
-import eg.sleepdiary.domain.User;
-import eg.sleepdiary.domain.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -38,8 +30,7 @@ public class SleepPeriodApiController {
 	@Autowired
 	private SleepPeriodRepository periodRepo;
 	@Autowired
-	private CommentRepository commentRepo;
-	
+	private CommentRepository commentRepo;	
 	@Autowired
 	private ExternalRepository externalRepo;
 	
@@ -89,41 +80,37 @@ public class SleepPeriodApiController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	//get all externals
 	@GetMapping("/externals/")
 	public ResponseEntity<Iterable<External>> getExternals() {
 		Iterable<External> externals = externalRepo.findAll();
 		return new ResponseEntity<Iterable<External>>(externals, HttpStatus.OK);
 	}
 	
-	//pitäisi luoda aina uusi ext
+	//create new external
 	@PostMapping("/externals/")
 	public ResponseEntity<?> postExternal(@RequestBody External external) {
 		External createdExternal = externalRepo.save(external);
-		return new ResponseEntity<External>(createdExternal, HttpStatus.OK);
+		return new ResponseEntity<External>(createdExternal, HttpStatus.CREATED);
 	}
-
 	
-	@DeleteMapping("/externals/{id}")
-    public Map<String, Boolean> deleteExternal(@PathVariable(value = "id") Long id)
-         throws ResourceNotFoundException {
-        External external = externalRepo.findById(id)
-       .orElseThrow(() -> new ResourceNotFoundException("External not found for this id :: " + id));
-
-        externalRepo.delete(external);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
-    }
-	
+	//update external
 	@PutMapping("/externals/{id}")
 	public ResponseEntity<?> updateExternal(@PathVariable Long id, @RequestBody External external) {
-		log.info("Updating External: {}", external);
-		if (!externalRepo.existsById(id)) {
-			log.error("An external with id {} doesn't exist", id);
+		if(!externalRepo.existsById(id)) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
-		External createdExternal = externalRepo.save(external);
-		return new ResponseEntity<External>(createdExternal, HttpStatus.OK);
+		return new ResponseEntity<External>(externalRepo.save(external), HttpStatus.OK);
+	}
+	
+	//delete an external
+	@DeleteMapping("/externals/{id}")
+	public ResponseEntity<?> deleteExternal(@PathVariable Long id) {
+		if(!externalRepo.existsById(id)) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		externalRepo.deleteById(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PutMapping("/sleepperiods/{id}")
