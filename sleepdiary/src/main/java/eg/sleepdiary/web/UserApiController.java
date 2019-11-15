@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.User;
 import eg.sleepdiary.domain.UserRepository;
 
@@ -35,11 +34,14 @@ public class UserApiController {
 	
 	//get user by id
 	@GetMapping("/users/{id}")
-	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id)
-	        throws ResourceNotFoundException {
-	        User user = userRepo.findById(id)
-	          .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-	        return ResponseEntity.ok().body(user);
+	public ResponseEntity<?> getUserById(@PathVariable Long id) {
+
+	        User user = userRepo.findById(id).orElse(null);
+			if (user == null) {
+				log.error("User with id {} doesn't exist", id);
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+	        return new ResponseEntity<User>(user, HttpStatus.OK);
 	    }
 	
 	//get all users
@@ -53,36 +55,31 @@ public class UserApiController {
 	@PostMapping("/users/")
 	public ResponseEntity<?> postUser(@RequestBody User user) {
 		User createdUser = userRepo.save(user);
-		return new ResponseEntity<User>(createdUser, HttpStatus.OK);
+		return new ResponseEntity<User>(createdUser, HttpStatus.CREATED);
 	}
 	
 	//update user
 	@PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable(value = "id") Long id,
-         @RequestBody User userDetails) throws ResourceNotFoundException {
-        User user = userRepo.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-
-        user.setName(userDetails.getName());
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setEmail(userDetails.getEmail());
-        user.setPassword(userDetails.getPassword());
-        user.setUserLevel(userDetails.getUserLevel());
-        final User updatedUser = userRepo.save(user);
-        return ResponseEntity.ok(updatedUser);
-    }
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody User user) {
+		log.info("Updating User: {}", user);
+		if (!userRepo.existsById(id)) {
+			log.error("An user with id {} doesn't exist", id);
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		User createdUser = userRepo.save(user);
+		return new ResponseEntity<User>(createdUser, HttpStatus.OK);
+	}
 	
 	//delete user
 	@DeleteMapping("/users/{id}")
-    public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long id)
-         throws ResourceNotFoundException {
-        User user = userRepo.findById(id)
-       .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-
-        userRepo.delete(user);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
-    }
+	public ResponseEntity<?> remove(@PathVariable Long id) {
+		log.info("Delete User with id {}", id);
+		User user = userRepo.findById(id).orElse(null);
+		if (user == null) {
+			log.error("User with id {} doesn't exist", id);
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		userRepo.delete(user);
+		return new ResponseEntity<>(HttpStatus.OK);
+	} 
 }
