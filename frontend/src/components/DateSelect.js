@@ -23,8 +23,12 @@ const DateSelect = ({ startDate, handleDateChange, sleepPeriods }) => {
     
     return(
         <>
-            <h1>Select the start date of the time period</h1>
-            <DatePicker selected={startDate} onChange={handleDateChange} includeDates={availableDates()} />
+            <h2>Select the start date of the time period</h2>
+            <DatePicker 
+                dateFormat="dd.MM.yyyy"
+                selected={startDate} 
+                onChange={handleDateChange} 
+                includeDates={availableDates()} />
         </>
     )
 }
