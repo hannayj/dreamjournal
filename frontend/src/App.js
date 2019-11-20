@@ -13,6 +13,7 @@ import Externals from './components/Externals'
 import User from './components/User'
 import FilteredView from './components/FilteredView'
 import DateSelect from './components/DateSelect'
+import Diary from './components/Diary'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -292,6 +293,11 @@ const App = () => {
               removeSleepPeriod={removeSleepPeriod}
               deleteComment={deleteComment}
               updateComment={updateComment}
+            />
+            <Diary
+              sleepPeriods={sleepPeriods}
+              comments={comments}
+              exts={exts}
             />
             <SleepPeriods
               sleepPeriods={filteredSleepPeriods}
