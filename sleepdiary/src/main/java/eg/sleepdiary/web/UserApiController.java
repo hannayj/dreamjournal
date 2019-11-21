@@ -38,11 +38,14 @@ public class UserApiController {
 	
 	//get user by id
 	@GetMapping("/users/{id}")
-	public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id)
-	        throws ResourceNotFoundException {
-	        User user = userRepo.findById(id)
-	          .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-	        return ResponseEntity.ok().body(user);
+	public ResponseEntity<?> getUserById(@PathVariable Long id) {
+
+	        User user = userRepo.findById(id).orElse(null);
+			if (user == null) {
+				log.error("User with id {} doesn't exist", id);
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+	        return new ResponseEntity<User>(user, HttpStatus.OK);
 	    }
 	
 	//get all users
@@ -57,7 +60,7 @@ public class UserApiController {
 	public ResponseEntity<?> postUser(@RequestBody User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		User createdUser = userRepo.save(user);
-		return new ResponseEntity<User>(createdUser, HttpStatus.OK);
+		return new ResponseEntity<User>(createdUser, HttpStatus.CREATED);
 	}
 	
 	//update user
@@ -79,14 +82,14 @@ public class UserApiController {
 	
 	//delete user
 	@DeleteMapping("/users/{id}")
-    public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long id)
-         throws ResourceNotFoundException {
-        User user = userRepo.findById(id)
-       .orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + id));
-
-        userRepo.delete(user);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
-    }
+	public ResponseEntity<?> remove(@PathVariable Long id) {
+		log.info("Delete User with id {}", id);
+		User user = userRepo.findById(id).orElse(null);
+		if (user == null) {
+			log.error("User with id {} doesn't exist", id);
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		userRepo.delete(user);
+		return new ResponseEntity<>(HttpStatus.OK);
+	} 
 }

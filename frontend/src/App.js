@@ -13,6 +13,7 @@ import Externals from './components/Externals'
 import User from './components/User'
 import FilteredView from './components/FilteredView'
 import DateSelect from './components/DateSelect'
+import Diary from './components/Diary'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
