@@ -7,6 +7,7 @@ import userService from './services/users'
 import accountService from './services/accounts'
 
 import SleepPeriods from './components/SleepPeriods'
+import Settings from './components/Settings'
 import Navigation from './components/Navigation'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
@@ -329,6 +330,7 @@ const App = () => {
               setPassword={setPassword}
               updateUser={updateUser}
             />
+            <Settings />
           </Route>
         </Switch>
       </Router>
