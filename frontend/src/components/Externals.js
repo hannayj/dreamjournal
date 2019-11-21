@@ -15,12 +15,12 @@ const Externals = ({
     updateExternal
 }) => {
     const formInputs = [
-        {
+        /*{
             name: 'ExtDate',
             type: 'datetime-local',
             value: externalDate,
             onChange: handleDateChange,
-        },
+        },*/
         {
             name: 'Quantity',
             type: 'text',
@@ -54,7 +54,7 @@ const Externals = ({
         <div>
             <h1>Externals</h1>
             <h2>Add a new external</h2>
-            <ExternalForm inputs={formInputs} select={selectionInputs} submit={addExternal} />
+            <ExternalForm inputs={formInputs} select={selectionInputs} submit={addExternal} externalDate={externalDate} handleDateChange={handleDateChange}/>
             <h1>
                 External factors 
             </h1>

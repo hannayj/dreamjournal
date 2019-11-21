@@ -224,7 +224,7 @@ const App = () => {
       })
   }
 
-  const handleExtDateChange = (event) => setExternalDate(event.target.value)
+  const handleExtDateChange = (date) => setExternalDate(date)
   const handleExtTypeChange = (event) => setExternalType(event.target.value)
   const handleQuantityChange = (event) => setQuantity(event.target.value)
 
