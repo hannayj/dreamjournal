@@ -295,6 +295,7 @@ const App = () => {
               updateComment={updateComment}
             />
             <Diary
+              date={dateFilter}
               sleepPeriods={sleepPeriods}
               comments={comments}
               exts={exts}

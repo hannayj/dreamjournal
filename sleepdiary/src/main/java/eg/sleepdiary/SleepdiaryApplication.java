@@ -41,8 +41,8 @@ public class SleepdiaryApplication {
 			LocalDateTime jakso3alku = LocalDateTime.parse("2019-09-04 00:00:00", formatter);
 			LocalDateTime jakso3loppu = LocalDateTime.parse("2019-09-04 05:00:00", formatter);
 			
-			LocalDateTime dateTime1 = LocalDateTime.of(2019, Month.SEPTEMBER, 11, 16, 15, 00);
-			LocalDateTime dateTime2 = LocalDateTime.of(2019, Month.SEPTEMBER, 19, 16, 15, 00);
+			LocalDateTime dateTime1 = LocalDateTime.of(2019, Month.SEPTEMBER, 1, 16, 15, 00);
+			LocalDateTime dateTime2 = LocalDateTime.of(2019, Month.SEPTEMBER, 2, 16, 15, 00);
 			
 
 			User user1 = new User("user", "Masa", "Aho", "ma@com", "password", UserLevel.BASIC);
