@@ -19,6 +19,7 @@ const Filter = ({
       <DatePicker
         selected={filterStartDate}
         onChange={value => setFilterStartDate(value)}
+        dateFormat="dd/MM/yyyy"
         id='filterStartDate'
         name='filterStartDate'
       />
@@ -28,6 +29,7 @@ const Filter = ({
       <DatePicker
         selected={filterEndDate}
         onChange={value => setFilterEndDate(value)}
+        dateFormat="dd/MM/yyyy"
         id='filterEndDate'
         name='filterEndDate'
       />
