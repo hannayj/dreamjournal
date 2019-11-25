@@ -13,6 +13,8 @@ import eg.sleepdiary.domain.Comment;
 import eg.sleepdiary.domain.CommentRepository;
 import eg.sleepdiary.domain.ExternalRepository;
 import eg.sleepdiary.domain.ExternalType;
+import eg.sleepdiary.domain.Permission;
+import eg.sleepdiary.domain.PermissionRepository;
 import eg.sleepdiary.domain.External;
 import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.SleepPeriodRepository;
@@ -30,7 +32,7 @@ public class SleepdiaryApplication {
 
 	@Bean
 	public CommandLineRunner demo(SleepPeriodRepository periodRepo, UserRepository userRepo,
-			CommentRepository commentRepo, ExternalRepository extRepo) {
+			CommentRepository commentRepo, ExternalRepository extRepo, PermissionRepository permRepo) {
 		return (args) -> {
 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -44,9 +46,11 @@ public class SleepdiaryApplication {
 			LocalDateTime dateTime1 = LocalDateTime.of(2019, Month.SEPTEMBER, 11, 16, 15, 00);
 			LocalDateTime dateTime2 = LocalDateTime.of(2019, Month.SEPTEMBER, 19, 16, 15, 00);
 			
-
-			User user1 = new User("user", "Masa", "Aho", "ma@com", "password", UserLevel.BASIC);
-			User user2 = new User("examiner", "Eva", "Oras", "eo@com","password", UserLevel.HIGHER);
+			User admin = new User("admin", "Antti", "Min", "amin@com", "password", UserLevel.HIGHER);
+			userRepo.save(admin);
+			
+			User user1 = new User("user", "Masa", "Aho", "ma@com", "password", UserLevel.BASIC, new Permission(admin));
+			User user2 = new User("examiner", "Eva", "Oras", "eo@com","password", UserLevel.HIGHER, new Permission(admin));
 
 			userRepo.save(user1);
 			userRepo.save(user2);
