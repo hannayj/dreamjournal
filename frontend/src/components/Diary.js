@@ -12,6 +12,7 @@ const Diary = ({
     exts
 }) => {
 
+  /*
   const getDayArray = () => {
     let day = new Date(date) 
     let startDate = moment(day).startOf("day").toDate();
@@ -28,20 +29,22 @@ const Diary = ({
     //const dummy = new Date('2019-09-01T12:00:00')
 
     return dates
-} 
-
-    const getDays = () => {
-      return {
-          sortedDates: getDayArray()
-      }
-    }
-
+} */
+  const startDate = () => {
+    let day = new Date(date) 
+    let startDate = moment(day).startOf("day").toDate();
+    return startDate
+  }
     //TODO fix: date follows the value of dateselect
-    const startDate = () => {
-      let day = new Date(date)     
-      let start = moment(day).startOf("day").toDate();
+    const dayValues = () => {
+      let selectedDate = new Date(date)
+      let day = {
+        id: 1,
+        start: moment(selectedDate).startOf("day").toDate(), 
+        end: moment(selectedDate).endOf("day").toDate()       
+      }
     // const startDate = moment('2019-09-01T12:00:00').startOf("day").toDate();
-      return start
+      return day
     }
 
     const groups = [{ id: 1, title: 'entries' }]
@@ -94,15 +97,15 @@ console.log(items)
     return (
         <div>
              <h6><b>{moment(startDate()).format('DD.MM.YYYY')}</b></h6>
-            { getDays().sortedDates.map(d =>
+            
             <Timeline
-              key={d.id}
+              key={dayValues().id}
               groups={groups}
               items={items}
-              defaultTimeStart={d.start}
-              defaultTimeEnd={d.end}
+              defaultTimeStart={dayValues().start}
+              defaultTimeEnd={dayValues().end}
             />
-             )}
+             
         </div>
     )
 }
