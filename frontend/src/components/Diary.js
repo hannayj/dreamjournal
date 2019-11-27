@@ -11,14 +11,13 @@ const Diary = ({
     comments,
     exts
 }) => {
-    //TODO fix: date follows the value of dateselect
-    //const startDate = moment(date).startOf("day").toDate();
-    const startDate = moment('2019-09-01T12:00:00').startOf("day").toDate();
 
-
-    const dates = []	
-    //TODO make an input to set the state of the value for repeats, currently 14 days
-		for (let i = 0; i<14; i++) {
+  const getDayArray = () => {
+    let day = new Date(date) 
+    let startDate = moment(day).startOf("day").toDate();
+    let dates = []	
+    //TODO make an input to set the state of the value for repeats, currently 7 days
+		for (let i = 0; i<7; i++) {
 			dates.push({
         id: i,
         start: moment(startDate).add(i, "day").startOf("day").toDate(),
@@ -26,60 +25,76 @@ const Diary = ({
       })
 		}
     //console.log(dates)
+    //const dummy = new Date('2019-09-01T12:00:00')
+
+    return dates
+} 
+
+    const getDays = () => {
+      return {
+          sortedDates: getDayArray()
+      }
+    }
+
+    //TODO fix: date follows the value of dateselect
+    const startDate = () => {
+      let day = new Date(date)     
+      let start = moment(day).startOf("day").toDate();
+    // const startDate = moment('2019-09-01T12:00:00').startOf("day").toDate();
+      return start
+    }
 
     const groups = [{ id: 1, title: 'entries' }]
     //console.log(sleepPeriods)
     let array, array1, array2 = []
     const items = []
     
-    array = sleepPeriods.map( s => s.id)
-    array1 = sleepPeriods.map( s => Math.floor(moment(s.startTime).valueOf() / 10000000) * 10000000)
-    array2 = sleepPeriods.map( s => Math.floor(moment(s.endTime).valueOf() / 10000000) * 10000000)
-    let length = array.length
-   // console.log(array)
-  
-    for (let i = 0; i<length; i++) {
-      items.push({
-        id: array[i],
-        group: 1,
-        title: 'sleep',
-        start_time: array1[i],
-        end_time: array2[i]
-      })
-      //console.log(items[i])
-    }
+      array = sleepPeriods.map( s => s.id)
+      array1 = sleepPeriods.map( s => Math.floor(moment(s.startTime).valueOf() / 10000000) * 10000000)
+      array2 = sleepPeriods.map( s => Math.floor(moment(s.endTime).valueOf() / 10000000) * 10000000)
+      let length = array.length
     
-
-    let extArray1, extArray2, extArray3 = []
-    
-    extArray1 = exts.map( e => e.id)
-    extArray2 = exts.map( e => Math.floor(moment(e.externalDate).valueOf() / 10000000) * 10000000)
-    extArray3 = exts.map( e => e.externalType + " " + e.quantity)
-    let length2 = extArray1.length
-   // console.log(extArray1)
-    
-   for (let i = 0; i<length2; i++) {
-    items.push({
-      id: extArray1[i] + length, //needs to be unique id 
-      group: 1,
-      title: extArray3[i],
-      start_time: extArray2[i],
-      end_time: extArray2[i],
-      itemProps: {
-        style: {
-          color: 'black',
-          background: 'red'
-        }
+      for (let i = 0; i<length; i++) {
+        items.push({
+          id: array[i],
+          group: 1,
+          title: 'sleep',
+          start_time: array1[i],
+          end_time: array2[i]
+        })
+        //console.log(items[i])
       }
-    })
-    //console.log(items[i])
-  }
-  console.log(items)
 
+      let extArray1, extArray2, extArray3 = []
+      
+      extArray1 = exts.map( e => e.id)
+      extArray2 = exts.map( e => Math.floor(moment(e.externalDate).valueOf() / 10000000) * 10000000)
+      extArray3 = exts.map( e => e.externalType + " " + e.quantity)
+      let length2 = extArray1.length
+    // console.log(extArray1)
+      
+    for (let i = 0; i<length2; i++) {
+      items.push({
+        id: extArray1[i] + length, //needs to be unique id 
+        group: 1,
+        title: extArray3[i],
+        start_time: extArray2[i],
+        end_time: extArray2[i],
+        itemProps: {
+          style: {
+            color: 'black',
+            background: 'red'
+          }
+        }
+      })
+    }
+
+console.log(items)
+  
     return (
         <div>
-             <h6><b>{moment(startDate).format('DD.MM.YYYY')}</b></h6>
-            { dates.map(d =>
+             <h6><b>{moment(startDate()).format('DD.MM.YYYY')}</b></h6>
+            { getDays().sortedDates.map(d =>
             <Timeline
               key={d.id}
               groups={groups}

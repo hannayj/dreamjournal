@@ -1,6 +1,7 @@
 import React from 'react';
 import SleepPeriod from './SleepPeriod'
 import Comment from './Comment'
+import Diary from './Diary'
 
 const FilteredView = ({
     date,
@@ -70,7 +71,7 @@ const FilteredView = ({
         if(exts) {
             const filtered = exts.filter(e => {
                 // WHAT IS THE NAME OF THE DATETIME VARIABLE FOR EXTS?
-                const start = new Date(e.extDate).getTime()
+                const start = new Date(e.externalDate).getTime()
                 if(start >= getStartTime().getTime() && start < getEndTime().getTime()) {
                     return true
                 }
@@ -111,6 +112,12 @@ const FilteredView = ({
                 />    
             )}
             <hr />
+            <Diary
+                date={getStartTime()}
+                sleepPeriods={getFiltered().filteredSleeps}
+                comments={getFiltered().filteredComments}
+                exts={getFiltered().filteredExts}
+            />
         </>
     )
 }
