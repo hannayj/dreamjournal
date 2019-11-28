@@ -14,6 +14,7 @@ const CustomTimeline = ({
 
   let commentArray1 = comments.map(c => c.commentDate)
   let commentArray2 = comments.map(c => c.comment)
+  let commentArray3 = comments.map(c => c.sleepQuality)
 
   const getDayArray = () => {
     //TODO fix: date follows the value of dateselect
@@ -30,10 +31,12 @@ const CustomTimeline = ({
         let b = moment(beginning).add(i, "day").startOf("day")
         console.log("commentdate: ", a.format('DD.MM.YYYY'))
         console.log("date in loop: ", b.format('DD.MM.YYYY'))
-        // if comment date is the same as the timeline date (difference in days is 0=, add to array
+        // if comment date is the same as the timeline date (difference in days is 0), add to array
+        //does the comment belong to the same day or the day before?
         console.log("difference: ", a.diff(b))
         if (a.diff(b) === 0) {
-          comment = commentArray2[j]
+          comment = 
+          moment(commentArray1[j]).format('dddd') + ": " + commentArray2[j] + ", sleepquality: " + commentArray3[j]
           console.log(comment)
         }
       }
@@ -107,7 +110,7 @@ console.log(items)
         <div>
              <h6><b>{moment(startDate()).format('DD.MM.YYYY')}</b></h6>
              { getDayArray().map(d =>
-             <div>
+             <div key={d.id}>
               <Timeline
                 key={d.id}
                 groups={groups}
