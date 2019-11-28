@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Button from 'react-bootstrap/Button';
 import Timeline from 'react-calendar-timeline'
 // make sure you include the timeline stylesheet or the timeline will not be styled
 import 'react-calendar-timeline/lib/Timeline.css'
@@ -12,6 +13,8 @@ const CustomTimeline = ({
     exts
 }) => {
 
+  const [repeats, setRepeats] = useState(1)
+
   let commentArray1 = comments.map(c => c.commentDate)
   let commentArray2 = comments.map(c => c.comment)
   let commentArray3 = comments.map(c => c.sleepQuality)
@@ -24,7 +27,7 @@ const CustomTimeline = ({
     console.log("alku: ", beginning)
     let dates = []	
     //TODO make an input to set the state of the value for repeats, currently 7 days
-		for (let i = 0; i<7; i++) {
+		for (let i = 0; i < repeats; i++) {
       let comment = ""
       for (let j=0; j<commentArray1.length; j++) {
         let a = moment(commentArray1[j]).startOf("day")
@@ -109,6 +112,9 @@ console.log(items)
     return (
         <div>
              <h6><b>{moment(startDate()).format('DD.MM.YYYY')}</b></h6>
+             <Button onClick={ () => setRepeats(1) } variant="warning" size="sm">Show 1 day</Button>
+             <Button onClick={ () => setRepeats(7) } variant="warning" size="sm">Show 1 week</Button>
+             <Button onClick={ () => setRepeats(14) } variant="warning" size="sm">Show 2 weeks</Button>
              { getDayArray().map(d =>
              <div key={d.id}>
               <Timeline
