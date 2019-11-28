@@ -74,8 +74,8 @@ const CustomTimeline = ({
 
     let array, array1, array2 = []
       array = sleepPeriods.map( s => s.id)
-      array1 = sleepPeriods.map( s => Math.floor(moment(s.startTime).valueOf() / 10000000) * 10000000)
-      array2 = sleepPeriods.map( s => Math.floor(moment(s.endTime).valueOf() / 10000000) * 10000000)
+      array1 = sleepPeriods.map( s => moment(s.startTime) )
+      array2 = sleepPeriods.map( s => moment(s.endTime) )
       let length = array.length
     
       for (let i = 0; i<length; i++) {
@@ -92,7 +92,7 @@ const CustomTimeline = ({
       let extArray1, extArray2, extArray3 = []
       
       extArray1 = exts.map( e => e.id)
-      extArray2 = exts.map( e => Math.floor(moment(e.externalDate).valueOf() / 10000000) * 10000000)
+      extArray2 = exts.map( e => moment(e.externalDate) )
       extArray3 = exts.map( e => e.externalType + " " + e.quantity)
       let length2 = extArray1.length
     // console.log(extArray1)
@@ -113,7 +113,7 @@ const CustomTimeline = ({
       })
     }
 
-//console.log(items)
+console.log(items)
   
     return (
         <div>
