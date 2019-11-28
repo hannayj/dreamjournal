@@ -123,12 +123,6 @@ const FilteredView = ({
                 />    
             )}
             <hr />
-            <CustomTimeline
-                date={getStartTime()}
-                sleepPeriods={getFiltered().filteredSleeps}
-                comments={getFiltered().filteredComments}
-                exts={getFiltered().filteredExts}
-            />
         </>
     )
 }

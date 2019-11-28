@@ -55,9 +55,11 @@ public class SleepdiaryApplication {
 			SleepPeriod u2 = new SleepPeriod(jakso2alku, jakso2loppu, user1);
 			SleepPeriod u3 = new SleepPeriod(jakso3alku, jakso3loppu, user1);
 			
-			Comment comment = new Comment("Tämä on kommentti", jakso1loppu, user1, SleepQuality.HIGH);
+			Comment comment = new Comment("This is a comment", jakso1loppu, user1, SleepQuality.HIGH);
+			Comment comment2 = new Comment("Sleep sleep sleep!", jakso3loppu, user1, SleepQuality.LOW);
 			
 			commentRepo.save(comment);
+			commentRepo.save(comment2);
 			periodRepo.save(u1);
 			periodRepo.save(u2);
 			periodRepo.save(u3);

@@ -280,7 +280,7 @@ const App = () => {
         {view === 'sleepperiods' &&
           <>
             <DateSelect 
-              startDate={dateFilter}
+              startDate={Date.now()}
               handleDateChange={handleDatePickerChange}
               sleepPeriods={sleepPeriods}
             />
