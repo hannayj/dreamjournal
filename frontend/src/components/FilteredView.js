@@ -1,7 +1,7 @@
 import React from 'react';
 import SleepPeriod from './SleepPeriod'
 import Comment from './Comment'
-import Diary from './Diary'
+import CustomTimeline from './CustomTimeline'
 
 const FilteredView = ({
     date,
@@ -112,7 +112,7 @@ const FilteredView = ({
                 />    
             )}
             <hr />
-            <Diary
+            <CustomTimeline
                 date={getStartTime()}
                 sleepPeriods={getFiltered().filteredSleeps}
                 comments={getFiltered().filteredComments}

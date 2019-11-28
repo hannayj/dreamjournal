@@ -13,7 +13,7 @@ import Externals from './components/Externals'
 import User from './components/User'
 import FilteredView from './components/FilteredView'
 import DateSelect from './components/DateSelect'
-import Diary from './components/Diary'
+import CustomTimeline from './components/CustomTimeline'
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -294,7 +294,7 @@ const App = () => {
               deleteComment={deleteComment}
               updateComment={updateComment}
             />
-            <Diary
+            <CustomTimeline
               date={dateFilter}
               sleepPeriods={sleepPeriods}
               comments={comments}

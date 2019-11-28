@@ -5,7 +5,7 @@ import 'react-calendar-timeline/lib/Timeline.css'
 import moment from 'moment'
 //import interact from 'interactjs'
 
-const Diary = ({
+const CustomTimeline = ({
     date,
     sleepPeriods, 
     comments,
@@ -110,4 +110,4 @@ console.log(items)
     )
 }
 
-export default Diary
+export default CustomTimeline
