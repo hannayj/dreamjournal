@@ -42,10 +42,10 @@ public class User {
 	private List<External> externals;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Permission> users;
+	private List<Permission> user;
 	
 	@OneToMany(mappedBy = "supervisor", cascade = CascadeType.ALL)
-	private List<Permission> supervisors = new ArrayList<>();
+	private List<Permission> supervisor = new ArrayList<>();
 	
 	public User(String name, String firstName, String lastName, String email, 
 			String password, UserLevel userLevel) {
@@ -68,7 +68,7 @@ public class User {
 		for(Permission p : permissions) {
 			p.setUser(this);
 		}
-		this.supervisors = Stream.of(permissions).collect(Collectors.toList());
+		this.supervisor = Stream.of(permissions).collect(Collectors.toList());
 	}
 	
 }

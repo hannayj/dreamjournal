@@ -36,6 +36,7 @@ const App = () => {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [noPeriods, setNoPeriods] = useState(1)
   const [dateFilter, setDateFilter] = useState(Date.now())
 
   useEffect(() => {
@@ -69,6 +70,13 @@ const App = () => {
     userService
     .getAll()
     .then(users => setUser(users[0]))
+  }
+
+  const setCurrentPeriodStart = () => {
+    const now = new Date()
+    if(now.getHours() < 12) {
+      setDateFilter(new Date(now.getTime() - (86400000 * noPeriods)))
+    }
   }
 
   const hideFooter = () => {
@@ -241,11 +249,8 @@ const App = () => {
     setDateFilter(date.getTime())
   }
 
-  const setCurrentPeriodStart = () => {
-    const now = new Date()
-    if(now.getHours() < 12) {
-      setDateFilter(new Date(now.getTime() - 86400000))
-    }
+  const handleLengthChange = (value) => {
+    setNoPeriods(Number(value))
   }
 
   return (
@@ -282,9 +287,12 @@ const App = () => {
               startDate={dateFilter}
               handleDateChange={handleDatePickerChange}
               sleepPeriods={sleepPeriods}
+              length={noPeriods}
+              setLength={handleLengthChange}
             />
             <FilteredView 
               date={dateFilter}
+              length={noPeriods}
               sleeps={sleepPeriods}
               comments={comments}
               exts={exts}
@@ -292,6 +300,8 @@ const App = () => {
               removeSleepPeriod={removeSleepPeriod}
               deleteComment={deleteComment}
               updateComment={updateComment}
+              deleteExternal={deleteExternal}
+              updateExternal={updateExternal}
             />
             <SleepPeriods
               sleepPeriods={filteredSleepPeriods}

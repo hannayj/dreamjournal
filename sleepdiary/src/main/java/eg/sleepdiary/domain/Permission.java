@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 @Entity
@@ -28,10 +30,12 @@ public class Permission implements Serializable {
 
 	@ManyToOne
 	@JoinColumn
+	@JsonIgnore
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn
+	@JsonIgnore
 	private User supervisor;
 	
 	public Permission(User supervisor) {
