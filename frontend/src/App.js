@@ -293,6 +293,8 @@ const App = () => {
               removeSleepPeriod={removeSleepPeriod}
               deleteComment={deleteComment}
               updateComment={updateComment}
+              updateExternal={updateExternal}
+              deleteExternal={deleteExternal}
             />
             <CustomTimeline
               date={dateFilter}

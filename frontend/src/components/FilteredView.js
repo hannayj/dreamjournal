@@ -2,6 +2,7 @@ import React from 'react';
 import SleepPeriod from './SleepPeriod'
 import Comment from './Comment'
 import CustomTimeline from './CustomTimeline'
+import External from './External'
 
 const FilteredView = ({
     date,
@@ -11,7 +12,9 @@ const FilteredView = ({
     updateSleepPeriod,
     removeSleepPeriod,
     deleteComment,
-    updateComment
+    updateComment,
+    updateExternal,
+    deleteExternal
 }) => {
     
     /**
@@ -101,6 +104,14 @@ const FilteredView = ({
                     sleepPeriod={s}
                     updateSleepPeriod={updateSleepPeriod}
                     removeSleepPeriod={removeSleepPeriod}
+                />
+            )}
+            {getFiltered().filteredExts.map(e =>
+                <External 
+                key={e.id} 
+                ext={e} 
+                deleteExternal={deleteExternal}
+                updateExternal={updateExternal}
                 />
             )}
             {getFiltered().filteredComments.map(c => 

@@ -12,40 +12,49 @@ const CustomTimeline = ({
     exts
 }) => {
 
-  /*
+  let commentArray1 = comments.map(c => c.commentDate)
+  let commentArray2 = comments.map(c => c.comment)
+
   const getDayArray = () => {
-    let day = new Date(date) 
-    let startDate = moment(day).startOf("day").toDate();
+    //TODO fix: date follows the value of dateselect
+    //let day = new Date(date) 
+    //let beginning = moment('day').subtract(7, 'days').startOf("day").toDate();
+    let beginning = moment('2019-09-08T12:00:00').subtract(7, 'days').startOf("day").toDate();
+    console.log("alku: ", beginning)
     let dates = []	
     //TODO make an input to set the state of the value for repeats, currently 7 days
 		for (let i = 0; i<7; i++) {
+      let comment = ""
+      for (let j=0; j<commentArray1.length; j++) {
+        let a = moment(commentArray1[j]).startOf("day")
+        let b = moment(beginning).add(i, "day").startOf("day")
+        console.log("commentdate: ", a.format('DD.MM.YYYY'))
+        console.log("date in loop: ", b.format('DD.MM.YYYY'))
+        // if comment date is the same as the timeline date (difference in days is 0=, add to array
+        console.log("difference: ", a.diff(b))
+        if (a.diff(b) === 0) {
+          comment = commentArray2[j]
+          console.log(comment)
+        }
+      }
 			dates.push({
         id: i,
-        start: moment(startDate).add(i, "day").startOf("day").toDate(),
-        end: moment(startDate).add(i, "day").endOf("day").toDate()
+        start: moment(beginning).add(i, "day").startOf("day").toDate(),
+        end: moment(beginning).add(i, "day").endOf("day").toDate(),
+        comment: comment
       })
 		}
     //console.log(dates)
     //const dummy = new Date('2019-09-01T12:00:00')
 
     return dates
-} */
+} 
   const startDate = () => {
     let day = new Date(date) 
     let startDate = moment(day).startOf("day").toDate();
     return startDate
   }
-    //TODO fix: date follows the value of dateselect
-    const dayValues = () => {
-      let selectedDate = new Date(date)
-      let day = {
-        id: 1,
-        start: moment(selectedDate).startOf("day").toDate(), 
-        end: moment(selectedDate).endOf("day").toDate()       
-      }
-    // const startDate = moment('2019-09-01T12:00:00').startOf("day").toDate();
-      return day
-    }
+ 
 
     const groups = [{ id: 1, title: 'entries' }]
     //console.log(sleepPeriods)
@@ -97,15 +106,18 @@ console.log(items)
     return (
         <div>
              <h6><b>{moment(startDate()).format('DD.MM.YYYY')}</b></h6>
-            
-            <Timeline
-              key={dayValues().id}
-              groups={groups}
-              items={items}
-              defaultTimeStart={dayValues().start}
-              defaultTimeEnd={dayValues().end}
-            />
-             
+             { getDayArray().map(d =>
+             <div>
+              <Timeline
+                key={d.id}
+                groups={groups}
+                items={items}
+                defaultTimeStart={d.start}
+                defaultTimeEnd={d.end}
+              />
+              <span>{d.comment}</span>
+            </div>
+             )}
         </div>
     )
 }
