@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Table from 'react-bootstrap/Table'
 
 const External = ({ 
     ext, 
     deleteExternal, 
-    updateExternal 
+    updateExternal,
+    externalDate 
 }) => {
     const [editMode, setEditMode] = useState(false)
     const [editableExternal, setExternal] = useState(ext)

@@ -224,7 +224,11 @@ const App = () => {
       })
   }
 
-  const handleExtDateChange = (date) => setExternalDate(date)
+  const handleExtDateChange = (date) => {
+    console.log(date)
+    setExternalDate(date)
+  }
+  
   const handleExtTypeChange = (event) => setExternalType(event.target.value)
   const handleQuantityChange = (event) => setQuantity(event.target.value)
 
@@ -239,6 +243,7 @@ const App = () => {
   
   const handleDatePickerChange = (date) => {
     setDateFilter(date.getTime())
+    console.log(date)
   }
 
   const setCurrentPeriodStart = () => {
@@ -247,7 +252,6 @@ const App = () => {
       setDateFilter(new Date(now.getTime() - 86400000))
     }
   }
-
   return (
     <div className='container'>
       <Header

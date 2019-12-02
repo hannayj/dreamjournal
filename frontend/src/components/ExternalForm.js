@@ -4,14 +4,16 @@ import "react-datepicker/dist/react-datepicker.css";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-const ExternalForm = ({ inputs, select, submit, externalDate, handleDateChange,}) => {
+const ExternalForm = ({ inputs, select, submit, externalDate, handleDateChange }) => {
     return (
         <Form onSubmit={submit}>
             <Form.Label>Date: </Form.Label>
             <DatePicker
             onChange={handleDateChange}
+            showTimeSelect
+            timeIntervals={15}
             selected={externalDate}
-            dateFormat="dd/MM/yyyy"
+            dateFormat="dd/MM/yyyy h:mm aa"
             type='datetime-local'
             id='extTime'
             name='ExtDate'
