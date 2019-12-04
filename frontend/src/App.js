@@ -250,20 +250,6 @@ const App = () => {
         <Switch>
           <Route exact path="/">
             <>
-            <User 
-            user={user}
-            name={name}
-            setName={setName}
-            firstName={firstName}
-            setFirstName={setFirstName}
-            lastName={lastName}
-            setLastName={setLastName}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            updateUser={updateUser}
-          />
             <DateSelect 
               startDate={dateFilter}
               handleDateChange={handleDatePickerChange}
@@ -284,32 +270,31 @@ const App = () => {
               deleteExternal={deleteExternal}
               updateExternal={updateExternal}
             />
-              <SleepPeriods
-                sleepPeriods={filteredSleepPeriods}
-                addSleepPeriod={addSleepPeriod}
-                startTime={startTime}
-                setStartTime={setStartTime}
-                endTime={endTime}
-                setEndTime={setEndTime}
-                filterStartDate={filterStartDate}
-                setFilterStartDate={setFilterStartDate}
-                filterEndDate={filterEndDate}
-                setFilterEndDate={setFilterEndDate}
-                updateSleepPeriod={updateSleepPeriod}
-                removeSleepPeriod={removeSleepPeriod}
-              />
-              <Comments
-                comments={comments}
-                comment={comment}
-                handleCommentChange={handleCommentChange}
-                commentDate={commentDate}
-                handleDateChange={handleCommentDateChange}
-                sleepQuality={sleepQuality}
-                handleQualityChange={handleQualityChange}
-                addComment={addComment}
-                deleteComment={deleteComment}
-                updateComment={updateComment}
-
+            <SleepPeriods
+              sleepPeriods={filteredSleepPeriods}
+               addSleepPeriod={addSleepPeriod}
+               startTime={startTime}
+               setStartTime={setStartTime}
+               endTime={endTime}
+               setEndTime={setEndTime}
+               filterStartDate={filterStartDate}
+               setFilterStartDate={setFilterStartDate}
+               filterEndDate={filterEndDate}
+               setFilterEndDate={setFilterEndDate}
+               updateSleepPeriod={updateSleepPeriod}
+               removeSleepPeriod={removeSleepPeriod}
+             />
+             <Comments
+               comments={comments}
+               comment={comment}
+               handleCommentChange={handleCommentChange}
+               commentDate={commentDate}
+               handleDateChange={handleCommentDateChange}
+               sleepQuality={sleepQuality}
+               handleQualityChange={handleQualityChange}
+               addComment={addComment}
+               deleteComment={deleteComment}
+               updateComment={updateComment}
               />
               <Externals
               externals={exts}
@@ -327,6 +312,20 @@ const App = () => {
           </Route>
           <Route path="/settings">
             <Settings />
+            <User 
+            user={user}
+            name={name}
+            setName={setName}
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            updateUser={updateUser}
+          />
           </Route>
         </Switch>
       </Router>
