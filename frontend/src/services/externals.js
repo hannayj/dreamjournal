@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:8080/api/externals/'
+const baseUrl = '/api/externals/'
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -11,9 +11,14 @@ const create = newObject => {
   return request.then(response => response.data)
 }
 
-const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObject)
+const update = (newObject) => {
+  const request = axios.put(baseUrl + newObject.id, newObject)
   return request.then(response => response.data)
 }
 
-export default { getAll, create, update }
+const deleteExt = id => {
+  const request = axios.delete(`${baseUrl}/${id}`)
+  return request.then(response => response.data)
+}
+
+export default { getAll, create, update, deleteExt }

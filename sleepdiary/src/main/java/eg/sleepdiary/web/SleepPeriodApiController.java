@@ -1,6 +1,11 @@
 package eg.sleepdiary.web;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import eg.sleepdiary.domain.Comment;
@@ -19,6 +25,8 @@ import eg.sleepdiary.domain.External;
 import eg.sleepdiary.domain.ExternalRepository;
 import eg.sleepdiary.domain.SleepPeriod;
 import eg.sleepdiary.domain.SleepPeriodRepository;
+import eg.sleepdiary.domain.User;
+import eg.sleepdiary.domain.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -58,11 +66,27 @@ public class SleepPeriodApiController {
 		return new ResponseEntity<Iterable<Comment>>(comments, HttpStatus.OK);
 	}
 	
-	//pitäisi luoda aina uusi kommentti
 	@PostMapping("/comments/")
 	public ResponseEntity<?> postComment(@RequestBody Comment comment) {
 		Comment createdComment = commentRepo.save(comment);
-		return new ResponseEntity<Comment>(createdComment, HttpStatus.OK);
+		return new ResponseEntity<Comment>(createdComment, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/comments/{id}")
+	public ResponseEntity<?> updateComment(@PathVariable Long id, @RequestBody Comment comment) {
+		if(!commentRepo.existsById(id)) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<Comment>(commentRepo.save(comment), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/comments/{id}")
+	public ResponseEntity<?> deleteComment(@PathVariable Long id) {
+		if(!commentRepo.existsById(id)) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		commentRepo.deleteById(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/externals/")
@@ -78,6 +102,30 @@ public class SleepPeriodApiController {
 		return new ResponseEntity<External>(createdExternal, HttpStatus.OK);
 	}
 
+	
+	@DeleteMapping("/externals/{id}")
+    public Map<String, Boolean> deleteExternal(@PathVariable(value = "id") Long id)
+         throws ResourceNotFoundException {
+        External external = externalRepo.findById(id)
+       .orElseThrow(() -> new ResourceNotFoundException("External not found for this id :: " + id));
+
+        externalRepo.delete(external);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return response;
+    }
+	
+	@PutMapping("/externals/{id}")
+	public ResponseEntity<?> updateExternal(@PathVariable Long id, @RequestBody External external) {
+		log.info("Updating External: {}", external);
+		if (!externalRepo.existsById(id)) {
+			log.error("An external with id {} doesn't exist", id);
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		External createdExternal = externalRepo.save(external);
+		return new ResponseEntity<External>(createdExternal, HttpStatus.OK);
+	}
+	
 	@PutMapping("/sleepperiods/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody SleepPeriod sleepPeriod) {
 		log.info("Updating SleepPeriod: {}", sleepPeriod);
@@ -100,4 +148,5 @@ public class SleepPeriodApiController {
 		periodRepo.delete(sleepPeriod);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
 }

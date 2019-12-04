@@ -10,7 +10,9 @@ const Comments = ({
     handleDateChange,
     sleepQuality,
     handleQualityChange,
-    addComment
+    addComment,
+    deleteComment,
+    updateComment
 }) => {
     const formInputs = [
         {
@@ -60,7 +62,14 @@ const Comments = ({
             <h2>Comments</h2>
             <h3>Add a new Comment</h3>
             <CommentForm inputs={formInputs} select={selectionInputs} submit={addComment} />
-            {comments.map(c => <Comment key={c.id} comment={c} />)}
+            {comments.map(c => 
+                    <Comment
+                        key={c.id}
+                        comment={c}
+                        deleteComment={deleteComment}
+                        updateComment={updateComment}
+                    />)
+            }
         </div>
     )
 }
