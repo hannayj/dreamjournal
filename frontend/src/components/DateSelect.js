@@ -25,7 +25,7 @@ const DateSelect = ({ startDate, handleDateChange, sleepPeriods, length, setLeng
         <>
             <h1>Select the start date of the time period</h1>
             <DatePicker selected={startDate} onChange={handleDateChange} includeDates={availableDates()} />
-            <h2>Select the length of the time period</h2>
+            <h2>Select the number of days shown</h2>
             <select onChange={event => setLength(event.target.value)} value={length}>
                 <option value={1}>1 day</option>
                 <option value={7}>7 days</option>
