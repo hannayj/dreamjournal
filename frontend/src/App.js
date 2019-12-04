@@ -248,6 +248,23 @@ const App = () => {
       <Router>
         <Navigation />
         <Switch>
+        <Route path="/settings">
+            <Settings />
+            <User 
+            user={user}
+            name={name}
+            setName={setName}
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            updateUser={updateUser}
+          />
+          </Route>
           <Route exact path="/">
             <>
             <DateSelect 
@@ -309,23 +326,6 @@ const App = () => {
               updateExternal={updateExternal}
               />
             </>
-          </Route>
-          <Route path="/settings">
-            <Settings />
-            <User 
-            user={user}
-            name={name}
-            setName={setName}
-            firstName={firstName}
-            setFirstName={setFirstName}
-            lastName={lastName}
-            setLastName={setLastName}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            updateUser={updateUser}
-          />
           </Route>
         </Switch>
       </Router>

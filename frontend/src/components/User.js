@@ -43,7 +43,7 @@ const User = ({
      let password1 = document.getElementById('newPassword').value.trim();
      console.log(password1)
      let password2 = document.getElementById('passwordAgain').value.trim();
-     console.log(password1)
+     console.log(password2)
      if (password1 === "" || password2 === "") {
       setMsg("Please enter values to both fields")
      } else if (password1 === password2) {
@@ -87,7 +87,7 @@ const User = ({
               value={passwordAgain} onChange={setPasswordAgain}/> 
               <br></br>   
               <p>{msg}</p>      
-              <Button variant="success">Submit</Button>
+              <button>Submit</button>
            </form>
           </div>
         }
