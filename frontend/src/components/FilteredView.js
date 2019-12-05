@@ -1,23 +1,12 @@
 import React from 'react';
-import SleepPeriod from './SleepPeriod'
-import Comment from './Comment'
-import External from './External'
-import Timeline from 'react-calendar-timeline'
-import 'react-calendar-timeline/lib/Timeline.css'
-
+import Period from './Period'
 
 const FilteredView = ({
     date,
     length,
     sleeps,
     comments,
-    exts,
-    updateSleepPeriod,
-    removeSleepPeriod,
-    deleteComment,
-    updateComment,
-    deleteExternal,
-    updateExternal
+    exts
 }) => {
     
 
@@ -107,30 +96,7 @@ const FilteredView = ({
             <h5>Selected time period(s)</h5>
             <h6><b>{getStartTime().toLocaleString()} - {getEndTime().toLocaleString()}</b></h6>
             <hr />
-            {getPeriodValues().map(period => {
-                return(
-                    <div key={period.start + period.end}>
-                        {period.sleep.map(s => <SleepPeriod 
-                            key={s.id}
-                            sleepPeriod={s}
-                            updateSleepPeriod={updateSleepPeriod}
-                            removeSleepPeriod={removeSleepPeriod}
-                        />)}
-                        {period.comment.map(c => <Comment 
-                            key={c.id}
-                            comment={c}
-                            deleteComment={deleteComment}
-                            updateComment={updateComment}
-                        />)}
-                        {period.external.map(e => <External
-                            key={e.id}
-                            ext={e}
-                            deleteExternal={deleteExternal}
-                            updateExternal={updateExternal}
-                        />)}
-                    </div>
-                )
-            })}
+            {getPeriodValues().map(p => <Period key={p.start + p.end} period={p}/>)}
             <hr />
         </>
     )
