@@ -2,7 +2,7 @@ import React from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const DateSelect = ({ startDate, handleDateChange, sleepPeriods }) => {
+const DateSelect = ({ startDate, handleDateChange, sleepPeriods, length, setLength }) => {
 
     /**
      * should return all the availabe sleepDates for the time periods so that
@@ -23,12 +23,14 @@ const DateSelect = ({ startDate, handleDateChange, sleepPeriods }) => {
     
     return(
         <>
-            <h2>Select the start date of the time period</h2>
-            <DatePicker 
-                dateFormat="dd.MM.yyyy"
-                selected={startDate} 
-                onChange={handleDateChange} 
-                includeDates={availableDates()} />
+            <h1>Select the start date of the time period</h1>
+            <DatePicker selected={startDate} onChange={handleDateChange} includeDates={availableDates()} />
+            <h2>Select the length of the time period</h2>
+            <select onChange={event => setLength(event.target.value)} value={length}>
+                <option value={1}>1 day</option>
+                <option value={7}>7 days</option>
+                <option value={14}>14 days</option>
+            </select>
         </>
     )
 }

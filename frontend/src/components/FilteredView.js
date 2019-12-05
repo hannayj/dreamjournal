@@ -1,16 +1,20 @@
 import React from 'react';
 import SleepPeriod from './SleepPeriod'
 import Comment from './Comment'
+import External from './External'
 
 const FilteredView = ({
     date,
+    length,
     sleeps,
     comments,
     exts,
     updateSleepPeriod,
     removeSleepPeriod,
     deleteComment,
-    updateComment
+    updateComment,
+    deleteExternal,
+    updateExternal
 }) => {
     
     /**
@@ -29,11 +33,11 @@ const FilteredView = ({
 
     /**
      * Calculates the endTime based on startTime
-     * endtime = startTime + 24h
-     * So the returned value should props.date + 24h 12:00:00.00
+     * endtime = startTime + 24h * props.length
+     * So the returned value should props.date + 24h * props.lengt 12:00:00.00
      */
     const getEndTime = () => {
-        let end = new Date(getStartTime().getTime() + 86400000)
+        let end = new Date(getStartTime().getTime() + (86400000 * length))
         return end
     }
 
@@ -70,7 +74,7 @@ const FilteredView = ({
         if(exts) {
             const filtered = exts.filter(e => {
                 // WHAT IS THE NAME OF THE DATETIME VARIABLE FOR EXTS?
-                const start = new Date(e.extDate).getTime()
+                const start = new Date(e.externalDate).getTime()
                 if(start >= getStartTime().getTime() && start < getEndTime().getTime()) {
                     return true
                 }
@@ -109,6 +113,14 @@ const FilteredView = ({
                     deleteComment={deleteComment}
                     updateComment={updateComment}
                 />    
+            )}
+            {getFiltered().filteredExts.map(e =>
+                <External
+                    key={e.id}
+                    ext={e}
+                    deleteExternal={deleteExternal}
+                    updateExternal={updateExternal}
+                />
             )}
             <hr />
         </>

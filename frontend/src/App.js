@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import sleepPeriodService from './services/sleepPeriods'
 import commentService from './services/comments'
 import externalService from './services/externals'
 import userService from './services/users'
 
 import SleepPeriods from './components/SleepPeriods'
-import Header from './components/Header'
-import Nav from './components/Nav'
-import Footer from './components/Footer'
+import Settings from './components/Settings'
+import Navigation from './components/Navigation'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
 import User from './components/User'
@@ -20,8 +20,6 @@ const App = () => {
   const [endTime, setEndTime] = useState('')
   const [filterStartDate, setFilterStartDate] = useState('')
   const [filterEndDate, setFilterEndDate] = useState('')
-  const [showFooter, setShowFooter] = useState(true)
-  const [view, setView] = useState('sleepperiods')
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const [commentDate, setCommentDate] = useState('')
@@ -36,6 +34,7 @@ const App = () => {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [noPeriods, setNoPeriods] = useState(1)
   const [dateFilter, setDateFilter] = useState(Date.now())
 
   useEffect(() => {
@@ -71,12 +70,11 @@ const App = () => {
     .then(users => setUser(users[0]))
   }
 
-  const hideFooter = () => {
-    setShowFooter(false)
-  }
-
-  const changeView = (view) => () => {
-    setView(view)
+  const setCurrentPeriodStart = () => {
+    const now = new Date()
+    if(now.getHours() < 12) {
+      setDateFilter(new Date(now.getTime() - (86400000 * noPeriods)))
+    }
   }
 
   const addSleepPeriod = () => (event) => {
@@ -246,25 +244,17 @@ const App = () => {
     console.log(date)
   }
 
-  const setCurrentPeriodStart = () => {
-    const now = new Date()
-    if(now.getHours() < 12) {
-      setDateFilter(new Date(now.getTime() - 86400000))
-    }
+  const handleLengthChange = (value) => {
+    setNoPeriods(Number(value))
   }
   return (
     <div className='container'>
-      <Header
-        changeView={changeView}
-      />
-      <Nav
-        changeView={changeView}
-      />
-      <div id="main">
-        {view === 'settings' &&
-          // TODO: add settings view
-          <>
-          <User 
+      <Router>
+        <Navigation />
+        <Switch>
+        <Route path="/settings">
+            <Settings />
+            <User 
             user={user}
             name={name}
             setName={setName}
@@ -278,17 +268,19 @@ const App = () => {
             setPassword={setPassword}
             updateUser={updateUser}
           />
-          </>
-        }
-        {view === 'sleepperiods' &&
-          <>
+          </Route>
+          <Route exact path="/">
+            <>
             <DateSelect 
               startDate={dateFilter}
               handleDateChange={handleDatePickerChange}
               sleepPeriods={sleepPeriods}
+              length={noPeriods}
+              setLength={handleLengthChange}
             />
             <FilteredView 
               date={dateFilter}
+              length={noPeriods}
               sleeps={sleepPeriods}
               comments={comments}
               exts={exts}
@@ -296,34 +288,36 @@ const App = () => {
               removeSleepPeriod={removeSleepPeriod}
               deleteComment={deleteComment}
               updateComment={updateComment}
+              deleteExternal={deleteExternal}
+              updateExternal={updateExternal}
             />
             <SleepPeriods
               sleepPeriods={filteredSleepPeriods}
-              addSleepPeriod={addSleepPeriod}
-              startTime={startTime}
-              setStartTime={setStartTime}
-              endTime={endTime}
-              setEndTime={setEndTime}
-              filterStartDate={filterStartDate}
-              setFilterStartDate={setFilterStartDate}
-              filterEndDate={filterEndDate}
-              setFilterEndDate={setFilterEndDate}
-              updateSleepPeriod={updateSleepPeriod}
-              removeSleepPeriod={ removeSleepPeriod }
-            />
-            <Comments
-              comments={comments}
-              comment={comment}
-              handleCommentChange={handleCommentChange}
-              commentDate={commentDate}
-              handleDateChange={handleCommentDateChange}
-              sleepQuality={sleepQuality}
-              handleQualityChange={handleQualityChange}
-              addComment={addComment}
-              deleteComment={deleteComment}
-              updateComment={updateComment}
-            />
-            <Externals 
+               addSleepPeriod={addSleepPeriod}
+               startTime={startTime}
+               setStartTime={setStartTime}
+               endTime={endTime}
+               setEndTime={setEndTime}
+               filterStartDate={filterStartDate}
+               setFilterStartDate={setFilterStartDate}
+               filterEndDate={filterEndDate}
+               setFilterEndDate={setFilterEndDate}
+               updateSleepPeriod={updateSleepPeriod}
+               removeSleepPeriod={removeSleepPeriod}
+             />
+             <Comments
+               comments={comments}
+               comment={comment}
+               handleCommentChange={handleCommentChange}
+               commentDate={commentDate}
+               handleDateChange={handleCommentDateChange}
+               sleepQuality={sleepQuality}
+               handleQualityChange={handleQualityChange}
+               addComment={addComment}
+               deleteComment={deleteComment}
+               updateComment={updateComment}
+              />
+              <Externals
               externals={exts}
               addExternal={addExt}
               externalType={externalType}
@@ -334,15 +328,11 @@ const App = () => {
               handleQuantityChange={handleQuantityChange}
               deleteExternal={deleteExternal}
               updateExternal={updateExternal}
-            />
-          </>
-        }
-      </div>
-      {showFooter &&
-        <Footer
-          hideFooter={hideFooter}
-        />
-      }
+              />
+            </>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   )
 }

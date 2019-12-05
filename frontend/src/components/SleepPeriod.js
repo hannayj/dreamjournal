@@ -57,11 +57,11 @@ const SleepPeriod = ({
           </p>
           <p>Duration: { sleepPeriod.duration }h</p>
           <br />
-          <button onClick={ () => removeSleepPeriod(sleepPeriod) }>Delete</button>
-          <button onClick={ () => {
+          <Button onClick={ () => removeSleepPeriod(sleepPeriod) } variant="danger" size="sm">Delete</Button>
+          <Button onClick={ () => {
             updateSleepPeriod(editableSleepPeriod);
             setEditMode(false);
-          }}>Save</button>
+          }} variant="success" size="sm">Save</Button>
         </div>
       }
     </div>

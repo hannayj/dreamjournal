@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
 
 const External = ({ 
     ext, 
@@ -41,8 +42,8 @@ const External = ({
                             <th>External date {ext.externalDate}</th>
                             <th>External type {ext.externalType}</th>
                             <th>Quantity {ext.quantity}</th>
-                            <td><button onClick={() => deleteExternal(ext.id)}>Delete</button></td>
-                            <td><button onClick={() => setEditMode(true)}>Edit</button></td>
+                            <td><Button onClick={() => deleteExternal(ext.id)} variant="danger" size="sm">Delete</Button></td>
+                            <td><Button onClick={() => setEditMode(true)} variant="warning" size="sm">Edit</Button></td>
                         </tr>
                     </tbody>
                 </Table>
@@ -86,11 +87,11 @@ const External = ({
                                     name='quantity'
                                     value={ editableExternal.quantity }
                                     /></th>
-                            <td><button onClick={() => deleteExternal(ext.id)}>Delete</button></td>
-                            <td><button onClick={() => {
+                            <td><Button onClick={() => deleteExternal(ext.id)} variant="danger" size="sm">Delete</Button></td>
+                            <td><Button onClick={() => {
                                 updateExternal(editableExternal);
                                 setEditMode(false)
-                                }}>Update</button></td>
+                                }} variant="success" size="sm">Save</Button></td>
                         </tr>
                     </tbody>
                 </Table>

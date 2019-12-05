@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button';
 
 const Comment = ({ comment, deleteComment, updateComment }) => {
     const [editMode, setEditMode] = useState(false)
@@ -43,8 +44,8 @@ const Comment = ({ comment, deleteComment, updateComment }) => {
                         </tr>
                         <tr>
                             <td colSpan="3">
-                                <button onClick={() => deleteComment(comment.id)}>Delete</button>
-                                <button onClick={() => setEditMode(true)}>Edit</button>
+                                <Button onClick={() => deleteComment(comment.id)} variant="danger" size="sm">Delete</Button>
+                                <Button onClick={() => setEditMode(true)} variant="warning" size="sm">Edit</Button>
                             </td>
                         </tr>
                     </tbody>
@@ -93,12 +94,12 @@ const Comment = ({ comment, deleteComment, updateComment }) => {
                         </tr>
                         <tr>
                             <td colSpan="3">
-                                <button onClick={() => deleteComment(comment.id)}>Delete</button>
-                                <button onClick={() => {
+                                <Button onClick={() => deleteComment(comment.id)} variant="danger" size="sm">Delete</Button>
+                                <Button onClick={() => {
                                     updateComment(editComment)
                                     setEditMode(false)
                                 }
-                                }>Save</button>
+                                } variant="success" size="sm">Save</Button>
                             </td>
                         </tr>
                     </tbody>

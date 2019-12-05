@@ -26,7 +26,7 @@ public class SleepPeriodTest {
 	public void init() {
 		start = LocalDateTime.of(2019, 10, 1, 0, 0);
 		end = LocalDateTime.of(2019, 10, 2, 0, 0);
-		user = new User(username, username, UserLevel.BASIC);
+		user = new User(username, "user", "name", "email", username, UserLevel.BASIC);
 		testPeriod = new SleepPeriod(start, end, user);
 	}
 
