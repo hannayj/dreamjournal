@@ -2,6 +2,9 @@ import React from 'react';
 import SleepPeriod from './SleepPeriod'
 import Comment from './Comment'
 import External from './External'
+import Timeline from 'react-calendar-timeline'
+import 'react-calendar-timeline/lib/Timeline.css'
+
 
 const FilteredView = ({
     date,
