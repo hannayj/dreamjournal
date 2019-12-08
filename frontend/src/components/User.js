@@ -87,7 +87,7 @@ const User = ({
               value={passwordAgain} onChange={setPasswordAgain}/> 
               <br></br>   
               <p>{msg}</p>      
-              <button>Submit</button>
+              <Button variant="success" type="submit">Submit</Button>
            </form>
           </div>
         }
