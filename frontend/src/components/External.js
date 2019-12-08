@@ -35,7 +35,7 @@ const External = ({
     return (
         <div className='product clearfix'>
             { editMode === false &&
-                <Table striped bordered hover>
+                <Table bordered hover responsive>
                     <tbody>
                         <tr>
                             <th>External ID {ext.id}</th>

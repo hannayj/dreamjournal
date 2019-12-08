@@ -32,7 +32,7 @@ const Comment = ({ comment, deleteComment, updateComment }) => {
     return (
         <div>
             {editMode === false &&
-                <Table striped bordered hover>
+                <Table striped bordered hover responsive>
                     <tbody>
                         <tr>
                             <th>Comment ID {comment.id}</th>

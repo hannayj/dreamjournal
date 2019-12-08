@@ -177,7 +177,7 @@ const App = () => {
   }
 
   const handleCommentChange = (event) => setComment(event.target.value)
-  const handleCommentDateChange = (event) => setCommentDate(event.target.value)
+  const handleCommentDateChange = (date) => setCommentDate(date)
   const handleQualityChange = (event) => setSleepQuality(event.target.value)
 
   const addExt = (event) => {
