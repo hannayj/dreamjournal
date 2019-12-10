@@ -6,6 +6,13 @@ const Comment = ({ comment, deleteComment, updateComment }) => {
     const [editMode, setEditMode] = useState(false)
     const [editComment, setComment] = useState(comment)
 
+    const convertToTimeZone = (date) => {
+        const timeDiff = new Date(date).getTimezoneOffset()
+        const oldMinutes = new Date(date).getMinutes()
+        const newDate = new Date(date).setMinutes(oldMinutes + (-1 * timeDiff))
+        return new Date(newDate).toLocaleString()
+    }
+
     const qualities = [
         {
             id: 1,
@@ -36,7 +43,7 @@ const Comment = ({ comment, deleteComment, updateComment }) => {
                     <tbody>
                         <tr>
                             <th>Comment ID {comment.id}</th>
-                            <th>Comment date {comment.commentDate}</th>
+                            <th>Comment date {convertToTimeZone(comment.commentDate)}</th>
                             <th>Sleep quality {comment.sleepQuality}</th>
                         </tr>
                         <tr>

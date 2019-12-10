@@ -223,7 +223,7 @@ const App = () => {
   }
 
   const handleExtDateChange = (date) => {
-    console.log(date)
+    console.log(typeof(date))
     setExternalDate(date)
   }
   

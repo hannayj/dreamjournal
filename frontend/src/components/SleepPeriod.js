@@ -9,6 +9,13 @@ const SleepPeriod = ({
   const [editMode, setEditMode] = useState(false)
   const [editableSleepPeriod, setSleepPeriod] = useState(sleepPeriod)
 
+  const convertToTimeZone = (date) => {
+    const timeDiff = new Date(date).getTimezoneOffset()
+    const oldMinutes = new Date(date).getMinutes()
+    const newDate = new Date(date).setMinutes(oldMinutes + (-1 * timeDiff))
+    return new Date(newDate).toLocaleString()
+  }
+
   return (
     <div className='product clearfix'>
       { editMode === false && 
@@ -16,8 +23,8 @@ const SleepPeriod = ({
           <a href={ '/sleepPeriods/' + sleepPeriod.id }>
             Sleep period { sleepPeriod.id }
           </a>
-          <p>Start time: { sleepPeriod.startTime }</p>
-          <p>End time: { sleepPeriod.endTime }</p>
+          <p>Start time: {convertToTimeZone(sleepPeriod.startTime)}</p>
+          <p>End time: {convertToTimeZone(sleepPeriod.endTime)}</p>
           <p>Duration: { sleepPeriod.duration }h</p>
           <br />
           <Button onClick={ () => removeSleepPeriod(sleepPeriod) } variant="danger" size="sm">Delete</Button>
