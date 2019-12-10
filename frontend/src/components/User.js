@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button'
 
 const User = ({
     user,
@@ -42,7 +43,7 @@ const User = ({
      let password1 = document.getElementById('newPassword').value.trim();
      console.log(password1)
      let password2 = document.getElementById('passwordAgain').value.trim();
-     console.log(password1)
+     console.log(password2)
      if (password1 === "" || password2 === "") {
       setMsg("Please enter values to both fields")
      } else if (password1 === password2) {
@@ -74,7 +75,7 @@ const User = ({
             <p>Last name: { user.lastName }</p>
             <p>Email: { user.email }</p>
             <br />
-            <button onClick={ () => setEditMode(true) }>Edit</button>
+            <Button onClick={ () => setEditMode(true) } variant="warning">Edit</Button>
             <h2>Change password:</h2>
             <form onSubmit={handleSubmit}>
               <p> New password:</p>
@@ -86,7 +87,7 @@ const User = ({
               value={passwordAgain} onChange={setPasswordAgain}/> 
               <br></br>   
               <p>{msg}</p>      
-              <button>Submit</button>
+              <Button variant="success" type="submit">Submit</Button>
            </form>
           </div>
         }
@@ -149,10 +150,10 @@ const User = ({
             </p>
             <br />
 
-            <button onClick={ () => {
+            <Button onClick={ () => {
               updateUser(editableUser);
               setEditMode(false);
-            }}>Save</button>
+            }} variant="success">Save</Button>
           </div>
         }
       </div>
