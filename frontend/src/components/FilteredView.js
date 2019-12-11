@@ -1,50 +1,33 @@
 import React from 'react';
-import SleepPeriod from './SleepPeriod'
-import Comment from './Comment'
+import Period from './Period'
 
 const FilteredView = ({
     date,
+    length,
     sleeps,
     comments,
-    exts,
-    updateSleepPeriod,
-    removeSleepPeriod,
-    deleteComment,
-    updateComment
+    exts
 }) => {
     
-    /**
-     * getStartTime is only interested on the date of props.date
-     * Sets the time to 12:00:00.00
-     * So the returned value is props.date 12:00:00.00
-     */
-    const getStartTime = () => {
-        let start = new Date(date)
-        start.setHours(12,0,0,0)
 
-        //const dummy = new Date('2019-09-01T12:00:00')
+    const getStartTime = () => {
+        let start = new Date(getEndTime().getTime() - (86400000 * length))
 
         return start
     }
 
-    /**
-     * Calculates the endTime based on startTime
-     * endtime = startTime + 24h
-     * So the returned value should props.date + 24h 12:00:00.00
-     */
     const getEndTime = () => {
-        let end = new Date(getStartTime().getTime() + 86400000)
+        let end = new Date(date)
+        end.setHours(12,0,0,0)
+        
         return end
     }
 
-    /**
-     * returns the param.sleeps starting between [getStartTime(),getEndTime()[
-     */
-    const getSleeps = () => {
+    const getSleepsForPeriod = (start, end) => {
         if(sleeps) {
             const filtered = sleeps.filter(s => {
                 const startTime = new Date(s.startTime).getTime()
-                if(startTime >= getStartTime().getTime() && startTime < getEndTime().getTime()) {
+                if(startTime >= start.getTime() && startTime < end.getTime()) {
                     return true
                 }
                 return false
@@ -53,11 +36,11 @@ const FilteredView = ({
         }
     }
 
-    const getComments = () => {
+    const getCommentsForPeriod = (start, end) => {
         if(comments) {
             const filtered = comments.filter(c => {
-                const start = new Date(c.commentDate).getTime()
-                if(start >= getStartTime().getTime() && start < getEndTime().getTime()) {
+                const commentTime = new Date(c.commentDate).getTime()
+                if(commentTime >= start.getTime() && commentTime < end.getTime()) {
                     return true
                 }
                 return false
@@ -66,12 +49,11 @@ const FilteredView = ({
         }
     }
 
-    const getExts = () => {
+    const getExtsForPeriod = (start, end) => {
         if(exts) {
             const filtered = exts.filter(e => {
-                // WHAT IS THE NAME OF THE DATETIME VARIABLE FOR EXTS?
-                const start = new Date(e.extDate).getTime()
-                if(start >= getStartTime().getTime() && start < getEndTime().getTime()) {
+                const externalDate = new Date(e.externalDate).getTime()
+                if(externalDate >= start.getTime() && externalDate < end.getTime()) {
                     return true
                 }
                 return false
@@ -80,36 +62,41 @@ const FilteredView = ({
         }
     }
 
-    const getFiltered = () => {
-        return {
-            filteredSleeps: getSleeps(),
-            filteredComments: getComments(),
-            filteredExts: getExts()
+    const getPeriodValues = () => {
+        let end = new Date(date)
+        end.setHours(12,0,0,0)
+        let start = new Date(end.getTime() - 86400000)
+
+        let periods = [{
+            start: start,
+            end: end,
+            sleep: getSleepsForPeriod(start, end),
+            comment: getCommentsForPeriod(start, end),
+            external: getExtsForPeriod(start, end)
+        }]
+
+        for(let i = 1; i < length; i++) {
+            end = start
+            start = new Date(end.getTime() - 86400000)
+            periods = [...periods, {
+                start: start,
+                end: end,
+                sleep: getSleepsForPeriod(start, end),
+                comment: getCommentsForPeriod(start, end),
+                external: getExtsForPeriod(start, end)
+            }]
         }
+
+        return(periods.reverse())
     }
     
     return(
         <>
             <hr />
-            <h5>Selected time period</h5>
+            <h5>Selected time period(s)</h5>
             <h6><b>{getStartTime().toLocaleString()} - {getEndTime().toLocaleString()}</b></h6>
             <hr />
-            {getFiltered().filteredSleeps.map(s =>
-                <SleepPeriod 
-                    key={s.id}
-                    sleepPeriod={s}
-                    updateSleepPeriod={updateSleepPeriod}
-                    removeSleepPeriod={removeSleepPeriod}
-                />
-            )}
-            {getFiltered().filteredComments.map(c => 
-                <Comment 
-                    key={c.id}
-                    comment={c}
-                    deleteComment={deleteComment}
-                    updateComment={updateComment}
-                />    
-            )}
+            {getPeriodValues().map(p => <Period key={p.start + p.end} period={p}/>)}
             <hr />
         </>
     )

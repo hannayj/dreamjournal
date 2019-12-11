@@ -1,7 +1,6 @@
 import React from 'react';
 import SleepPeriod from './SleepPeriod'
 import AddSleepPeriodForm from './AddSleepPeriodForm'
-import Filter from './Filter'
 
 const SleepPeriods = ({
     sleepPeriods,
@@ -25,12 +24,6 @@ const SleepPeriods = ({
         setStartTime={ setStartTime }
         endTime={ endTime }
         setEndTime={ setEndTime }
-      />
-      <Filter
-        filterStartDate={filterStartDate}
-        setFilterStartDate={setFilterStartDate}
-        filterEndDate={filterEndDate}
-        setFilterEndDate={setFilterEndDate}
       />
       <h2>
         Sleep periods

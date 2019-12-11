@@ -21,12 +21,6 @@ const Comments = ({
             value: comment,
             onChange: handleCommentChange,
         },
-        {
-            name: 'Date',
-            type: 'datetime-local',
-            value: commentDate,
-            onChange: handleDateChange
-        }
     ]
 
     const selectionInputs = {
@@ -59,9 +53,8 @@ const Comments = ({
 
     return (
         <div>
-            <h2>Comments</h2>
-            <h3>Add a new Comment</h3>
-            <CommentForm inputs={formInputs} select={selectionInputs} submit={addComment} />
+            <h2>Add a new Comment</h2>
+            <CommentForm commentDate={commentDate} handleDateChange={handleDateChange} inputs={formInputs} select={selectionInputs} submit={addComment} />
             {comments.map(c => 
                     <Comment
                         key={c.id}

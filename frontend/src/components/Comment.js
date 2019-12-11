@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button';
 
 const Comment = ({ comment, deleteComment, updateComment }) => {
     const [editMode, setEditMode] = useState(false)
     const [editComment, setComment] = useState(comment)
+
+    const convertToTimeZone = (date) => {
+        const timeDiff = new Date(date).getTimezoneOffset()
+        const oldMinutes = new Date(date).getMinutes()
+        const newDate = new Date(date).setMinutes(oldMinutes + (-1 * timeDiff))
+        return new Date(newDate).toLocaleString()
+    }
 
     const qualities = [
         {
@@ -31,11 +39,11 @@ const Comment = ({ comment, deleteComment, updateComment }) => {
     return (
         <div>
             {editMode === false &&
-                <Table striped bordered hover>
+                <Table striped bordered hover responsive>
                     <tbody>
                         <tr>
                             <th>Comment ID {comment.id}</th>
-                            <th>Comment date {comment.commentDate}</th>
+                            <th>Comment date {convertToTimeZone(comment.commentDate)}</th>
                             <th>Sleep quality {comment.sleepQuality}</th>
                         </tr>
                         <tr>
@@ -43,8 +51,8 @@ const Comment = ({ comment, deleteComment, updateComment }) => {
                         </tr>
                         <tr>
                             <td colSpan="3">
-                                <button onClick={() => deleteComment(comment.id)}>Delete</button>
-                                <button onClick={() => setEditMode(true)}>Edit</button>
+                                <Button onClick={() => deleteComment(comment.id)} variant="danger" size="sm">Delete</Button>
+                                <Button onClick={() => setEditMode(true)} variant="warning" size="sm">Edit</Button>
                             </td>
                         </tr>
                     </tbody>
@@ -93,12 +101,12 @@ const Comment = ({ comment, deleteComment, updateComment }) => {
                         </tr>
                         <tr>
                             <td colSpan="3">
-                                <button onClick={() => deleteComment(comment.id)}>Delete</button>
-                                <button onClick={() => {
+                                <Button onClick={() => deleteComment(comment.id)} variant="danger" size="sm">Delete</Button>
+                                <Button onClick={() => {
                                     updateComment(editComment)
                                     setEditMode(false)
                                 }
-                                }>Save</button>
+                                } variant="success" size="sm">Save</Button>
                             </td>
                         </tr>
                     </tbody>

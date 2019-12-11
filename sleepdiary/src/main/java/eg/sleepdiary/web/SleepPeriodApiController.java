@@ -90,6 +90,7 @@ public class SleepPeriodApiController {
 	//create new external
 	@PostMapping("/externals/")
 	public ResponseEntity<?> postExternal(@RequestBody External external) {
+		log.info("Log:" + external.getExternalDate().toString());
 		External createdExternal = externalRepo.save(external);
 		return new ResponseEntity<External>(createdExternal, HttpStatus.CREATED);
 	}

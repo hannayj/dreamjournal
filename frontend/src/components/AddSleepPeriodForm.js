@@ -1,4 +1,6 @@
 import React from 'react';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Button from 'react-bootstrap/Button';
 
 const AddSleepPeriodForm = ({
@@ -6,7 +8,7 @@ const AddSleepPeriodForm = ({
   setStartTime,
   endTime,
   setEndTime,
-  addSleepPeriod,
+  addSleepPeriod
 }) => {
   return (
     <div id='new'>
@@ -16,8 +18,12 @@ const AddSleepPeriodForm = ({
       <form onSubmit={ addSleepPeriod() }>
         <label htmlFor='startTime'>Start time</label>
         <br />
-        <input
-          onChange={event => setStartTime(event.target.value)}
+        <DatePicker
+          onChange={date => setStartTime(date)}
+          showTimeSelect
+          timeIntervals={15}
+          selected={startTime}
+          dateFormat="dd/MM/yyyy h:mm aa"
           type='datetime-local'
           id='startTime'
           name='startTime'
@@ -26,8 +32,12 @@ const AddSleepPeriodForm = ({
         <br />
         <label htmlFor='endTime'>End time</label>
         <br />
-        <input
-          onChange={event => setEndTime(event.target.value)}
+        <DatePicker
+          onChange={date => setEndTime(date)}
+          showTimeSelect
+          timeIntervals={15}
+          selected={endTime}
+          dateFormat="dd/MM/yyyy h:mm aa"
           type='datetime-local'
           id='endTime'
           name='endTime'
