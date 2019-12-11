@@ -139,7 +139,7 @@ Lataa ja asenna [Java](https://www.oracle.com/technetwork/java/javase/downloads/
  - Käynnistä React-sovellus: `npm start`
 
 Tietokannan määrittely:
-- PostgreSQL:n [asentamisen](http://www.postgresqltutorial.com/install-postgresql/) sovellukselle voidaan luoda käyttäjä, salasana tälle käyttäjälle, tietokanta ja antaa käyttäjälle oikeudet tietokantaan. Nämä voidaan asettaa ottamalla yhteys PostgreSQL-tietokantapalvelimelle [psql-terminaaliohjelman](http://www.postgresqltutorial.com/connect-to-postgresql-database/) avulla:
+- PostgreSQL:n [asentamisen](http://www.postgresqltutorial.com/install-postgresql/) jälkeen sovellukselle voidaan luoda käyttäjä, salasana tälle käyttäjälle, tietokanta ja antaa käyttäjälle oikeudet tietokantaan. Nämä voidaan asettaa ottamalla yhteys PostgreSQL-tietokantapalvelimelle [psql-terminaaliohjelman](http://www.postgresqltutorial.com/connect-to-postgresql-database/) avulla:
 
 - `create user kayttaja;`
 - `alter user kayttaja with encrypted password '<vahva salasana>';`
