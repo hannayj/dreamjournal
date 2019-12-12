@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import { Form, Button, Col } from 'react-bootstrap';
 
 const AddSleepPeriodForm = ({
   startTime,
@@ -13,7 +13,21 @@ const AddSleepPeriodForm = ({
       <h2>
         Add new sleep period
       </h2>
-      <form onSubmit={ addSleepPeriod() }>
+      <Form onSubmit={ addSleepPeriod() }>
+        <Form.Row>
+          <Form.Group as={Col} controlId="formGridStartTime">
+            <Form.Label>Start time</Form.Label>
+            <Form.Control type="datetime-local" placeholder="Start time" />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="formGridEndTime">
+            <Form.Label>End time</Form.Label>
+            <Form.Control type="datetime-local" placeholder="End time" />
+          </Form.Group>
+        </Form.Row>
+        <Button variant='info' type='submit'>Add new sleep period</Button>
+      </Form>
+      {/* <form onSubmit={ addSleepPeriod() }>
         <label htmlFor='startTime'>Start time</label>
         <br />
         <input
@@ -36,7 +50,7 @@ const AddSleepPeriodForm = ({
         <br />
         <p></p>
         <Button variant='info' type='submit'>Add new sleep period</Button>
-      </form>
+      </form> */}
     </div>
   )
 }

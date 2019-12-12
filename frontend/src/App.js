@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import sleepPeriodService from './services/sleepPeriods'
 import commentService from './services/comments'
 import externalService from './services/externals'
 import userService from './services/users'
+import accountService from './services/accounts'
 
+import SleepPeriodTimeline from './components/SleepPeriodTimeline'
 import SleepPeriods from './components/SleepPeriods'
-import Header from './components/Header'
-import Nav from './components/Nav'
-import Footer from './components/Footer'
+import Navigation from './components/Navigation'
 import Comments from './components/Comments'
 import Externals from './components/Externals'
 import User from './components/User'
 import FilteredView from './components/FilteredView'
 import DateSelect from './components/DateSelect'
+
+import { Jumbotron, Button, Tabs, Tab } from 'react-bootstrap';
 
 const App = () => {
   const [sleepPeriods, setSleepPeriods] = useState([])
@@ -20,8 +23,6 @@ const App = () => {
   const [endTime, setEndTime] = useState('')
   const [filterStartDate, setFilterStartDate] = useState('')
   const [filterEndDate, setFilterEndDate] = useState('')
-  const [showFooter, setShowFooter] = useState(true)
-  const [view, setView] = useState('sleepperiods')
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const [commentDate, setCommentDate] = useState('')
@@ -43,7 +44,6 @@ const App = () => {
     fetchSleepPeriods()
     fetchComments()
     fetchExternals()
-    fetchUsers()
     setCurrentPeriodStart()
   }, [])
 
@@ -65,18 +65,33 @@ const App = () => {
       .then(externals => setExts(externals))
   }
 
-  const fetchUsers = () => {
+  const fetchUser = () => {
     userService
-    .getAll()
-    .then(users => setUser(users[0]))
+      .getAll()
+      .then(users => setUser(users[0]))
   }
 
-  const hideFooter = () => {
-    setShowFooter(false)
+  const login = () => async (event) => {
+    event.preventDefault()
+
+    try {
+      const user = await accountService.login({
+        userName: "user",
+        password: "password"
+      })
+      console.log(user.data)
+      console.log(user.headers)
+      window.localStorage.setItem('user', JSON.stringify(user))
+
+      setUser(user)
+    } catch (e) {
+      console.log("d'oh!")
+      fetchUser()
+    }
   }
 
-  const changeView = (view) => () => {
-    setView(view)
+  const logout = () => () => {
+    setUser('')
   }
 
   const addSleepPeriod = () => (event) => {
@@ -249,98 +264,124 @@ const App = () => {
   }
 
   return (
-    <div className='container'>
-      <Header
-        changeView={changeView}
-      />
-      <Nav
-        changeView={changeView}
-      />
-      <div id="main">
-        {view === 'settings' &&
-          // TODO: add settings view
-          <>
-          <User 
-            user={user}
-            name={name}
-            setName={setName}
-            firstName={firstName}
-            setFirstName={setFirstName}
-            lastName={lastName}
-            setLastName={setLastName}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            updateUser={updateUser}
-          />
-          </>
-        }
-        {view === 'sleepperiods' &&
-          <>
-            <DateSelect 
-              startDate={dateFilter}
-              handleDateChange={handleDatePickerChange}
-              sleepPeriods={sleepPeriods}
-            />
-            <FilteredView 
-              date={dateFilter}
-              sleeps={sleepPeriods}
-              comments={comments}
-              exts={exts}
-              updateSleepPeriod={updateSleepPeriod}
-              removeSleepPeriod={removeSleepPeriod}
-              deleteComment={deleteComment}
-              updateComment={updateComment}
-            />
-            <SleepPeriods
-              sleepPeriods={filteredSleepPeriods}
-              addSleepPeriod={addSleepPeriod}
-              startTime={startTime}
-              setStartTime={setStartTime}
-              endTime={endTime}
-              setEndTime={setEndTime}
-              filterStartDate={filterStartDate}
-              setFilterStartDate={setFilterStartDate}
-              filterEndDate={filterEndDate}
-              setFilterEndDate={setFilterEndDate}
-              updateSleepPeriod={updateSleepPeriod}
-              removeSleepPeriod={ removeSleepPeriod }
-            />
-            <Comments
-              comments={comments}
-              comment={comment}
-              handleCommentChange={handleCommentChange}
-              commentDate={commentDate}
-              handleDateChange={handleCommentDateChange}
-              sleepQuality={sleepQuality}
-              handleQualityChange={handleQualityChange}
-              addComment={addComment}
-              deleteComment={deleteComment}
-              updateComment={updateComment}
-            />
-            <Externals 
-              externals={exts}
-              addExternal={addExt}
-              externalType={externalType}
-              handleExternalTypeChange={handleExtTypeChange}
-              externalDate={externalDate}
-              handleDateChange={handleExtDateChange}
-              externalQuantityValue={quantity}
-              handleQuantityChange={handleQuantityChange}
-              deleteExternal={deleteExternal}
-              updateExternal={updateExternal}
-            />
-          </>
-        }
-      </div>
-      {showFooter &&
-        <Footer
-          hideFooter={hideFooter}
+    <div className="container">
+      <Router>
+        <Navigation
+          user={user}
+          login={login}
+          logout={logout}
         />
-      }
+        <Switch>
+          { !user &&
+            <Route exact path="/">
+              <Jumbotron>
+                <h1>Welcome to Sleep Diary</h1>
+                <p>
+                  Sleep diary is a thing
+                </p>
+                <p>
+                  <Button variant="primary">Learn more</Button>
+                </p>
+              </Jumbotron>
+            </Route>
+          }
+          { user &&
+            <>
+              <Route exact path="/">
+                <>
+                  <Tabs defaultActiveKey="timeline" id="uncontrolled-tab-example">
+                    <Tab eventKey="timeline" title="Timeline">
+                      <DateSelect
+                        startDate={dateFilter}
+                        handleDateChange={handleDatePickerChange}
+                        sleepPeriods={sleepPeriods}
+                      />
+                      <FilteredView
+                        date={dateFilter}
+                        sleeps={sleepPeriods}
+                        comments={comments}
+                        exts={exts}
+                        updateSleepPeriod={updateSleepPeriod}
+                        removeSleepPeriod={removeSleepPeriod}
+                        deleteComment={deleteComment}
+                        updateComment={updateComment}
+                      />
+                      <SleepPeriodTimeline
+                        sleepPeriods={sleepPeriods}
+                        comments={comments}
+                        externals={exts}
+                        startDate={dateFilter}
+                      />
+                    </Tab>
+                    <Tab eventKey="sleepPeriods" title="Sleep Periods">
+                      <SleepPeriods
+                        sleepPeriods={filteredSleepPeriods}
+                        addSleepPeriod={addSleepPeriod}
+                        startTime={startTime}
+                        setStartTime={setStartTime}
+                        endTime={endTime}
+                        setEndTime={setEndTime}
+                        filterStartDate={filterStartDate}
+                        setFilterStartDate={setFilterStartDate}
+                        filterEndDate={filterEndDate}
+                        setFilterEndDate={setFilterEndDate}
+                        updateSleepPeriod={updateSleepPeriod}
+                        removeSleepPeriod={removeSleepPeriod}
+                      />
+                    </Tab>
+                    <Tab eventKey="comments" title="Comments">
+                      <Comments
+                        comments={comments}
+                        comment={comment}
+                        handleCommentChange={handleCommentChange}
+                        commentDate={commentDate}
+                        handleDateChange={handleCommentDateChange}
+                        sleepQuality={sleepQuality}
+                        handleQualityChange={handleQualityChange}
+                        addComment={addComment}
+                        deleteComment={deleteComment}
+                        updateComment={updateComment}
+                      />
+                    </Tab>
+                    <Tab eventKey="externals" title="Externals">
+                      <Externals
+                        externals={exts}
+                        addExternal={addExt}
+                        externalType={externalType}
+                        handleExternalTypeChange={handleExtTypeChange}
+                        externalDate={externalDate}
+                        handleDateChange={handleExtDateChange}
+                        externalQuantityValue={quantity}
+                        handleQuantityChange={handleQuantityChange}
+                        deleteExternal={deleteExternal}
+                        updateExternal={updateExternal}
+                      />
+                    </Tab>
+                  </Tabs>
+                </>
+              </Route>
+              <Route path="/settings">
+                <User
+                  user={user}
+                  name={name}
+                  setName={setName}
+                  firstName={firstName}
+                  setFirstName={setFirstName}
+                  lastName={lastName}
+                  setLastName={setLastName}
+                  email={email}
+                  setEmail={setEmail}
+                  password={password}
+                  setPassword={setPassword}
+                  updateUser={updateUser}
+                />
+              </Route>
+            </>
+          }
+        </Switch>
+      </Router>
     </div>
-  )
+  );
 }
 
 export default App
