@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import { ListGroupItem, Button } from 'react-bootstrap';
 
 const SleepPeriod = ({
   sleepPeriod,
@@ -10,7 +10,7 @@ const SleepPeriod = ({
   const [editableSleepPeriod, setSleepPeriod] = useState(sleepPeriod)
 
   return (
-    <div className='product clearfix'>
+    <ListGroupItem>
       { editMode === false && 
         <div>
           <a href={ '/sleepPeriods/' + sleepPeriod.id }>
@@ -57,14 +57,14 @@ const SleepPeriod = ({
           </p>
           <p>Duration: { sleepPeriod.duration }h</p>
           <br />
-          <button onClick={ () => removeSleepPeriod(sleepPeriod) }>Delete</button>
-          <button onClick={ () => {
+          <Button onClick={ () => removeSleepPeriod(sleepPeriod) }>Delete</Button>
+          <Button onClick={ () => {
             updateSleepPeriod(editableSleepPeriod);
             setEditMode(false);
-          }}>Save</button>
+          }}>Save</Button>
         </div>
       }
-    </div>
+    </ListGroupItem>
   )
 }
 

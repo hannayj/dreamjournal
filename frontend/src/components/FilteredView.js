@@ -90,11 +90,9 @@ const FilteredView = ({
     
     return(
         <>
-            <hr />
             <h5>Selected time period</h5>
             <h6><b>{getStartTime().toLocaleString()} - {getEndTime().toLocaleString()}</b></h6>
-            <hr />
-            {getFiltered().filteredSleeps.map(s =>
+            {/* {getFiltered().filteredSleeps.map(s =>
                 <SleepPeriod 
                     key={s.id}
                     sleepPeriod={s}
@@ -109,7 +107,7 @@ const FilteredView = ({
                     deleteComment={deleteComment}
                     updateComment={updateComment}
                 />    
-            )}
+            )} */}
             <hr />
         </>
     )
