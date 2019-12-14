@@ -129,12 +129,7 @@ Järjestelmän palvelin toteutettiin Spring Boot -frameworkilla, käyttöliittym
 
 ## Testaus
 
-Tässä kohdin selvitetään, miten ohjelmiston oikea toiminta varmistetaan
-testaamalla projektin aikana: millaisia testauksia tehdään ja missä vaiheessa.
-Testauksen tarkemmat sisällöt ja testisuoritusten tulosten raportit kirjataan
-erillisiin dokumentteihin.
-
-Tänne kirjataan myös lopuksi järjestelmän tunnetut ongelmat, joita ei ole korjattu.
+Spring Bootilla toteutettua serveri-ohjelmaa testattiin järjestelmän kehitysvaiheessa. Testauksessa keskityttiin model-luokkien itse ohjelmoitujen metodien yksikkötestaukseen ja luotujen JPA-komponenttien testaamiseen. JPA-komponenttien toimivuus testattiin Spring-frameworkin tarjoamalla @DataJpaTest annotatiolla ja yksikkötestauksessa käytettiin JUnit-testejä.
 
 ## Asennustiedot
 
