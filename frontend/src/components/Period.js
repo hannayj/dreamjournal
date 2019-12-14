@@ -33,8 +33,8 @@ const Period = ({ period }) => {
                 id: i + period.sleep.length,
                 group: 1,
                 title: `ext ${i}`,
-                start_time: new Date(period.external[i-1].externalDate).getTime(),
-                end_time: new Date(period.external[i-1].externalDate).getTime() + 1000
+                start_time: new Date(convertToTimeZone(period.external[i-1].externalDate)).getTime(),
+                end_time: new Date(convertToTimeZone(period.external[i-1].externalDate)).getTime() + 1000
             }]
         }
         return(items)
